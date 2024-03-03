@@ -1,0 +1,23 @@
+# Bookings:
+    - Listar todos los bookings: GET /bookings
+    - Mostrar un booking específico: GET /bookings/:id
+    - Crear un nuevo booking: POST /bookings
+    - Actualizar un booking existente: PUT /bookings/:id
+    - Eliminar un booking existente: DELETE /bookings/:id
+
+# Rooms:
+    - Listar todas las rooms: GET /rooms
+    - Mostrar una room específica: GET /rooms/:id
+    - Crear una nueva room: POST /rooms
+    - Actualizar una room existente: PUT /rooms/:id
+    - Eliminar una room existente: DELETE /rooms/:id
+
+# Users:
+    - Listar todos los usuarios: GET /users
+    - Mostrar un usuario específico: GET /users/:id
+    - Crear un nuevo usuario: POST /users
+    - Actualizar un usuario existente: PUT /users/:id
+    - Eliminar un usuario existente: DELETE /users/:id
+
+# Contact:
+    - Enviar un mensaje de contacto: POST /contact
