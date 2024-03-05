@@ -4,15 +4,21 @@ import { SlEnvolopeLetter } from "react-icons/sl";
 import { CiBellOn } from "react-icons/ci";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
     const { theme, handleToggleTheme } = useTheme();
+    const location = useLocation();
 
     return (
         <>
-            { visible
-                ? <ArrowLeft onClick={toggleSidebar} />
-                : <ArrowRight onClick={toggleSidebar} /> }
+            <RoutePath>
+                { visible
+                    ? <ArrowLeft onClick={toggleSidebar} />
+                    : <ArrowRight onClick={toggleSidebar} />
+                }
+                <Location>{location.pathname.split("/")[2] ?? "dashboard"}</Location>
+            </RoutePath>
 
             <TopbarContainer>
                 <MenuIcon>
@@ -88,4 +94,15 @@ const ThemeButtonLayout = styled(ButtonTopbar)`
     margin-left: 2rem;
     z-index: 1;
     height: 100%;
+`
+
+const RoutePath = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+`
+
+const Location = styled.p`
+    font: normal normal 600 20px Poppins;
+    text-transform: capitalize;
 `
