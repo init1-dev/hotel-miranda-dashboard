@@ -9,12 +9,12 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
     const { theme, handleToggleTheme } = useTheme();
 
     return (
-        <TopBar>
+        <>
             { visible
                 ? <ArrowLeft onClick={toggleSidebar} />
                 : <ArrowRight onClick={toggleSidebar} /> }
 
-            <div>
+            <TopbarContainer>
                 <MenuIcon>
                     <SlEnvolopeLetter />
                 </MenuIcon>
@@ -30,32 +30,25 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
                 <ThemeButtonLayout onClick={handleToggleTheme}>
                     {theme === 'light' ? '🌙' : '☀️'}
                 </ThemeButtonLayout>
-            </div>
+            </TopbarContainer>
 
-        </TopBar>
+        </>
     )
 
 }
 
-const TopBar = styled.div`
-    background-color: ${({ theme }) => theme.contentBg};
+const TopbarContainer = styled.div`
     display: flex;
-    justify-content: space-around;
+    gap: 1rem;
     align-items: center;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 90px;
-    padding: 2rem;
-    box-shadow: 0px 3px 10px #00000005;
 `
 
 const MenuIcon = styled.button`
+    display: flex;
     color: ${({ theme }) => theme.menuText};
     background-color: unset;
     font-size: 25px;
-    padding: 0.5rem;
+    padding: 0;
     outline: unset;
 
     &:hover {
@@ -78,15 +71,11 @@ const ArrowRight = styled(FaArrowRight)`
 `
 
 const ButtonTopbar = styled.button`
-    background-color: ${({ theme }) => theme.bg};
+    background-color: ${({ theme }) => theme.menuBox};
     border: 1px;
-    /* border-color: ${({ theme }) => theme.themeButtonBg}; */
-    color: ${({ theme }) => theme.text};
-    padding: 0.5rem;
+    padding: 0.3rem;
     cursor: pointer;
-    font-size: 15px;
     border-radius: 5px;
-    margin: 0.5rem;
     box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px, rgb(0 0 0 / 30%) 0px 7px 13px -3px, rgb(0 0 0 / 20%) 0px -3px 0px inset;
 
     &:focus, &:focus-visible {
@@ -95,9 +84,8 @@ const ButtonTopbar = styled.button`
 `;
 
 const ThemeButtonLayout = styled(ButtonTopbar)`
-    position: absolute;
-    top: 20px;
-    right: 25px;
     margin: 0;
+    margin-left: 2rem;
     z-index: 1;
+    height: 100%;
 `

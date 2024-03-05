@@ -12,7 +12,7 @@ export const SideBarComponent = () => {
     const [active, setActive] = useState('/dashboard');
 
     return (
-            <SideBar>
+            <>
                 <Imagen src="/assets/travl.png" alt="imagen del logotipo" />
 
                 <Lista>
@@ -62,23 +62,10 @@ export const SideBarComponent = () => {
                 </Lista>
                 
                 <AuthStatus />
-            </SideBar>
+            </>
     )
 
 }
-
-const SideBar = styled.div`
-    background-color: ${({ theme }) => theme.contentBg};
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    width: 16rem;
-    height: 100%;
-    top: 0;
-    left: 0;
-    box-shadow: -3px 5px 15px black;
-    z-index: 1;
-`
 
 const Imagen = styled.img`
     width: 85%;
