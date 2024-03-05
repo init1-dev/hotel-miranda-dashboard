@@ -7,7 +7,7 @@ function LoginPage() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
-    const [username, setUsername] = useState('in1t');
+    const [username, setUsername] = useState('In1t.dev');
     const [password, setPassword] = useState('12345');
 
     const navigation = useNavigation();

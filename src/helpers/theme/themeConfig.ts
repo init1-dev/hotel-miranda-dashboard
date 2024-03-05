@@ -7,6 +7,7 @@ export interface Theme {
     menuText: string;
     menuActive: string;
     iconsColor: string;
+    menuBox: string;
 }
 
 export const lightTheme: Theme = {
@@ -16,6 +17,7 @@ export const lightTheme: Theme = {
     menuText: '#799283',
     menuActive: '#E23428',
     iconsColor: '#135846',
+    menuBox: '#FFFFFF',
 };
 
 export const darkTheme: Theme = {
@@ -25,10 +27,12 @@ export const darkTheme: Theme = {
     menuText: '#808080',
     menuActive: '#E23428',
     iconsColor: '#135846',
+    menuBox: '#292828',
 };
 
 export const GlobalStyles = createGlobalStyle<{ theme?: Theme }>`
     :root {
-        background-color: ${({ theme }) => theme.bg};;
+        background-color: ${({ theme }) => theme.bg};
+        font-family: Poppins;
     }
 `;

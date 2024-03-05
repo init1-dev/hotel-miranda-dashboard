@@ -12,9 +12,9 @@ function Layout() {
     return (
         <>
             { (!user || !fakeAuthProvider.isAuthenticated) &&
-                <ThemeButton onClick={handleToggleTheme}>
+                <ThemeButtonLayout onClick={handleToggleTheme}>
                     {theme === 'light' ? '🌙' : '☀️'}
-                </ThemeButton>
+                </ThemeButtonLayout>
             }
 
             {!user && !isLogin &&
@@ -30,7 +30,7 @@ function Layout() {
     );
 }
 
-const Button = styled.button`
+const ButtonLayout = styled.button`
     background-color: ${({ theme }) => theme.bg};
     border: 1px;
     /* border-color: ${({ theme }) => theme.themeButtonBg}; */
@@ -47,7 +47,7 @@ const Button = styled.button`
     }
 `;
 
-const ThemeButton = styled(Button)`
+const ThemeButtonLayout = styled(ButtonLayout)`
     position: absolute;
     top: 20px;
     right: 25px;

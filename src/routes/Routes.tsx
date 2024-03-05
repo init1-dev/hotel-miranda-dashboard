@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         id: "root",
         path: "/",
         loader() {
-            return { user: fakeAuthProvider.username };
+            return { user: fakeAuthProvider.username, email: fakeAuthProvider.email };
         },
         Component: Layout,
         children: [

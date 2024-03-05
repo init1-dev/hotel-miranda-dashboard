@@ -2,6 +2,7 @@ interface AuthProvider {
     isAuthenticated: boolean;
     username: string | null;
     password: string | null;
+    email: string | null;
     signin(username: string, password: string): Promise<void>;
     signout(): Promise<void>;
 }
@@ -20,6 +21,7 @@ export const fakeAuthProvider: AuthProvider = {
     isAuthenticated: Boolean(user),
     username: user,
     password: password,
+    email: "init1.dev@gmail.com",
     async signin(username: string, password: string) {
         await new Promise((r) => setTimeout(r, 500));
 
@@ -29,7 +31,8 @@ export const fakeAuthProvider: AuthProvider = {
 
         localStorage.setItem('__user__', JSON.stringify({
             username: this.username,
-            password: this.password
+            password: this.password,
+            email: this.email
         }));
     },
     async signout() {
