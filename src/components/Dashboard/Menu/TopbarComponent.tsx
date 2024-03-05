@@ -22,14 +22,23 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
 
             <TopbarContainer>
                 <MenuIcon>
+                    <MenuIconAlert>
+                        2
+                    </MenuIconAlert>
                     <SlEnvolopeLetter />
                 </MenuIcon>
 
                 <MenuIcon>
+                    <MenuIconAlert>
+                        87
+                    </MenuIconAlert>
                     <CiBellOn />
                 </MenuIcon>
 
                 <MenuIcon>
+                    <MenuIconAlert>
+                        !
+                    </MenuIconAlert>
                     <MdOutlineMessage />
                 </MenuIcon>
 
@@ -45,17 +54,19 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
 
 const TopbarContainer = styled.div`
     display: flex;
-    gap: 1rem;
+    gap: 4rem;
     align-items: center;
 `
 
 const MenuIcon = styled.button`
+    position: relative;
     display: flex;
-    color: ${({ theme }) => theme.menuText};
+    color: ${({ theme }) => theme.iconsColor};
     background-color: unset;
     font-size: 25px;
     padding: 0;
     outline: unset;
+    border: unset;
 
     &:hover {
         color: ${({ theme }) => theme.text};
@@ -63,7 +74,27 @@ const MenuIcon = styled.button`
 
     &:hover, &:focus, &:focus-visible, &:active {
         outline: unset;
+        border: unset;
     }
+`
+
+const MenuIconAlert = styled.p`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    top: -10px;
+    left: 15px;
+    color: white;
+    font-size: 12px;
+    background-color: red;
+    border-radius: 0.4rem;
+    height: 22px;
+    min-width: 24px;
+    width: auto;
+    padding: 0.2rem;
+
 `
 
 const ArrowLeft = styled(FaArrowLeft)`
@@ -91,7 +122,6 @@ const ButtonTopbar = styled.button`
 
 const ThemeButtonLayout = styled(ButtonTopbar)`
     margin: 0;
-    margin-left: 2rem;
     z-index: 1;
     height: 100%;
 `
