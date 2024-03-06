@@ -3,8 +3,8 @@ import { fakeAuthProvider } from "../AuthProvider";
 
 async function loginAction({ request }: LoaderFunctionArgs) {
     const formData = await request.formData();
-    const username = (formData.get("username") as string).trim();
-    const password = (formData.get("password") as string).trim();
+    const username = (formData.get("username") as string).trim().toLocaleLowerCase();
+    const password = (formData.get("password") as string).trim().toLocaleLowerCase();
 
     if (!username || !password) {
         return {
@@ -23,7 +23,7 @@ async function loginAction({ request }: LoaderFunctionArgs) {
         if (response.ok) {
             const responseData = await response.json();
 
-            if (responseData.status === 1 && username === "In1t.dev" && password === "12345") {
+            if (responseData.status === 1 && username === "init.dev" && password === "12345") {
                 await fakeAuthProvider.signin(username, password);
                 const redirectTo = formData.get("redirectTo") as string | null;
                 return redirect(redirectTo || "/");

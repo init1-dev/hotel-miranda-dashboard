@@ -6,7 +6,7 @@ function AuthStatus() {
     const { user, email } = useRouteLoaderData("root") as { user: string | null, email: string | null };
 
     if (!user) {
-        return <p>You are not logged in. ( In1t.dev : 12345 )</p>;
+        return <p>You are not logged in. ( init.dev : 12345 )</p>;
     }
 
     return (

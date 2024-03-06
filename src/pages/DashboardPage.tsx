@@ -50,12 +50,18 @@ export const DashboardPage = () => {
 }
 
 const Content = styled.div`
-    margin-top: 100px;
-    margin-left: 20rem;
+    padding: 1rem 1.5rem 0 1.5rem;
+    width: calc(100% - 16rem);
+    position: fixed;
+    top: 105px;
+    left: 16rem;
+    margin-left: auto;
+    margin-right: auto;
 `
 
 const ContentMax = styled(Content)`
-    margin-left: 2rem;
+    width: 100%;
+    left: unset;
 `
 
 const TopBarContainer = styled.div`
