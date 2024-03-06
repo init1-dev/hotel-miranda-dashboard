@@ -12,7 +12,7 @@ function Logout() {
             <fetcher.Form method="post" action="/logout">
                 <LogButton type="submit" disabled={isLoggingOut}>
                     <MdLogout />
-                    {isLoggingOut ? "Signing out..." : "Sign out"}
+                    {isLoggingOut ? "Loging out..." : "Log out"}
                 </LogButton>
             </fetcher.Form>
         </>
@@ -22,13 +22,12 @@ function Logout() {
 const LogButton = styled.button`
     display: flex;
     align-items: center;
-    width: 100%;
     gap: 0.5rem;
-    background-color: ${({ theme }) => theme.bg};
-    color: ${({ theme }) => theme.text};
-    font-size: 12px;
+    background-color: #135846;
+    color: white;
+    font-size: 13px;
     border: 0;
-    transition: background-color 0.4s ease;
+    transition: all 0.4s ease;
 
     &:hover {
         color: white;

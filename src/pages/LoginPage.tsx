@@ -8,8 +8,8 @@ function LoginPage() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
-    const [username, setUsername] = useState('In1t.dev');
-    const [password, setPassword] = useState('12345');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const navigation = useNavigation();
     const isLoggingIn = navigation.formData?.get("username") != null;
@@ -34,9 +34,13 @@ function LoginPage() {
                         <Form method="post"  style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                            <Input type="text" name="username" value={username}
+                                placeholder="Your username"
+                                onChange={(e) => setUsername(e.target.value)}/>
 
-                            <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <Input type="password" name="password" value={password}
+                                placeholder="Your password"
+                                onChange={(e) => setPassword(e.target.value)}/>
 
                             <Button type="submit" disabled={isLoggingIn}>
                                 {isLoggingIn ? "Logging in..." : "Login"}
@@ -74,7 +78,7 @@ const Input = styled.input`
     color: ${({ theme }) => theme.text};
     width: 350px;
     padding: 0.5rem;
-    box-shadow: 0px 1px 6px black;
+    box-shadow: 0px 1px 6px #444444;
     z-index: 1;
     display: block;
     margin: 1rem auto 2rem auto;

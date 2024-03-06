@@ -3,32 +3,43 @@ import { fakeAuthProvider } from "../AuthProvider";
 
 async function loginAction({ request }: LoaderFunctionArgs) {
     const formData = await request.formData();
-    const username = formData.get("username") as string;
-    const password = formData.get("password") as string;
+    const username = (formData.get("username") as string).trim();
+    const password = (formData.get("password") as string).trim();
 
-    // Validate our form inputs and return validation errors via useActionData()
-    if (!username) {
+    if (!username || !password) {
         return {
-            error: "You must provide a username to log in",
+            error: "You must provide a valid username/password to log in",
         };
     }
 
-    // Sign in and redirect to the proper destination if successful.
-    try {
-        await fakeAuthProvider.signin(username, password);
+    try {      
+        const apiUrl = "https://tararoutray.com/demo/react-auth/login.php";
+        const requestOptions = {
+            method: "GET"
+        };
+
+        const response = await fetch(apiUrl, requestOptions);
+
+        if (response.ok) {
+            const responseData = await response.json();
+
+            if (responseData.status === 1 && username === "In1t.dev" && password === "12345") {
+                await fakeAuthProvider.signin(username, password);
+                const redirectTo = formData.get("redirectTo") as string | null;
+                return redirect(redirectTo || "/");
+            } else {
+                return {
+                    error: "Invalid login attempt",
+                };
+            }
+        } else {
+            throw new Error("Error de red o solicitud fallida");
+        }
+        
     } catch (error) {
-        // Unused as of now but this is how you would handle invalid
-        // username/password combinations - just like validating the inputs
-        // above
-        return {
-            error: "Invalid login attempt",
-        };
+        // Unused as of now but this is how you would handle invalid username/password combinations
+        return error;
     }
-
-    const redirectTo = formData.get("redirectTo") as string | null;
-    console.log(redirectTo);
-    
-    return redirect(redirectTo || "/");
 }
 
 export default loginAction;

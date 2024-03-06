@@ -31,7 +31,6 @@ export const fakeAuthProvider: AuthProvider = {
 
         localStorage.setItem('__user__', JSON.stringify({
             username: this.username,
-            password: this.password,
             email: this.email
         }));
     },
