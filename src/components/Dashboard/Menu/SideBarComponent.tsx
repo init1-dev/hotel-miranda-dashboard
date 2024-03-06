@@ -1,12 +1,9 @@
+import React from "react";
 import { NavLink } from "react-router-dom"
 import styled from "styled-components"
 import AuthStatus from "../../../helpers/login/authStatus";
-import { MdOutlineMessage } from "react-icons/md";
-import { IoKeyOutline } from "react-icons/io5";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
+import { menuOptions } from "../../../helpers/dashboard/Menu/menuOptions";
 
 export const SideBarComponent = () => {
     const [active, setActive] = useState('/dashboard');
@@ -16,49 +13,17 @@ export const SideBarComponent = () => {
                 <Imagen src="/assets/travl.png" alt="imagen del logotipo" />
 
                 <Lista>
-                    <MenuOption 
-                        to="/dashboard"
-                        className={ active === "/dashboard" ? "activated" : ""}
-                        onClick={() => setActive("/dashboard")}
-                    >
-                        <LuLayoutDashboard />
-                        <Texto>Dashboard</Texto>
-                    </MenuOption>
-                    <MenuOption 
-                        to="/dashboard/bookings"
-                        className={ active === "/dashboard/bookings" ? "activated" : ""}
-                        onClick={() => setActive("/dashboard/bookings")}
-                    >
-                        <FaRegCalendarAlt />
-                        <Texto>Bookings</Texto>
-                    </MenuOption>
-
-                    <MenuOption 
-                        to="/dashboard/rooms"
-                        className={ active === "/dashboard/rooms" ? "activated" : ""}
-                        onClick={() => setActive("/dashboard/rooms")}
-                    >
-                        <IoKeyOutline />
-                        <Texto>Rooms</Texto>
-                    </MenuOption>
-
-                    <MenuOption 
-                        to="/dashboard/contact"
-                        className={ active === "/dashboard/contact" ? "activated" : ""}
-                        onClick={() => setActive("/dashboard/contact")}
-                    >
-                        <MdOutlineMessage />
-                        <Texto>Contact</Texto>
-                    </MenuOption>
-
-                    <MenuOption 
-                        to="/dashboard/users"
-                        className={ active === "/dashboard/users" ? "activated" : ""}
-                        onClick={() => setActive("/dashboard/users")}
-                    >
-                        <IoPersonOutline />
-                        <Texto>Users</Texto>
-                    </MenuOption>
+                    {menuOptions.map((option, index) => (
+                        <MenuOption
+                            key={index}
+                            to={option.to}
+                            className={active === option.to ? "activated" : ""}
+                            onClick={() => setActive(option.to)}
+                        >
+                            {React.createElement(option.icon)}
+                            <Texto>{option.text}</Texto>
+                        </MenuOption>
+                    ))}
                 </Lista>
                 
                 <AuthStatus />

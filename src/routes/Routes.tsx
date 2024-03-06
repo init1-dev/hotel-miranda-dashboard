@@ -6,21 +6,9 @@ import loginLoader from "../helpers/login/loginLoader";
 import dashboardLoader from "../helpers/dashboard/dashboardLoader";
 import { DashboardPage } from "../pages/DashboardPage";
 import Layout from "../components/Layout";
-import Dashboard from "../pages/Dashboard";
-import Bookings from "../pages/Bookings";
-import Rooms from "../pages/Rooms";
-import Contact from "../pages/Contact";
-import Users from "../pages/Users";
+import { RouterMenuOptions } from "../helpers/dashboard/Menu/menuOptions";
 
 export const appName = '/hotel-miranda-dashboard';
-
-const menuOptions = [
-    { path: '', component: Dashboard },
-    { path: 'bookings', component: Bookings },
-    { path: 'rooms', component: Rooms },
-    { path: 'contact', component: Contact },
-    { path: 'users', component: Users }
-];
 
 const router = createBrowserRouter([
     {
@@ -42,7 +30,7 @@ const router = createBrowserRouter([
                 path: "dashboard",
                 loader: dashboardLoader,
                 Component: DashboardPage,
-                children: menuOptions.map(option => ({
+                children: RouterMenuOptions.map(option => ({
                     path: option.path,
                     loader: () => null,
                     Component: option.component
