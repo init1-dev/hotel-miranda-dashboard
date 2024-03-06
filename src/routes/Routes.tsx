@@ -6,11 +6,11 @@ import loginLoader from "../helpers/login/loginLoader";
 import dashboardLoader from "../helpers/dashboard/dashboardLoader";
 import { DashboardPage } from "../pages/DashboardPage";
 import Layout from "../components/Layout";
-import Dashboard from "../components/Dashboard/Dashboard";
-import Bookings from "../components/Dashboard/Bookings";
-import Rooms from "../components/Dashboard/Rooms";
-import Contact from "../components/Dashboard/Contact";
-import Users from "../components/Dashboard/Users";
+import Dashboard from "../pages/Dashboard";
+import Bookings from "../pages/Bookings";
+import Rooms from "../pages/Rooms";
+import Contact from "../pages/Contact";
+import Users from "../pages/Users";
 
 export const appName = '/hotel-miranda-dashboard';
 
