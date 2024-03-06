@@ -2,6 +2,7 @@ import { Form, redirect, useActionData, useLocation, useNavigation, useRouteLoad
 import AuthStatus from "../helpers/login/authStatus";
 import styled from "styled-components";
 import { useState } from "react";
+import hotel from "../assets/hotel-dashboard-header.jpeg";
 
 function LoginPage() {
     const location = useLocation();
@@ -17,29 +18,25 @@ function LoginPage() {
 
     const { user } = useRouteLoaderData("root") as { user: string | null };
 
-    if(user === null) redirect("/")
+    if(user === null) redirect("/");
 
     return (
         <>
             { !user &&
                 <>
+                    <HeaderImage src={hotel} alt="imagen header del panel del hotel" />
+
                     <LoginInfo>
                         <AuthStatus />
-
-                        <p style={{marginTop: '1rem'}}>You must log in to view the page at {from}</p>
                     </LoginInfo>
 
                     <div>
                         <Form method="post"  style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Label>
-                                Username: <Input name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-                            </Label>{" "}
+                            <Input name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
 
-                            <Label>
-                                Password: <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                            </Label>{" "}
+                            <Input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 
                             <Button type="submit" disabled={isLoggingIn}>
                                 {isLoggingIn ? "Logging in..." : "Login"}
@@ -57,36 +54,38 @@ function LoginPage() {
     );
 }
 
+const HeaderImage = styled.img`
+    height: 300px;
+    width: 1000px;
+    margin-top: -5rem;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    object-position: bottom;
+`
+
 const LoginInfo = styled.div`
     padding: 0%.5rem;
     color: ${({ theme }) => theme.text};
     border-radius: 1rem;
 `
 
-const Label = styled.label`
-    padding: 1rem;
-    z-index: 1;
-    display: block;
-`
-
 const Input = styled.input`
     background-color: ${({ theme }) => theme.contentBg};
     color: ${({ theme }) => theme.text};
-    width: 100%;
+    width: 350px;
     padding: 0.5rem;
-    box-shadow: -3px 5px 15px black;
+    box-shadow: 0px 1px 6px black;
     z-index: 1;
     display: block;
-    margin-top: 1rem;
+    margin: 1rem auto 2rem auto;
 `
 
 const Button = styled.button`
     background-color: ${({ theme }) => theme.contentBg};
     color: ${({ theme }) => theme.text};
-    box-shadow: -3px 5px 15px black;
-    margin-top: 1rem;
+    box-shadow: 0px 1px 6px black;
     margin-bottom: 1rem;
-    width: 50%;
+    width: 150px;
 `
 
 export default LoginPage;

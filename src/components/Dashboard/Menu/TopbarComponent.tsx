@@ -1,10 +1,10 @@
 import styled, { useTheme } from "styled-components";
 import { MdOutlineMessage } from "react-icons/md";
-import { SlEnvolopeLetter } from "react-icons/sl";
 import { CiBellOn } from "react-icons/ci";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
+import Logout from "../../Logout/Logout";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
     const { theme, handleToggleTheme } = useTheme();
@@ -25,7 +25,7 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
                     <MenuIconAlert>
                         2
                     </MenuIconAlert>
-                    <SlEnvolopeLetter />
+                    <MdOutlineMessage />
                 </MenuIcon>
 
                 <MenuIcon>
@@ -35,12 +35,7 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
                     <CiBellOn />
                 </MenuIcon>
 
-                <MenuIcon>
-                    <MenuIconAlert>
-                        !
-                    </MenuIconAlert>
-                    <MdOutlineMessage />
-                </MenuIcon>
+                <Logout />
 
                 <ThemeButtonLayout onClick={handleToggleTheme}>
                     {theme === 'light' ? '🌙' : '☀️'}

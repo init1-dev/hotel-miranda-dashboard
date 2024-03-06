@@ -2,7 +2,7 @@ function Bookings() {
     
     return (
         <>
-            <h1>BOOKING</h1>
+            <h1>BOOKINGS</h1>
         </>
     );
 }

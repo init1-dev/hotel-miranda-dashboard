@@ -1,28 +1,23 @@
-import { useFetcher, useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import init from "../../assets/init.png";
 
 function AuthStatus() {
-    // Get our logged in user, if they exist, from the root route loader data
     const { user, email } = useRouteLoaderData("root") as { user: string | null, email: string | null };
-    const fetcher = useFetcher();
 
     if (!user) {
         return <p>You are not logged in.</p>;
     }
 
-    const isLoggingOut = fetcher.formData != null;
-
     return (
         <Container>
-            <ProfileImage src="/assets/init.png" alt="imagen de perfil" />
+            <ProfileImage src={init} alt="imagen de perfil" />
             <UserContainer>
                 <ProfileName>{user}</ProfileName>
                 <ProfileEmail>{email}</ProfileEmail>
-                <fetcher.Form method="post" action="/logout">
-                <Button type="submit" disabled={isLoggingOut}>
-                    {isLoggingOut ? "Signing out..." : "Sign out"}
+                <Button type="submit">
+                    Edit User
                 </Button>
-                </fetcher.Form>
             </UserContainer>
 
             <CopyrightTitle>Trvl Hotel Admin Dashboard</CopyrightTitle>
@@ -47,6 +42,22 @@ const UserContainer = styled.div`
     margin-bottom: 3rem;
 `
 
+const Button = styled.button`
+    background-color: #EBF1EF;
+    color: #135846;
+    font-size: 14px;
+    margin-top: 1rem;
+    width: 75%;
+    padding: 0.5rem;
+    border: 0;
+    transition: all 0.4s ease;
+
+    &:hover {
+        color: white;
+        background-color: #0e4234;
+    }
+`
+
 const ProfileImage = styled.img`
     position: absolute;
     width: 25%;
@@ -66,22 +77,6 @@ const ProfileEmail = styled.p`
     color: #888888;
     font-size: 13px;
     font-weight: normal;
-`
-
-const Button = styled.button`
-    background-color: #EBF1EF;
-    color: #135846;
-    font-size: 14px;
-    margin-top: 1rem;
-    width: 75%;
-    padding: 0.5rem;
-    border: 0;
-    transition: all 0.4s ease;
-
-    &:hover {
-        color: white;
-        background-color: #0e4234;
-    }
 `
 
 const CopyrightTitle = styled.p`

@@ -26,7 +26,7 @@ export const darkTheme: Theme = {
     text: 'white',
     menuText: '#808080',
     menuActive: '#E23428',
-    iconsColor: '#135846',
+    iconsColor: '#808080',
     menuBox: '#292828',
 };
 

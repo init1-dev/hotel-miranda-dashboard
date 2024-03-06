@@ -4,13 +4,14 @@ import styled from "styled-components"
 import AuthStatus from "../../../helpers/login/authStatus";
 import { useState } from "react";
 import { menuOptions } from "../../../helpers/dashboard/Menu/menuOptions";
+import travl from "../../../assets/travl.png";
 
 export const SideBarComponent = () => {
     const [active, setActive] = useState('/dashboard');
 
     return (
             <>
-                <Imagen src="/assets/travl.png" alt="imagen del logotipo" />
+                <Imagen src={travl} alt="imagen del logotipo" />
 
                 <Lista>
                     {menuOptions.map((option, index) => (
