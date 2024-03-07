@@ -18,7 +18,7 @@ type TableProps = {
 };
 
 const Table = ({ columns, data }:TableProps) => {
-    const selectedData = data.slice(0, 8);
+    const selectedData = data.slice(0, 20);
     const navigate = useNavigate();
 
     const renderCellContent = (column: Column, row: Data) => {
@@ -38,7 +38,7 @@ const Table = ({ columns, data }:TableProps) => {
             const arrayFormat = Array.isArray(rowData) ? rowData.join(", ") : rowData;
             return arrayFormat;
         } else {
-            return rowData;
+            return rowData.toString().slice(0, 100);
         }
     };
 
@@ -74,18 +74,34 @@ const Table = ({ columns, data }:TableProps) => {
 };
 
 const TableStyle = styled.table`
+    display: block;
     width: 100%;
+    height: 78vh;
+    overflow-y: auto;
     text-align: center;
     padding: 0.5rem;
     border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.menuBox};
 
-    thead {
-        
+    &::-webkit-scrollbar {
+        width: 5px;
     }
 
-    td {
-        padding: 0 1rem 0 1rem;
+    &::-webkit-scrollbar-track {
+        background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme.menuText};
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    th {
+        padding-bottom: 1rem;
     }
 `
 
@@ -96,6 +112,7 @@ const Img = styled.img`
 
 const TableRow = styled.td`
     font-size: 12px;
+    line-height: 25px;
 `
 
 export default Table;

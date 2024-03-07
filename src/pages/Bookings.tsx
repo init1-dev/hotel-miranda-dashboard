@@ -1,6 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { bookings } from "../helpers/Tabs/tabs";
+import Table from "../components/Table/Table";
+import bookingsData from '../Data/bookings.json';
+import { bookingsHeaders } from "../helpers/Headers/bookingsHeaders";
 
 function Bookings() {
     const location=useLocation().pathname;
@@ -17,7 +20,7 @@ function Bookings() {
                                     )) 
                                 }
                             </TabsContent>
-                            {/* <Table columns={} data={} /> */}
+                            <Table columns={bookingsHeaders} data={bookingsData} />
                         </>
                     : <Outlet />
             }
@@ -36,10 +39,6 @@ const Tab = styled.button`
     all: unset;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
-
-    &.active {
-        color: #135846;
-    }
 `
 
 export default Bookings;

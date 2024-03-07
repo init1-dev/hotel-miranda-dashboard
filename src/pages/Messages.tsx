@@ -1,6 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { messages } from "../helpers/Tabs/tabs";
+import messagesData from '../Data/messages.json';
+import Table from "../components/Table/Table";
+import { messagesHeaders } from "../helpers/Headers/messagesHeaders";
 
 function Messages() {
     const location=useLocation().pathname;
@@ -17,7 +20,7 @@ function Messages() {
                                     )) 
                                 }
                             </TabsContent>
-                            {/* <Table columns={roomsHeaders} data={roomsData} /> */}
+                            <Table columns={messagesHeaders} data={messagesData} />
                         </>
                     : <Outlet />
             }
@@ -32,8 +35,10 @@ const TabsContent = styled.div`
     margin-bottom: 2rem;
 `
 
-const Tab = styled.div`
-    
+const Tab = styled.button`
+    all: unset;
+    cursor: pointer;
+    color: ${({ theme }) => theme.text};
 `
 
 export default Messages;

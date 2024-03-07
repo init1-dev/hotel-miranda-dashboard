@@ -35,8 +35,10 @@ const TabsContent = styled.div`
     margin-bottom: 2rem;
 `
 
-const Tab = styled.div`
-    
+const Tab = styled.button`
+    all: unset;
+    cursor: pointer;
+    color: ${({ theme }) => theme.text};
 `
 
 export default Rooms;
