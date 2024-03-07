@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import AuthStatus from "../../../helpers/login/authStatus";
 import { useState } from "react";
@@ -7,7 +7,11 @@ import { menuOptions } from "../../../helpers/dashboard/Menu/menuOptions";
 import travl from "../../../assets/travl.png";
 
 export const SideBarComponent = () => {
-    const [active, setActive] = useState('/dashboard');
+    const location = useLocation().pathname;
+    const path = (location === "/dashboard")
+        ? location
+        : "/dashboard/" + location.split("/")[2];
+    const [active, setActive] = useState(path);
 
     return (
             <>

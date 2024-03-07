@@ -6,7 +6,7 @@ function AuthStatus() {
     const { user, email } = useRouteLoaderData("root") as { user: string | null, email: string | null };
 
     if (!user) {
-        return <p>You are not logged in. ( init.dev : 12345 )</p>;
+        return <p>You are not logged in</p>;
     }
 
     return (
@@ -40,6 +40,7 @@ const UserContainer = styled.div`
     padding: 3rem 1rem 1rem 1rem;
     border-radius: 1rem;
     margin-bottom: 3rem;
+    text-align: center;
 `
 
 const Button = styled.button`

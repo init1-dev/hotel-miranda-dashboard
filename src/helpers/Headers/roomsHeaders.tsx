@@ -1,10 +1,5 @@
 export const roomsHeaders = [
     {
-        'header': 'Id',
-        'type' : 'text',
-        'accessor': 'id'
-    },
-    {
         'header': 'Image',
         'type' : 'image',
         'accessor': 'photo'

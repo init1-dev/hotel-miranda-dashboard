@@ -2,7 +2,8 @@ import { Form, redirect, useActionData, useLocation, useNavigation, useRouteLoad
 import AuthStatus from "../helpers/login/authStatus";
 import styled from "styled-components";
 import { useState } from "react";
-import hotel from "../assets/hotel-dashboard-header.jpeg";
+import hotel from "../assets/hotel-dashboard-header2.jpeg";
+import { FaUserCircle } from "react-icons/fa";
 
 function LoginPage() {
     const location = useLocation();
@@ -23,23 +24,25 @@ function LoginPage() {
     return (
         <>
             { !user &&
-                <>
+                <LoginContent>
                     <HeaderImage src={hotel} alt="imagen header del panel del hotel" />
 
-                    <LoginInfo>
-                        <AuthStatus />
-                    </LoginInfo>
+                    <LoginContainer>
+                        <UserIcon />
 
-                    <div>
+                        <LoginInfo>
+                            <AuthStatus />
+                        </LoginInfo>
+
                         <Form method="post"  style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
                             <Input type="text" name="username" value={username}
-                                placeholder="Your username"
+                                placeholder="init.dev"
                                 onChange={(e) => setUsername(e.target.value)}/>
 
                             <Input type="password" name="password" value={password}
-                                placeholder="Your password"
+                                placeholder="12345"
                                 onChange={(e) => setPassword(e.target.value)}/>
 
                             <Button type="submit" disabled={isLoggingIn}>
@@ -51,20 +54,33 @@ function LoginPage() {
                                 <p style={{ color: "red" }}>{actionData.error}</p>
                                 ) : null}
                         </Form>
-                    </div>
-                </>
+                    </LoginContainer>
+                </LoginContent>
             }
         </>
     );
 }
 
+const LoginContent = styled.div`
+    text-align: center;
+    display: flex;
+    align-items: center;
+`
+
 const HeaderImage = styled.img`
-    height: 300px;
-    width: 1000px;
-    margin-top: -5rem;
-    margin-bottom: 1rem;
+    height: 100vh;
+    width: 50%;
     object-fit: cover;
     object-position: bottom;
+`
+
+const LoginContainer = styled.div`
+    width: 50%;
+`
+
+const UserIcon = styled(FaUserCircle)`
+    font-size: 50px;
+    margin-bottom: 1rem;
 `
 
 const LoginInfo = styled.div`
@@ -76,9 +92,10 @@ const LoginInfo = styled.div`
 const Input = styled.input`
     background-color: ${({ theme }) => theme.contentBg};
     color: ${({ theme }) => theme.text};
-    width: 350px;
+    width: 300px;
     padding: 0.5rem;
-    box-shadow: 0px 1px 6px #444444;
+    border: 2px solid #188669;
+    border-radius: 0.5rem;
     z-index: 1;
     display: block;
     margin: 1rem auto 2rem auto;
@@ -87,9 +104,14 @@ const Input = styled.input`
 const Button = styled.button`
     background-color: ${({ theme }) => theme.contentBg};
     color: ${({ theme }) => theme.text};
-    box-shadow: 0px 1px 6px black;
-    margin-bottom: 1rem;
+    box-shadow: 1px 1px 2px black;
     width: 150px;
+    border: unset;
+    margin-bottom: 2rem;
+
+    &:hover {
+        filter: brightness(90%);
+    }
 `
 
 export default LoginPage;

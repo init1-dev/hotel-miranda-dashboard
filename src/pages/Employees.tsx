@@ -1,18 +1,30 @@
 import styled from "styled-components";
 import Table from "../components/Table/Table";
 import employeesData from "../Data/employees.json";
-import { usersTable } from "../helpers/Headers/usersHeaders";
+import { usersTable } from "../helpers/Headers/employeesHeaders";
+import { Outlet, useLocation } from "react-router-dom";
+import { employees } from "../helpers/Tabs/tabs";
 
 function Employees() {
+    const location=useLocation().pathname;
     
     return (
         <>
-            <TabsContent>
-                <Tab>All Employee</Tab>
-                <Tab>Active Employee</Tab>
-                <Tab>Inactive Employee</Tab>
-            </TabsContent>
-            <Table columns={usersTable} data={employeesData} path="/employees" />
+            {
+                location === "/dashboard/employees"
+                    ?    <>
+                            <TabsContent>
+                                { 
+                                    employees.map((item, index) => (
+                                        <Tab key={index}>{item}</Tab>
+                                    )) 
+                                }
+                            </TabsContent>
+                            <Table columns={usersTable} data={employeesData} />
+                        </>
+                    : <Outlet />
+            
+            }
         </>
     );
 }

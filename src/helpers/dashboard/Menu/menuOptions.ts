@@ -6,11 +6,20 @@ import { IoPersonOutline } from "react-icons/io5";
 import { Dashboard, Bookings, Rooms, Contact, Users } from "../../../pages/pages-module";
 
 export const RouterMenuOptions = [
-    { path: '', component: Dashboard },
-    { path: 'bookings', component: Bookings },
-    { path: 'rooms', component: Rooms },
-    { path: 'messages', component: Contact },
-    { path: 'employees', component: Users }
+    { path: '', component: Dashboard, children: [] },
+    { path: 'bookings', component: Bookings, children: [
+        { path: ':id', Component: Bookings },
+        { path: 'edit/:id', Component: Bookings }
+    ] },
+    { path: 'rooms', component: Rooms, children: [
+        { path: ':id', Component: Rooms },
+        { path: 'edit/:id', Component: Rooms }
+    ] },
+    { path: 'messages', component: Contact, children: [] },
+    { path: 'employees', component: Users, children: [
+        { path: ':id', Component: Users },
+        { path: 'edit/:id', Component: Users }
+    ]}
 ];
 
 export const menuOptions = [

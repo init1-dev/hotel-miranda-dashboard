@@ -33,8 +33,19 @@ const router = createBrowserRouter([
                 children: RouterMenuOptions.map(option => ({
                     path: option.path,
                     loader: () => null,
-                    Component: option.component
+                    Component: option.component,
+                    children: option.children
                 }))
+            },
+            {
+                path: "*",
+                async loader() {
+                    if (fakeAuthProvider.isAuthenticated) {
+                        return redirect("/dashboard");
+                    } else {
+                        return redirect("/login");
+                    }
+                }
             }
         ]
     },
@@ -44,16 +55,6 @@ const router = createBrowserRouter([
             await fakeAuthProvider.signout();
             
             return redirect("/login");
-        }
-    },
-    {
-        path: "/*",
-        async loader() {
-            if (fakeAuthProvider.isAuthenticated) {
-                return redirect("/dashboard");
-            } else {
-                return redirect("/login");
-            }
         }
     }
 ])

@@ -6,8 +6,8 @@ function Layout() {
     const { user } = useRouteLoaderData("root") as { user: string | null };
     const { theme, handleToggleTheme } = useTheme();
     const location = useLocation();
-    const isDashboard = location.pathname.match("/^/dashboard(?:/|$)/");
-    const isLogin = location.pathname.match("/^/login(?:/|$)/");
+    const isDashboard = /\/dashboard(?:\/|$)/.test(location.pathname);
+    const isLogin = /\/login(?:\/|$)/.test(location.pathname);
 
     return (
         <>

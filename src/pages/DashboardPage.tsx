@@ -1,18 +1,38 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { SideBarComponent } from "../components/Dashboard/Menu/SideBarComponent";
 import { TopbarComponent } from "../components/Dashboard/Menu/TopbarComponent";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const DashboardPage = () => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
+    const currentLocation = useLocation().pathname;
+    const prevLocationRef = useRef("");
+    const nextLocationRef = useRef("");
+    const firstMount = useRef(true);
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
+    useEffect(() => {
+        if(firstMount.current){
+            firstMount.current = false;
+            return;
+        }
+        prevLocationRef.current = nextLocationRef.current;
+        nextLocationRef.current = currentLocation;
+
+        localStorage.setItem('__path__handler__', JSON.stringify({
+            prevPath: prevLocationRef.current === "" ? currentLocation : prevLocationRef.current,
+            currentPath: nextLocationRef.current
+        }));
+    }, [currentLocation])
+
+    
+
     return (
-        <div className="dashboard-container">
+        <div>
 
             {sidebarVisible
                 ? <SideBarContainer>
@@ -48,21 +68,6 @@ export const DashboardPage = () => {
     )
 
 }
-
-const Content = styled.div`
-    padding: 1rem 1.5rem 0 1.5rem;
-    width: calc(100% - 16rem);
-    position: fixed;
-    top: 105px;
-    left: 16rem;
-    margin-left: auto;
-    margin-right: auto;
-`
-
-const ContentMax = styled(Content)`
-    width: 100%;
-    left: unset;
-`
 
 const TopBarContainer = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
@@ -100,4 +105,16 @@ const SideBarContainer = styled.div`
 
 const SideBarContainerMax = styled(SideBarContainer)`
     display: none;
+`
+
+const Content = styled.div`
+    position: fixed;
+    top: 100px;
+    padding: 1rem 1.5rem 0 1.5rem;
+    margin-left: 260px;
+    margin-right: auto;
+`
+
+const ContentMax = styled(Content)`
+    margin-left: unset;
 `

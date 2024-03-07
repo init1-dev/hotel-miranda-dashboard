@@ -2,17 +2,28 @@ import styled from "styled-components";
 import Table from "../components/Table/Table";
 import roomsData from '../Data/rooms.json';
 import { roomsHeaders } from "../helpers/Headers/roomsHeaders";
+import { Outlet, useLocation } from "react-router-dom";
+import { rooms } from "../helpers/Tabs/tabs";
 
 function Rooms() {
+    const location=useLocation().pathname;
     
     return (
         <>
-            <TabsContent>
-                <Tab>All Rooms</Tab>
-                <Tab>Available Rooms</Tab>
-                <Tab>Unavailable Rooms</Tab>
-            </TabsContent>
-            <Table columns={roomsHeaders} data={roomsData} path="/rooms"/>
+            {
+                location === "/dashboard/rooms"
+                    ?   <>
+                            <TabsContent>
+                                { 
+                                    rooms.map((item, index) => (
+                                        <Tab key={index}>{item}</Tab>
+                                    )) 
+                                }
+                            </TabsContent>
+                            <Table columns={roomsHeaders} data={roomsData} />
+                        </>
+                    : <Outlet />
+            }
         </>
     );
 }

@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 type Column = {
@@ -15,30 +15,30 @@ type Data = {
 type TableProps = {
     columns: Column[];
     data: Data[];
-    path: string;
 };
 
-const Table = ({ columns, data, path }:TableProps) => {
-    const selectedData = data.slice(0, 10);
-    // const navigate = useNavigate();
+const Table = ({ columns, data }:TableProps) => {
+    const selectedData = data.slice(0, 8);
+    const navigate = useNavigate();
 
     const renderCellContent = (column: Column, row: Data) => {
+        const rowData = row[column.accessor];
+        
         if (column.type === 'image') {
-            return <Img src={row[column.accessor].toString()} alt="" />;
+            return <Img src={rowData.toString()} alt="" />;
         } else if (column.type === 'date') {
-            const formated = new Date(row[column.accessor].toString())
+            const formated = new Date(rowData.toString())
             return formated.toLocaleDateString('en-GB');
         } else if (column.type === 'bool') {
             const status = column.status ? column.status : ['Yes', 'No'];
-            return row[column.accessor] ? status[0] : status[1];
+            return rowData ? status[0] : status[1];
         } else if (column.type === 'currency') {
-            return `${row[column.accessor]}€`;
+            return rowData + "€";
         } else if (column.type === 'array') {
-            
-            const arrayFormat = row[column.accessor].join(", ");
+            const arrayFormat = Array.isArray(rowData) ? rowData.join(", ") : rowData;
             return arrayFormat;
         } else {
-            return row[column.accessor];
+            return rowData;
         }
     };
 
@@ -56,8 +56,9 @@ const Table = ({ columns, data, path }:TableProps) => {
                 <tbody>
                     {selectedData.map((row, rowIndex) => (
                         <tr onClick={(e) => {
+                            const rowPath = `${row.id}`;
                             e.stopPropagation();
-                            // navigate(`${path}/${row.id}`)
+                            navigate(rowPath)
                         }} key={rowIndex}>
                             {columns.map((column, colIndex) => (
                                 <TableRow key={colIndex}>
@@ -77,16 +78,20 @@ const TableStyle = styled.table`
     text-align: center;
     padding: 0.5rem;
     border-radius: 0.5rem;
-    background-color: #202020;
+    background-color: ${({ theme }) => theme.menuBox};
 
     thead {
-        background-color: #202020;
+        
+    }
+
+    td {
+        padding: 0 1rem 0 1rem;
     }
 `
 
 const Img = styled.img`
     max-width: 100px;
-    max-height: 60px;
+    height: auto;
 `
 
 const TableRow = styled.td`
