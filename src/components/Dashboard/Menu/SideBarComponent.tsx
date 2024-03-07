@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import AuthStatus from "../../../helpers/login/authStatus";
@@ -13,29 +13,42 @@ export const SideBarComponent = () => {
         : "/dashboard/" + location.split("/")[2];
     const [active, setActive] = useState(path);
 
+    useEffect(() => {
+        setActive(location);
+    }, [location])
+    
+
     return (
             <>
-                <Imagen src={travl} alt="imagen del logotipo" />
+                <div>
+                    <ImageButton to={"/dashboard"}>
+                        <Imagen src={travl} alt="imagen del logotipo" />
+                    </ImageButton>
 
-                <Lista>
-                    {menuOptions.map((option, index) => (
-                        <MenuOption
-                            key={index}
-                            to={option.to}
-                            className={active === option.to ? "activated" : ""}
-                            onClick={() => setActive(option.to)}
-                        >
-                            {React.createElement(option.icon)}
-                            <Texto>{option.text}</Texto>
-                        </MenuOption>
-                    ))}
-                </Lista>
+                    <Lista>
+                        {menuOptions.map((option, index) => (
+                            <MenuOption
+                                key={index}
+                                to={option.to}
+                                className={active === option.to ? "activated" : ""}
+                                onClick={() => setActive(option.to)}
+                            >
+                                {React.createElement(option.icon)}
+                                <Texto>{option.text}</Texto>
+                            </MenuOption>
+                        ))}
+                    </Lista>
+                </div>
                 
                 <AuthStatus />
             </>
     )
 
 }
+
+const ImageButton = styled(NavLink)`
+    display: flex;
+`
 
 const Imagen = styled.img`
     width: 85%;
@@ -48,6 +61,7 @@ const Lista = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
     margin-bottom: 3rem;
     margin-left: 1rem;
 `

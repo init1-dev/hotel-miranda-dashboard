@@ -3,7 +3,7 @@ import { MdOutlineMessage } from "react-icons/md";
 import { CiBellOn } from "react-icons/ci";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Logout from "../../Logout/Logout";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
@@ -39,23 +39,23 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
 
     return (
         <>
-            <RoutePath>
+            <RoutePath onClick={toggleSidebar}>
                 { visible
-                    ? <ArrowLeft onClick={toggleSidebar} />
-                    : <ArrowRight onClick={toggleSidebar} />
+                    ? <ArrowLeft />
+                    : <ArrowRight />
                 }
                 <Location>{title(location)}</Location>
             </RoutePath>
 
             <TopbarContainer>
-                <MenuIcon>
+                <MenuIcon to={'/dashboard/messages'}>
                     <MenuIconAlert>
                         2
                     </MenuIconAlert>
                     <MdOutlineMessage />
                 </MenuIcon>
 
-                <MenuIcon>
+                <MenuIcon to={'/dashboard'}>
                     <MenuIconAlert>
                         87
                     </MenuIconAlert>
@@ -80,7 +80,7 @@ const TopbarContainer = styled.div`
     align-items: center;
 `
 
-const MenuIcon = styled.button`
+const MenuIcon = styled(NavLink)`
     position: relative;
     display: flex;
     color: ${({ theme }) => theme.iconsColor};
@@ -121,12 +121,10 @@ const MenuIconAlert = styled.p`
 
 const ArrowLeft = styled(FaArrowLeft)`
     font-size: 25px;
-    cursor: pointer;
 `
 
 const ArrowRight = styled(FaArrowRight)`
     font-size: 25px;
-    cursor: pointer;
 `
 
 const ButtonTopbar = styled.button`
@@ -152,6 +150,7 @@ const RoutePath = styled.div`
     display: flex;
     align-items: center;
     gap: 2rem;
+    cursor: pointer;
 `
 
 const Location = styled.p`

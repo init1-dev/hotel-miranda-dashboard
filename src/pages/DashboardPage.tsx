@@ -93,6 +93,7 @@ const SideBarContainer = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     position: fixed;
     width: 16rem;
     height: 100%;
@@ -108,6 +109,7 @@ const SideBarContainerMax = styled(SideBarContainer)`
 `
 
 const Content = styled.div`
+    width: calc(100% - 260px);
     position: fixed;
     top: 100px;
     padding: 1rem 1.5rem 0 1.5rem;
@@ -117,4 +119,5 @@ const Content = styled.div`
 
 const ContentMax = styled(Content)`
     margin-left: unset;
+    width: 100%;
 `

@@ -11,8 +11,8 @@ function AuthStatus() {
 
     return (
         <Container>
-            <ProfileImage src={init} alt="imagen de perfil" />
             <UserContainer>
+                <ProfileImage src={init} alt="imagen de perfil" />
                 <ProfileName>{user}</ProfileName>
                 <ProfileEmail>{email}</ProfileEmail>
                 <Button type="submit">
@@ -29,22 +29,31 @@ function AuthStatus() {
 }
 
 const Container = styled.div`
-position: relative;
     width: 100%;
     padding: 0 2rem 0 2rem;
+    margin-bottom: 4rem;
 `
 
 const UserContainer = styled.div`
+    position: relative;
     background-color: ${({ theme }) => theme.menuBox};
     box-shadow: 0px 20px 30px #00000014;
     padding: 3rem 1rem 1rem 1rem;
     border-radius: 1rem;
     margin-bottom: 3rem;
     text-align: center;
+    transition: scale 0.1s ease-in-out;
+
+    &:hover {
+        scale: 1.06;
+    }
 `
 
 const Button = styled.button`
+    all: unset;
+    cursor: pointer;
     background-color: #EBF1EF;
+    border-radius: 0.5rem;
     color: #135846;
     font-size: 14px;
     margin-top: 1rem;
@@ -61,11 +70,11 @@ const Button = styled.button`
 
 const ProfileImage = styled.img`
     position: absolute;
-    width: 25%;
+    width: 32%;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
-    top: -32px;
-    left: 97px;
+    top: -31px;
+    left: 67px;
 `
 
 const ProfileName = styled.p`
