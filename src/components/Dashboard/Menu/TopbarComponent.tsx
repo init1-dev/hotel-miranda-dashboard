@@ -1,7 +1,7 @@
 import styled, { useTheme } from "styled-components";
 import { MdOutlineMessage } from "react-icons/md";
 import { CiBellOn } from "react-icons/ci";
-import { FaArrowLeft } from "react-icons/fa";
+import { RiMenuFoldLine } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { NavLink, useLocation } from "react-router-dom";
 import Logout from "../../Logout/Logout";
@@ -119,7 +119,7 @@ const MenuIconAlert = styled.p`
 
 `
 
-const ArrowLeft = styled(FaArrowLeft)`
+const ArrowLeft = styled(RiMenuFoldLine)`
     font-size: 25px;
 `
 

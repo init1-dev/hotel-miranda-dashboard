@@ -4,6 +4,7 @@ import { LuCalendarCheck2 } from "react-icons/lu";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
+import MessagesSlider from "../components/Dashboard/Messages/MessagesSlide";
 
 function Dashboard() {
     
@@ -53,7 +54,7 @@ function Dashboard() {
 
             <h2>CALENDARIO Y GRAFICOS</h2>
             <h2>BOOKINGS STATISTICS</h2>
-            <h2>MESSAGES SWIPER</h2>
+            <MessagesSlider />
         </>
     );
 }
