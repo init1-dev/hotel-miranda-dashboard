@@ -3,8 +3,8 @@ import { fakeAuthProvider } from "../AuthProvider";
 
 async function loginAction({ request }: LoaderFunctionArgs) {
     const formData = await request.formData();
-    const username = (formData.get("username") as string).trim().toLocaleLowerCase();
-    const password = (formData.get("password") as string).trim().toLocaleLowerCase();
+    const username = (formData.get("username") as string).trim().toLowerCase();
+    const password = (formData.get("password") as string).trim().toLowerCase();
 
     if (!username || !password) {
         return {

@@ -2,8 +2,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { messages } from "../helpers/Tabs/tabs";
 import messagesData from '../Data/messages.json';
-import Table from "../components/Table/Table";
-import { messagesHeaders } from "../helpers/Headers/messagesHeaders";
+import Table, { Data } from "../components/Table/Table";
+import MessagesSlider from "../components/Dashboard/Messages/MessagesSlide";
 
 function Messages() {
     const location=useLocation().pathname;
@@ -13,6 +13,7 @@ function Messages() {
             {
                 location === "/dashboard/messages"
                     ?   <>
+                            <MessagesSlider />
                             <TabsContent>
                                 { 
                                     messages.map((item, index) => (
@@ -28,10 +29,46 @@ function Messages() {
     );
 }
 
+const messagesHeaders = [
+    {
+        'label': 'ID',
+        'value': 'id'
+    },
+    {
+        'label': 'Date',
+        'value': 'date'
+    },
+    {
+        'label': 'Customer',
+        display: (row: Data) => String(row.full_name)
+    },
+    {
+        'label': 'Email',
+        'value': 'email'
+    },
+    {
+        'label': 'Phone',
+        'value': 'phone'
+    },
+    {
+        'label': 'Subject',
+        'value': 'subject'
+    },
+    {
+        'label': 'Comment',
+        'value' : 'message',
+    },
+    {
+        'label': 'Archived',
+        'value' : 'archived',
+    }
+];
+
 const TabsContent = styled.div`
     display: flex;
     padding: 0 1rem 0 1rem;
     gap: 5rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
 `
 

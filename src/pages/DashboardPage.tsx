@@ -83,6 +83,7 @@ const TopBarContainer = styled.div`
     padding-left: 18rem;
     box-shadow: 0px 3px 10px #00000005;
     user-select: none;
+    z-index: 1;
 `
 
 const TopBarContainerMax = styled(TopBarContainer)`
@@ -100,7 +101,7 @@ const SideBarContainer = styled.div`
     top: 0;
     left: 0;
     box-shadow: -3px 5px 15px black;
-    z-index: 1;
+    z-index: 2;
     user-select: none;
 `
 
@@ -110,9 +111,10 @@ const SideBarContainerMax = styled(SideBarContainer)`
 
 const Content = styled.div`
     width: calc(100% - 260px);
-    position: fixed;
+    position: absolute;
+    overflow-y: auto;
     top: 100px;
-    padding: 1rem 1.5rem 0 1.5rem;
+    padding: 1rem 1.5rem 2rem 1.5rem;
     margin-left: 260px;
     margin-right: auto;
 `

@@ -5,6 +5,7 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import MessagesSlider from "../components/Dashboard/Messages/MessagesSlide";
+import Calendar from "../components/Calendar/Calendar";
 
 function Dashboard() {
     
@@ -52,8 +53,9 @@ function Dashboard() {
                 </ButtonContent>
             </ButtonsContainer>
 
-            <h2>CALENDARIO Y GRAFICOS</h2>
-            <h2>BOOKINGS STATISTICS</h2>
+            {/* <h2>CALENDARIO Y GRAFICOS</h2> */}
+            <Calendar />
+            {/* <h2>BOOKINGS STATISTICS</h2> */}
             <MessagesSlider />
         </>
     );
@@ -65,7 +67,7 @@ const ButtonsContainer = styled.div`
     gap: 1.5rem;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 `
 
 const ButtonContent = styled(NavLink)`

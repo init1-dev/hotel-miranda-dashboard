@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Table from "../components/Table/Table";
 import employeesData from "../Data/employees.json";
-import { usersTable } from "../helpers/Headers/employeesHeaders";
 import { Outlet, useLocation } from "react-router-dom";
 import { employees } from "../helpers/Tabs/tabs";
 
@@ -28,6 +27,41 @@ function Employees() {
         </>
     );
 }
+
+const usersTable = [
+    {
+        'label': 'Image',
+        'value': 'photo'
+    },
+    {
+        'label': 'Full Name',
+        'value': 'fullname'
+    },
+    {
+        'label': 'ID',
+        'value': 'employee_id'
+    },
+    {
+        'label': 'Email',
+        'value': 'email'
+    },
+    {
+        'label': 'Start Date',
+        'value': 'start_date'
+    },
+    {
+        'label': 'Description',
+        'value': 'description'
+    },
+    {
+        'label': 'Phone',
+        'value': 'phone'
+    },
+    {
+        'label': 'Status',
+        'value' : 'status'
+    }
+];
 
 const TabsContent = styled.div`
     display: flex;

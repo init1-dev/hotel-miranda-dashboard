@@ -66,6 +66,10 @@ const Button = styled.button`
         color: white;
         background-color: #0e4234;
     }
+
+    &:focus, &:focus-visible {
+        outline: unset;
+    }
 `
 
 const ProfileImage = styled.img`

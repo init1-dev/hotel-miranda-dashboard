@@ -1,15 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 type Column = {
-    header: string;
-    type: string;
-    accessor: string;
-    status?: string[] | undefined;
+    label: string;
+    value?: string;
+    display?: ((row: Data) => string);
 };
 
-type Data = {
-    [key: string]: string | number | boolean | string[];
+export type Data = {
+    [key: string]: string | number | boolean | Array<string>;
 };
 
 type TableProps = {
@@ -18,29 +17,9 @@ type TableProps = {
 };
 
 const Table = ({ columns, data }:TableProps) => {
-    const selectedData = data.slice(0, 20);
+    const selectedData = data.slice(0, 12);
     const navigate = useNavigate();
-
-    const renderCellContent = (column: Column, row: Data) => {
-        const rowData = row[column.accessor];
-        
-        if (column.type === 'image') {
-            return <Img src={rowData.toString()} alt="" />;
-        } else if (column.type === 'date') {
-            const formated = new Date(rowData.toString())
-            return formated.toLocaleDateString('en-GB');
-        } else if (column.type === 'bool') {
-            const status = column.status ? column.status : ['Yes', 'No'];
-            return rowData ? status[0] : status[1];
-        } else if (column.type === 'currency') {
-            return rowData + "€";
-        } else if (column.type === 'array') {
-            const arrayFormat = Array.isArray(rowData) ? rowData.join(", ") : rowData;
-            return arrayFormat;
-        } else {
-            return rowData.toString().slice(0, 100);
-        }
-    };
+    const isMessages = useLocation().pathname === "/dashboard/messages";
 
     return (
         <div>
@@ -48,7 +27,7 @@ const Table = ({ columns, data }:TableProps) => {
                 <thead>
                     <tr>
                     {columns.map((column, index) => (
-                        <th key={index}>{column.header}</th>
+                        <th key={index}>{column.label}</th>
                     ))}
                     </tr>
                 </thead>
@@ -56,14 +35,16 @@ const Table = ({ columns, data }:TableProps) => {
                 <tbody>
                     {selectedData.map((row, rowIndex) => (
                         <tr onClick={(e) => {
-                            const rowPath = `${row.id}`;
-                            e.stopPropagation();
-                            navigate(rowPath)
+                            if(!isMessages) {
+                                const rowPath = `${row.id}`;
+                                e.stopPropagation();
+                                navigate(rowPath)
+                            }
                         }} key={rowIndex}>
                             {columns.map((column, colIndex) => (
-                                <TableRow key={colIndex}>
-                                    {renderCellContent(column, row)}
-                                </TableRow>
+                                <td key={colIndex}>
+                                    {column.value && row[column.value] ? row[column.value] : (column.display ? column.display(row) : "")}
+                                </td>
                             ))}
                         </tr>
                     ))}
@@ -74,45 +55,40 @@ const Table = ({ columns, data }:TableProps) => {
 };
 
 const TableStyle = styled.table`
-    display: block;
     width: 100%;
-    height: 78vh;
+    height: 74vh;
+    font-size: 14px;
     overflow-y: auto;
     text-align: center;
     padding: 0.5rem;
     border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.menuBox};
-
-    &::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: none;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: ${({ theme }) => theme.menuText};
-        border-radius: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+    cursor: zoom-in;
 
     th {
         padding-bottom: 1rem;
     }
-`
 
-const Img = styled.img`
-    max-width: 100px;
-    height: auto;
-`
+    thead {
+        /* text-align: left; */
+    }
 
-const TableRow = styled.td`
-    font-size: 12px;
-    line-height: 25px;
+    tbody{
+        /* text-align: left; */
+
+        tr{
+            filter: grayscale(0.5);
+            transition: filter 0.2s ease;
+            height: 40px;
+            line-height: 20px;
+        }
+
+        tr:hover {
+            filter: grayscale(0);
+            box-shadow: 0px 0px 3px ${({ theme }) => theme.iconsColor};
+            border-radius: 0.5rem;
+        }
+    }
 `
 
 export default Table;
