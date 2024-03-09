@@ -123,5 +123,8 @@ const RoutePath = styled.div`
     display: flex;
     align-items: center;
     gap: 2rem;
-    cursor: pointer;
+
+    svg {
+        cursor: pointer;
+    }
 `
