@@ -32,7 +32,7 @@ function Dashboard() {
                     </ButtonTextContainer>
                 </ButtonContent>
 
-                <ButtonContent to={'/dashboard/rooms'}>
+                <ButtonContent to={'/dashboard/bookings'}>
                     <ButtonImage>
                         <RiLoginBoxLine />
                     </ButtonImage>
@@ -42,7 +42,7 @@ function Dashboard() {
                     </ButtonTextContainer>
                 </ButtonContent>
 
-                <ButtonContent to={'/dashboard/rooms'}>
+                <ButtonContent to={'/dashboard/bookings'}>
                     <ButtonImage>
                         <RiLogoutBoxLine />
                     </ButtonImage>
