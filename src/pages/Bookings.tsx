@@ -1,21 +1,22 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { bookings } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
 import bookingsData from '../Data/bookings.json';
 import { format } from "date-fns";
-import { ActionButton, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
+import { ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
 import Swal from 'sweetalert2'
 import withReactContent from "sweetalert2-react-content";
 import { MessageText, MessageTitle } from "../styled/Message";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { TiArrowUnsorted } from "react-icons/ti";
+import { action } from "../helpers/action";
 
 const MySwal = withReactContent(Swal)
 
 function Bookings() {
     const location=useLocation().pathname;
-    
+    const navigate = useNavigate();
     
     return (
         <>
@@ -28,7 +29,7 @@ function Bookings() {
                                     ROOM ORDER
                                 </NewButton>
                             </TabsComponent>
-                            <Table columns={bookingsHeaders} data={bookingsData} />
+                            <Table columns={bookingsHeaders} data={bookingsData} action={action(navigate)}/>
                         </>
                     : <Outlet />
             }

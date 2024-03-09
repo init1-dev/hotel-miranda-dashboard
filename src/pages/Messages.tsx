@@ -4,7 +4,7 @@ import messagesData from '../Data/messages.json';
 import Table, { Data } from "../components/Table/Table";
 // import MessagesSlider from "../components/Dashboard/Messages/MessagesSlide";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { ActionButton, Archive, ButtonContainer, NewButton, Publish } from "../styled/Button";
+import { Archive, ButtonContainer, NewButton, Publish } from "../styled/Button";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { format } from "date-fns";
 import { CiMail } from "react-icons/ci";
@@ -30,6 +30,27 @@ const messageStars = (row: number) => {
 
 function Messages() {
     const location=useLocation().pathname;
+    const action = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
+        e.stopPropagation()
+        return (
+            MySwal.fire({
+                title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+                html: (
+                    <>
+                        <MessageText><strong>Email:</strong> {row.email}</MessageText>
+                        <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
+                        <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
+                        <MessageText><strong>Rating:</strong> { messageStars(Number(row.stars)) }</MessageText>
+                        <br />
+                        <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
+                        <br />
+                        <MessageText><strong>Message:</strong> {row.message}</MessageText>
+                    </>
+                ),
+                showConfirmButton: false
+            })
+        )
+    }
 
     return (
         <>
@@ -44,7 +65,7 @@ function Messages() {
                                     MESSAGE ORDER
                                 </NewButton>
                             </TabsComponent>
-                            <Table columns={messagesHeaders} data={messagesData} />
+                            <Table columns={messagesHeaders} data={messagesData} action={action}/>
                         </>
                     : <Outlet />
             }
@@ -93,9 +114,9 @@ const messagesHeaders = [
                     </p>
     
                     <h3>
-                        {messageStars(row.stars)} / <SmallText>
-                                    {String(row.subject).slice(0,30)}..
-                                </SmallText>
+                        {messageStars(Number(row.stars))} / <SmallText>
+                                                        {String(row.subject).slice(0,30)}..
+                                                    </SmallText>
                     </h3>
     
                     <Message>
@@ -108,44 +129,20 @@ const messagesHeaders = [
     {
         'label': 'Actions',
         display : (row: Data) => {
-            const MsgButton = (
-                <ActionButton onClick={(event) => {
-                    event.stopPropagation()
-                    return (
-                        MySwal.fire({
-                            title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
-                            html: (
-                                <>
-                                    <MessageText><strong>Email:</strong> {row.email}</MessageText>
-                                    <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
-                                    <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
-                                    <MessageText><strong>Rating:</strong> { messageStars(row.stars) }</MessageText>
-                                    <br />
-                                    <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
-                                    <br />
-                                    <MessageText><strong>Message:</strong> {row.message}</MessageText>
-                                </>
-                            ),
-                            showConfirmButton: false
-                        })
-                    )
-                }}>
-                    Message
-                </ActionButton>
-            )
-
             if (row.archived === false) {
                 return (
                     <ButtonContainer>
-                        {MsgButton}
-                        <Publish>Archive</Publish>
+                        <Publish onClick={(e) => {
+                            e.stopPropagation()
+                        }}>Archive</Publish>
                     </ButtonContainer>
                 )
             } else {
                 return (
                     <ButtonContainer>
-                        {MsgButton}
-                        <Archive>Publish</Archive>
+                        <Archive onClick={(e) => {
+                            e.stopPropagation()
+                        }}>Publish</Archive>
                     </ButtonContainer>
                 )
             }

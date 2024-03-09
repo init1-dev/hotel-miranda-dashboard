@@ -1,6 +1,6 @@
 import Table, { Data } from "../components/Table/Table";
 import employeesData from "../Data/employees.json";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { employees } from "../helpers/Tabs/tabs";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { NewButton } from "../styled/Button";
@@ -11,11 +11,13 @@ import styled from "styled-components";
 import { format } from "date-fns";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
 import { FaPlus } from "react-icons/fa";
+import { action } from "../helpers/action";
 
 const MySwal = withReactContent(Swal)
 
 function Employees() {
     const location=useLocation().pathname;
+    const navigate = useNavigate();
     
     return (
         <>
@@ -28,7 +30,7 @@ function Employees() {
                                         NEW EMPLOYEE
                                     </NewButton>
                                 </TabsComponent>
-                            <Table columns={usersTable} data={employeesData} />
+                            <Table columns={usersTable} data={employeesData} action={action(navigate)} />
                         </>
                     : <Outlet />
             
@@ -49,7 +51,7 @@ const usersTable = [
                             title: <MessageTitle>Employee #{row.employee_id}</MessageTitle>,
                             html: (
                                 <>
-                                    <img src={row.photo} alt="imagen de la habitacion" />
+                                    <img src={String(row.photo)} alt="imagen de la habitacion" />
                                     <MessageText><strong>Name:</strong> {row.fullname}</MessageText>
                                     <MessageText><strong>Email:</strong> {row.email}</MessageText>
                                     <MessageText><strong>Phone:</strong> {row.phone}</MessageText>

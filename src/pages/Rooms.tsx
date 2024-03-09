@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Table, { Data } from "../components/Table/Table";
 import roomsData from '../Data/rooms.json';
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { rooms } from "../helpers/Tabs/tabs";
 import { ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
 import { MessageTitle } from "../styled/Message";
@@ -10,11 +10,13 @@ import Swal from "sweetalert2";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { FaPlus } from "react-icons/fa";
+import { action } from "../helpers/action";
 
 const MySwal = withReactContent(Swal)
 
 function Rooms() {
     const location=useLocation().pathname;
+    const navigate = useNavigate();
     
     return (
         <>
@@ -27,7 +29,7 @@ function Rooms() {
                                     NEW ROOM
                                 </NewButton>
                             </TabsComponent>
-                            <Table columns={roomsHeaders} data={roomsData} />
+                            <Table columns={roomsHeaders} data={roomsData} action={action(navigate)}/>
                         </>
                     : <Outlet />
             }
@@ -45,7 +47,7 @@ const roomsHeaders = [
                     return (
                         MySwal.fire({
                             title: <MessageTitle>Room #{row.room_number}: {row.room_type}</MessageTitle>,
-                            html: <ImagePreview src={row.photo} alt="imagen de la habitacion" />,
+                            html: <ImagePreview src={String(row.photo)} alt="imagen de la habitacion" />,
                             width: 1000,
                             showConfirmButton: false
                         })
@@ -67,9 +69,12 @@ const roomsHeaders = [
         display: (row: Data) => row.amenities ?
             <ButtonStyledViewNotes onClick={(event) => {
                 event.stopPropagation()
+                const amenitiesArray = Array.isArray(row.amenities) 
+                    ? row.amenities 
+                    : [String(row.amenities)];
                 const htmlCode = (
                     <ul>
-                        {row.amenities.map((amenity: string, i:number) =>{
+                        {amenitiesArray.map((amenity: string, i:number) =>{
                             return <li key={i}>
                                     <small>{amenity}</small>
                                 </li>

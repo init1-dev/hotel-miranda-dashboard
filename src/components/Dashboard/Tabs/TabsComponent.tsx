@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export interface SectionData {
     label: string;
-    accessor: string;
+    accessor?: string;
+    display?: () => void;
 }
 
 export interface TabsProps  {

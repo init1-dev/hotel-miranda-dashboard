@@ -1,10 +1,10 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 type Column = {
     label: string;
     value?: string;
-    display?: ((row: Data) => string);
+    display?: ((row: Data) => string | ReactNode);
 };
 
 export type Data = {
@@ -14,12 +14,11 @@ export type Data = {
 type TableProps = {
     columns: Column[];
     data: Data[];
+    action: (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => void
 };
 
-const Table = ({ columns, data }:TableProps) => {
+const Table = ({ columns, data, action }:TableProps) => {
     const selectedData = data.slice(0, 10);
-    const navigate = useNavigate();
-    const isMessages = useLocation().pathname === "/dashboard/messages";
 
     return (
         <div>
@@ -35,11 +34,7 @@ const Table = ({ columns, data }:TableProps) => {
                 <tbody>
                     {selectedData.map((row, rowIndex) => (
                         <tr onClick={(e) => {
-                            if(!isMessages) {
-                                const rowPath = `${row.id}`;
-                                e.stopPropagation();
-                                navigate(rowPath)
-                            }
+                            action(e, row);
                         }} key={rowIndex}>
                             {columns.map((column, colIndex) => (
                                 <td key={colIndex}>
