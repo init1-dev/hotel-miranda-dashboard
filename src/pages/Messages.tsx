@@ -99,7 +99,7 @@ const messagesHeaders = [
                     </h3>
     
                     <Message>
-                        {String(row.message).slice(0,150)}..
+                        {String(row.message).slice(0,50)}..
                     </Message>
                 </>
             )

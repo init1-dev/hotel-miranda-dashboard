@@ -79,7 +79,6 @@ const TableStyle = styled.table`
         tr{
             filter: grayscale(0.5);
             transition: filter 0.2s ease;
-            height: 40px;
             line-height: 20px;
         }
 
