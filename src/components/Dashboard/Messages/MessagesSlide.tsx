@@ -57,6 +57,7 @@ const SwiperItem = styled(Swiper)`
     flex-direction: column-reverse;
     border-radius: 0.5rem;
     user-select: none;
+    z-index: 0;
 
     .swiper-button-prev, .swiper-button-next {
         position: absolute;

@@ -3,11 +3,13 @@ import Table, { Data } from "../components/Table/Table";
 import roomsData from '../Data/rooms.json';
 import { Outlet, useLocation } from "react-router-dom";
 import { rooms } from "../helpers/Tabs/tabs";
-import { ButtonStyledViewNotes, ButtonStyledViewNotesDisabled } from "../styled/Button";
+import { ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
 import { MessageTitle } from "../styled/Message";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
+import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
+import { FaPlus } from "react-icons/fa";
 
 const MySwal = withReactContent(Swal)
 
@@ -18,14 +20,13 @@ function Rooms() {
         <>
             {
                 location === "/dashboard/rooms"
-                    ?   <>
-                            <TabsContent>
-                                { 
-                                    rooms.map((item, index) => (
-                                        <Tab key={index}>{item}</Tab>
-                                    )) 
-                                }
-                            </TabsContent>
+                    ?   <>  
+                            <TabsComponent section={rooms}>
+                                <NewButton>
+                                    <FaPlus />
+                                    NEW ROOM
+                                </NewButton>
+                            </TabsComponent>
                             <Table columns={roomsHeaders} data={roomsData} />
                         </>
                     : <Outlet />
@@ -44,14 +45,15 @@ const roomsHeaders = [
                     return (
                         MySwal.fire({
                             title: <MessageTitle>Room #{row.room_number}: {row.room_type}</MessageTitle>,
-                            html: <img src={row.photo} alt="imagen de la habitacion" />,
+                            html: <ImagePreview src={row.photo} alt="imagen de la habitacion" />,
+                            width: 1000,
                             showConfirmButton: false
                         })
                     )
                 }}/>
                 <SpanContainer>
-                    <p>#{row.id}</p>
-                    <p>Nº{row.room_number}</p>
+                    <h4>{row.name} Nº{row.room_number}</h4>
+                    <small>#{row.id}</small>
                 </SpanContainer>
             </Container>
         }
@@ -68,7 +70,9 @@ const roomsHeaders = [
                 const htmlCode = (
                     <ul>
                         {row.amenities.map((amenity: string, i:number) =>{
-                            return <li key={i}>{amenity}</li>
+                            return <li key={i}>
+                                    <small>{amenity}</small>
+                                </li>
                         })}
                     </ul>
                 )
@@ -115,19 +119,6 @@ const roomsHeaders = [
     },
 ];
 
-const TabsContent = styled.div`
-    display: flex;
-    padding: 0 1rem 0 1rem;
-    gap: 5rem;
-    margin-bottom: 2rem;
-`
-
-const Tab = styled.button`
-    all: unset;
-    cursor: pointer;
-    color: ${({ theme }) => theme.text};
-`
-
 const Container = styled.div`
     display: flex;
     align-items: center;
@@ -141,11 +132,8 @@ const Imagen = styled.img`
     object-position: center;
 `
 
-const SpanContainer = styled.span`
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-left: 1rem;
+const ImagePreview = styled.img`
+    width: 100%;
 `
 
 const Night = styled.p`

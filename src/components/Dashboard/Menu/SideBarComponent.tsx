@@ -14,8 +14,8 @@ export const SideBarComponent = () => {
     const [active, setActive] = useState(path);
 
     useEffect(() => {
-        setActive(location);
-    }, [location])
+        setActive(path);
+    }, [path])
     
 
     return (

@@ -1,14 +1,15 @@
 import { Outlet, useLocation } from "react-router-dom";
-import styled from "styled-components";
 import { bookings } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
 import bookingsData from '../Data/bookings.json';
 import { format } from "date-fns";
-import { ActionButton, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled } from "../styled/Button";
-import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
+import { ActionButton, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
 import Swal from 'sweetalert2'
 import withReactContent from "sweetalert2-react-content";
 import { MessageText, MessageTitle } from "../styled/Message";
+import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
+import { TiArrowUnsorted } from "react-icons/ti";
 
 const MySwal = withReactContent(Swal)
 
@@ -20,14 +21,13 @@ function Bookings() {
         <>
             {
                 location === "/dashboard/bookings"
-                    ?   <>
-                            <TabsContent>
-                                { 
-                                    bookings.map((item, index) => (
-                                        <Tab key={index}>{item}</Tab>
-                                    )) 
-                                }
-                            </TabsContent>
+                    ?   <>  
+                            <TabsComponent section={bookings}>
+                                <NewButton>
+                                    <TiArrowUnsorted />
+                                    ROOM ORDER
+                                </NewButton>
+                            </TabsComponent>
                             <Table columns={bookingsHeaders} data={bookingsData} />
                         </>
                     : <Outlet />
@@ -36,16 +36,19 @@ function Bookings() {
     );
 }
 
-const actions = () => {
-    return <ActionButton>Action</ActionButton>
-}
-
 // display: (row: Data) => format( new Date(`${row.order_date}`), 'MMM do, yyyy HH:mm')
 
 const bookingsHeaders = [
     {
         'label': 'Guest Name',
-        display: (row: Data) => `${row.full_name} #${row.id}`
+        display: (row: Data) => {
+            return (
+                <SpanContainer>
+                    <h4>{row.full_name}</h4>
+                    <small>#{row.id}</small>
+                </SpanContainer>
+            )
+        }
     },
     {
         'label': 'Order Date',
@@ -90,24 +93,7 @@ const bookingsHeaders = [
                 return <SpanStyledInProgress>{row.status}</SpanStyledInProgress>
             }
         }
-    },
-    {
-        'label': 'Actions',
-        display: () => actions()
     }
 ];
-
-const TabsContent = styled.div`
-    display: flex;
-    padding: 0 1rem 0 1rem;
-    gap: 5rem;
-    margin-bottom: 2rem;
-`
-
-const Tab = styled.button`
-    all: unset;
-    cursor: pointer;
-    color: ${({ theme }) => theme.text};
-`
 
 export default Bookings;

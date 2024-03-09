@@ -5,12 +5,19 @@ export const SpanStyled = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #FFF;
+    color: ${({ theme }) => theme.text};
     background-color: #5AD07A;
     border-radius: 4rem;
     padding: 0.5rem;
     border: 0rem;
 `;
+
+export const SpanContainer = styled.span`
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 1rem;
+`
 
 export const SpanStyledCheckIn = styled(SpanStyled)`
     background-color: #5AD07A;

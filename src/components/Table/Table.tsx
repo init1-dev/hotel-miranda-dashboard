@@ -17,7 +17,7 @@ type TableProps = {
 };
 
 const Table = ({ columns, data }:TableProps) => {
-    const selectedData = data.slice(0, 12);
+    const selectedData = data.slice(0, 10);
     const navigate = useNavigate();
     const isMessages = useLocation().pathname === "/dashboard/messages";
 

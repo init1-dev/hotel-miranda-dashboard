@@ -3,48 +3,21 @@ import { MdOutlineMessage } from "react-icons/md";
 import { CiBellOn } from "react-icons/ci";
 import { RiMenuFoldLine } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logout from "../../Logout/Logout";
+import TitleComponent from "./TitleComponent";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
     const { theme, handleToggleTheme } = useTheme();
-    const location = useLocation().pathname;
-
-    const title = (location: string) => {
-        switch (true) {
-            case location.startsWith('/dashboard/bookings/edit/'):
-                return "Bookings / Edit Booking ";
-            case location.startsWith('/dashboard/bookings/'):
-                return "Bookings / View Booking";
-            case location.startsWith('/dashboard/bookings'):
-                return "Bookings";
-            case location.startsWith('/dashboard/rooms/edit/'):
-                return "Rooms / Edit Room";
-            case location.startsWith('/dashboard/rooms/'):
-                return "Rooms / View Room";
-            case location.startsWith('/dashboard/rooms'):
-                return "Rooms";
-            case location.startsWith('/dashboard/employees/edit/'):
-                return "Employees / Edit Employee";
-            case location.startsWith('/dashboard/employees/'):
-                return "Employees / View Employee";
-            case location.startsWith('/dashboard/employees'):
-                return "Employees";
-            case location.startsWith('/dashboard/messages'):
-                return "Messages";
-            default:
-                return "Dashboard";
-        }
-    }
 
     return (
         <>
-            <RoutePath onClick={toggleSidebar}>
+            <RoutePath>
                 { visible
-                    ? <ArrowLeft />
-                    : <ArrowRight />
+                    ? <ArrowLeft onClick={toggleSidebar} />
+                    : <ArrowRight onClick={toggleSidebar} />
                 }
-                <Location>{title(location)}</Location>
+                <TitleComponent />
             </RoutePath>
 
             <TopbarContainer>
@@ -151,9 +124,4 @@ const RoutePath = styled.div`
     align-items: center;
     gap: 2rem;
     cursor: pointer;
-`
-
-const Location = styled.p`
-    font: normal normal 600 20px Poppins;
-    text-transform: capitalize;
 `

@@ -1,8 +1,18 @@
-import styled from "styled-components";
-import Table from "../components/Table/Table";
+import Table, { Data } from "../components/Table/Table";
 import employeesData from "../Data/employees.json";
 import { Outlet, useLocation } from "react-router-dom";
 import { employees } from "../helpers/Tabs/tabs";
+import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
+import { NewButton } from "../styled/Button";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { MessageText, MessageTitle } from "../styled/Message";
+import styled from "styled-components";
+import { format } from "date-fns";
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
+import { FaPlus } from "react-icons/fa";
+
+const MySwal = withReactContent(Swal)
 
 function Employees() {
     const location=useLocation().pathname;
@@ -11,14 +21,13 @@ function Employees() {
         <>
             {
                 location === "/dashboard/employees"
-                    ?    <>
-                            <TabsContent>
-                                { 
-                                    employees.map((item, index) => (
-                                        <Tab key={index}>{item}</Tab>
-                                    )) 
-                                }
-                            </TabsContent>
+                    ?   <>
+                                <TabsComponent section={employees}>
+                                    <NewButton>
+                                        <FaPlus />
+                                        NEW EMPLOYEE
+                                    </NewButton>
+                                </TabsComponent>
                             <Table columns={usersTable} data={employeesData} />
                         </>
                     : <Outlet />
@@ -30,20 +39,56 @@ function Employees() {
 
 const usersTable = [
     {
-        'label': 'Image',
-        'value': 'photo'
+        'label': 'Employee',
+        display: (row: Data) => {
+            return <Container>
+                <Imagen src={`${row.photo}`} alt="imagen de la habitacion" onClick={(e) => {
+                    e.stopPropagation();
+                    return (
+                        MySwal.fire({
+                            title: <MessageTitle>Employee #{row.employee_id}</MessageTitle>,
+                            html: (
+                                <>
+                                    <img src={row.photo} alt="imagen de la habitacion" />
+                                    <MessageText><strong>Name:</strong> {row.fullname}</MessageText>
+                                    <MessageText><strong>Email:</strong> {row.email}</MessageText>
+                                    <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
+                                    <MessageText><strong>Description:</strong> {row.description} </MessageText>
+                                    <br />
+                                    <MessageText><strong>Start Date:</strong> {row.start_date}</MessageText>
+                                    <MessageText><strong>Status:</strong> {row.status ? "Active" : "Inactive"}</MessageText>
+                                </>
+                            ),
+                            showConfirmButton: false
+                        })
+                    )
+                }}/>
+                <SpanContainer>
+                    <h4>{row.fullname}</h4>
+                    <small>#{row.employee_id}</small>
+                </SpanContainer>
+            </Container>
+        }
     },
     {
-        'label': 'Full Name',
-        'value': 'fullname'
-    },
-    {
-        'label': 'ID',
-        'value': 'employee_id'
+        'label': 'Joined',
+        display: (row: Data) => (
+            <>
+                {format( new Date(`${row.start_date}`), 'MMM do, yyyy')}
+            </>
+        )
     },
     {
         'label': 'Email',
-        'value': 'email'
+        display: (row: Data) => (
+            <>
+                <p>{row.email}</p>
+            </>
+        )
+    },
+    {
+        'label': 'Phone',
+        'value': 'phone'
     },
     {
         'label': 'Start Date',
@@ -51,29 +96,35 @@ const usersTable = [
     },
     {
         'label': 'Description',
-        'value': 'description'
-    },
-    {
-        'label': 'Phone',
-        'value': 'phone'
+        display: (row: Data) => (
+            <>
+                <h4>{row.description}</h4>
+            </>
+        )
     },
     {
         'label': 'Status',
-        'value' : 'status'
+        display : (row: Data) => {
+            if (row.status) {
+                return <SpanStyledCheckIn>Active</SpanStyledCheckIn>
+            } else {
+                return <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
+            }
+        }
     }
 ];
 
-const TabsContent = styled.div`
+const Container = styled.div`
     display: flex;
-    padding: 0 1rem 0 1rem;
-    gap: 5rem;
-    margin-bottom: 2rem;
+    align-items: center;
 `
 
-const Tab = styled.button`
-    all: unset;
-    cursor: pointer;
-    color: ${({ theme }) => theme.text};
+const Imagen = styled.img`
+    max-height: auto;
+    width: 70px;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    object-position: center;
 `
 
 export default Employees;
