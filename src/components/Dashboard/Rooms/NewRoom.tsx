@@ -19,16 +19,14 @@ function NewRoom () {
                     </Select>
 
                     <Label htmlFor="room-number">Room Number:</Label>
-                    <Input type="number" name="room-number" id="room-number" value={350} required/>
+                    <Input type="number" name="room-number" id="room-number" value="" placeholder="Room number" required/>
 
                     <Label htmlFor="description">Description:</Label>
-                    <TextArea name="description" id="description" cols={30} rows={10} required>
-                        texto
+                    <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert room description" required>
                     </TextArea>
 
                     <Label htmlFor="cancelation-policy">Cancelation Policy:</Label>
-                    <TextArea name="cancelation-policy" id="cancelation-policy" cols={30} rows={10} required>
-                        texto
+                    <TextArea name="cancelation-policy" id="cancelation-policy" cols={30} rows={10} placeholder="Insert cancelation policy" required>
                     </TextArea>
                 </GridContainer>
 
@@ -37,10 +35,10 @@ function NewRoom () {
                     <Input type="file" name="files" id="files"/>
 
                     <Label htmlFor="offer">Offer:</Label>
-                    <Input type="number" name="offer" id="offer" value={250}/>
+                    <Input type="number" name="offer" id="offer" value="" placeholder="Insert offer price"/>
 
                     <Label htmlFor="price">Price:</Label>
-                    <Input type="number" name="price" id="price" value={350} required/>
+                    <Input type="number" name="price" id="price" value="" placeholder="Insert price" required/>
 
                     
 
