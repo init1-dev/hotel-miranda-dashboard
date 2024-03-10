@@ -109,7 +109,7 @@ const Content = styled.div`
     position: absolute;
     overflow-y: auto;
     top: 100px;
-    padding: 1rem 1.5rem 0 1.5rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
     margin-left: 260px;
     margin-right: auto;
 `

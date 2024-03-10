@@ -80,6 +80,7 @@ const ButtonContent = styled(NavLink)`
     gap: 1.5rem;
     background-color: ${({ theme }) => theme.contentBg};
     transition: scale 0.3s ease;
+    box-shadow: 2px 2px 6px -4px black;
 
     & > div:first-child {
             background-color: #ffedec;

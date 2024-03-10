@@ -121,6 +121,7 @@ const TableStyle = styled.table`
     border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.menuBox};
     cursor: zoom-in;
+    box-shadow: 2px 2px 6px -4px black;
 
     th {
         padding-bottom: 1rem;
@@ -128,6 +129,10 @@ const TableStyle = styled.table`
 
     thead {
         /* text-align: left; */
+
+        tr {
+            line-height: 30px;
+        }
     }
 
     tbody{

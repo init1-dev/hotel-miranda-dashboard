@@ -8,7 +8,7 @@ export const Preview = styled.div`
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
     margin: 1rem 15% 0 15%;
-    box-shadow: 1px 1px 5px black;
+    box-shadow: 2px 2px 6px -4px black;
 `
 
 export const PreviewContainer = styled.div`
