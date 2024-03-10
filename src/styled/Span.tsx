@@ -5,11 +5,12 @@ export const SpanStyled = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${({ theme }) => theme.text};
+    color: white;
     background-color: #5AD07A;
     border-radius: 4rem;
     padding: 0.5rem;
     border: 0rem;
+    text-shadow: 1px 1px 1px black;
 `;
 
 export const SpanContainer = styled.span`
@@ -28,6 +29,5 @@ export const SpanStyledCheckOut = styled(SpanStyled)`
 `;
 
 export const SpanStyledInProgress = styled(SpanStyled)`
-    color: #393939;
     background-color: #FF9C3A;
 `;
