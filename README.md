@@ -19,5 +19,4 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 
 # TODO:
 
-- Imprement tables pagination
 - Create view details for bookings, rooms and employees

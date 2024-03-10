@@ -21,6 +21,18 @@ export const ButtonStyled = styled.button`
     }
 `;
 
+export const ArrowButton = styled(ButtonStyled)`
+    cursor: pointer;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    background-color: ${({ theme }) => theme.contentBg};
+    color: ${({ theme }) => theme.tabButtonColor};
+
+    &:focus, &:focus-visible {
+        outline: unset;
+    }
+`;
+
 export const ActionButton = styled.button`
     all: unset;
     width: auto;

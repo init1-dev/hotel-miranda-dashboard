@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import styled from "styled-components";
+import { ArrowButton } from "../../styled/Button";
 
 type Column = {
     label: string;
@@ -14,11 +15,55 @@ export type Data = {
 type TableProps = {
     columns: Column[];
     data: Data[];
-    action: (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => void
+    action: (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => void;
+    itemsPerPage?: number;
+    maxPageNumbersToShow?: number;
 };
 
-const Table = ({ columns, data, action }:TableProps) => {
-    const selectedData = data.slice(0, 10);
+const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow = 5 }:TableProps) => {
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const selectedData = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const getPageNumbers = () => {
+        const halfMaxPagesToShow = Math.floor(maxPageNumbersToShow / 2);
+        const firstPage = Math.max(1, currentPage - halfMaxPagesToShow);
+        const lastPage = Math.min(totalPages, firstPage + maxPageNumbersToShow - 1);
+
+        const pageNumbers = [];
+        for (let i = firstPage; i <= lastPage; i++) {
+            pageNumbers.push(i);
+        }
+
+        if (firstPage > 1) {
+            pageNumbers.unshift("...");
+            pageNumbers.unshift(1);
+        }
+        if (lastPage < totalPages) {
+            pageNumbers.push("...");
+            pageNumbers.push(totalPages);
+        }
+
+        return pageNumbers;
+    };
 
     return (
         <div>
@@ -38,20 +83,37 @@ const Table = ({ columns, data, action }:TableProps) => {
                         }} key={rowIndex}>
                             {columns.map((column, colIndex) => (
                                 <td key={colIndex}>
-                                    {column.value && row[column.value] ? row[column.value] : (column.display ? column.display(row) : "")}
+                                    {column.value && row[column.value]
+                                        ? row[column.value] 
+                                        : (column.display 
+                                            ? column.display(row) 
+                                            : "")}
                                 </td>
                             ))}
                         </tr>
                     ))}
                 </tbody>
             </TableStyle>
+            <Pagination>
+                <ArrowButton onClick={prevPage} disabled={currentPage === 1}>{'<'}</ArrowButton>
+                {getPageNumbers().map((pageNumber, index) => (
+                    <PageNumber key={index} onClick={() => {
+                        if (typeof pageNumber === 'number') {
+                            paginate(pageNumber)
+                        }
+                    }} className={`${pageNumber === currentPage && "active"}`}>
+                        {pageNumber}
+                    </PageNumber>
+                ))}
+                <ArrowButton onClick={nextPage} disabled={currentPage === totalPages}>{'>'}</ArrowButton>
+            </Pagination>
         </div>
     );
 };
 
 const TableStyle = styled.table`
     width: 100%;
-    height: 74vh;
+    height: 72vh;
     font-size: 14px;
     overflow-y: auto;
     text-align: center;
@@ -84,5 +146,25 @@ const TableStyle = styled.table`
         }
     }
 `
+
+const Pagination = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+`;
+
+const PageNumber = styled.span`
+    cursor: pointer;
+    margin: 0 0.5rem;
+    padding: 0 0.8rem;
+    border-radius: 0.5rem;
+    color: ${({ theme }) => theme.menuText};
+
+    &.active {
+        background-color: #7bcf92;
+        color: black;
+    }
+`;
 
 export default Table;

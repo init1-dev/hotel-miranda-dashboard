@@ -58,6 +58,7 @@ const SwiperItem = styled(Swiper)`
     border-radius: 0.5rem;
     user-select: none;
     z-index: 0;
+    margin-bottom: 2rem;
 
     .swiper-button-prev, .swiper-button-next {
         position: absolute;
