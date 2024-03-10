@@ -19,7 +19,7 @@ function NewRoom () {
                     </Select>
 
                     <Label htmlFor="room-number">Room Number:</Label>
-                    <Input type="number" name="room-number" id="room-number" value="" placeholder="Room number" required/>
+                    <Input type="number" name="room-number" id="room-number" placeholder="Room number" required/>
 
                     <Label htmlFor="description">Description:</Label>
                     <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert room description" required>
@@ -35,10 +35,10 @@ function NewRoom () {
                     <Input type="file" name="files" id="files"/>
 
                     <Label htmlFor="offer">Offer:</Label>
-                    <Input type="number" name="offer" id="offer" value="" placeholder="Insert offer price"/>
+                    <Input type="number" name="offer" id="offer" placeholder="Insert offer price"/>
 
                     <Label htmlFor="price">Price:</Label>
-                    <Input type="number" name="price" id="price" value="" placeholder="Insert price" required/>
+                    <Input type="number" name="price" id="price" placeholder="Insert price" required/>
 
                     
 
@@ -89,16 +89,19 @@ const Input = styled.input`
     display: block;
     width: 100%;
     padding: 0.5rem;
+    border-radius: 0.5rem;
 `
 
 const TextArea = styled.textarea`
     width: 100%;
     padding: 0.5rem;
+    border-radius: 0.5rem;
 `
 
 const Select = styled.select`
     width: 100%;
     padding: 0.5rem;
+    border-radius: 0.5rem;
 `
 
 const AmenitiesSelect = styled(Select)`

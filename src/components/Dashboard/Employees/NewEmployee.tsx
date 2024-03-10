@@ -5,51 +5,54 @@ function NewEmployee () {
         <>
             <Title>NEW EMPLOYEE</Title>
 
-            <Form id="new-room" name="new-room" action="">
+            <Form id="new-employee" name="new-employee" action="">
                 <GridContainer>
-                    <Label htmlFor="room-type">Room Type:</Label>
-                    <Select name="room-type" id="room-type" required>
-                        <option value="" selected hidden>Click to see options</option>
-                        {
-                            // roomTypes.map((type, index) => {
-                            //     return <option key={index} value={type.value}>{type.label}</option>
-                            // })
-                        }
-                    </Select>
 
-                    <Label htmlFor="room-number">Room Number:</Label>
-                    <Input type="number" name="room-number" id="room-number" value="" placeholder="Room number" required/>
+                    <Label htmlFor="fullname">Fullname:</Label>
+                    <Input type="text" name="fullname" id="fullname" placeholder="Insert employee name" required/>
+
+                    <Label htmlFor="email">Email:</Label>
+                    <Input type="email" name="email" id="email" placeholder="Insert employee email" required/>
+
+                    <Label htmlFor="phone">Phone:</Label>
+                    <Input type="tel" name="phone" id="phone" placeholder="Insert employee phone" required/>
 
                     <Label htmlFor="description">Description:</Label>
-                    <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert room description" required>
-                    </TextArea>
-
-                    <Label htmlFor="cancelation-policy">Cancelation Policy:</Label>
-                    <TextArea name="cancelation-policy" id="cancelation-policy" cols={30} rows={10} placeholder="Insert cancelation policy" required>
+                    <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert employee description" required>
                     </TextArea>
                 </GridContainer>
 
                 <GridContainer>
-                    <Label htmlFor="files">Load Images:</Label>
-                    <Input type="file" name="files" id="files"/>
+                    <Label htmlFor="files">Load Photo:</Label>
+                    <Input type="file" name="files" id="files" required/>
 
-                    <Label htmlFor="offer">Offer:</Label>
-                    <Input type="number" name="offer" id="offer" value="" placeholder="Insert offer price"/>
-
-                    <Label htmlFor="price">Price:</Label>
-                    <Input type="number" name="price" id="price" value="" placeholder="Insert price" required/>
-
-                    
-
-                    <Label htmlFor="amenities">Amenities:</Label>
-                    <AmenitiesSelect multiple name="amenities" id="amenities" required>
+                    <Label htmlFor="room-type">Employee Type:</Label>
+                    <Select name="room-type" id="room-type" required>
+                        <option value="" selected hidden>Click to see options</option>
                         {
-                            // amenities.map((type, index) => {
-                            //     return <option key={index} value={type.value}>{type.label}</option>
-                            // })
+                            EmployeeTypes.map((type, index) => {
+                                return <option key={index} value={type.value}>{type.label}</option>
+                            })
                         }
-                    </AmenitiesSelect>
-                    <Button type="submit" form="new-room">
+                    </Select>
+
+                    <Label htmlFor="start-date">Start Date:</Label>
+                    <Input type="date" name="start-date" id="start-date" required/>
+
+                    <Label htmlFor="employee-status">Status:</Label>
+                    <Select name="employee-status" id="employee-status" required>
+                        <option value="" selected hidden>Click to see options</option>
+                        {
+                            EmployeeStatus.map((type, index) => {
+                                return <option key={index} value={type.value}>{type.label}</option>
+                            })
+                        }
+                    </Select>
+
+                    <Label htmlFor="password">Password:</Label>
+                    <Input type="password" name="password" id="password" placeholder="Insert employee password" required/>
+                    
+                    <Button type="submit" form="new-employee">
                         Submit
                     </Button>
                 </GridContainer>
@@ -88,24 +91,65 @@ const Input = styled.input`
     display: block;
     width: 100%;
     padding: 0.5rem;
+    border-radius: 0.5rem;
 `
 
 const TextArea = styled.textarea`
     width: 100%;
     padding: 0.5rem;
+    border-radius: 0.5rem;
 `
 
 const Select = styled.select`
     width: 100%;
     padding: 0.5rem;
-`
-
-const AmenitiesSelect = styled(Select)`
-    height: 245px;
+    border-radius: 0.5rem;
 `
 
 const Button = styled.button`
     color: white;
 `
+
+const EmployeeTypes = [
+    {
+        label: "Maintenance",
+        value: "maintenance"
+    },
+    {
+        label: "Receptionist",
+        value: "receptionist"
+    },
+    {
+        label: "Kitchen",
+        value: "kitchen"
+    },
+    {
+        label: "Rooms",
+        value: "rooms"
+    },
+    {
+        label: "Support",
+        value: "support"
+    },
+    {
+        label: "Sales",
+        value: "sales"
+    },
+    {
+        label: "Marketing",
+        value: "marketing"
+    },
+];
+
+const EmployeeStatus = [
+    {
+        label: "Active",
+        value: "active"
+    },
+    {
+        label: "Inactive",
+        value: "inactive"
+    }
+];
 
 export default NewEmployee ;
