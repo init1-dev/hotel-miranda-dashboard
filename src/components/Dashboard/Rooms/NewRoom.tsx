@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { AmenitiesSelect, Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../../styled/Form";
 
 function NewRoom () {
 
@@ -58,59 +58,6 @@ function NewRoom () {
         </>
     );
 }
-
-const Title = styled.h1`
-    margin: 0 15% 0 15%;
-`
-
-const Form = styled.form`
-    background-color: ${({ theme }) => theme.contentBg};
-    padding: 2rem;
-    border-radius: 0.5rem;
-    display: grid;
-    justify-items: center;
-    grid-template-columns: repeat(2, 1fr);
-    margin: 1rem 15% 0 15%;
-    box-shadow: 1px 1px 5px black;
-`
-
-const GridContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 90%;
-`
-
-const Label = styled.label`
-    display: block;
-`
-
-const Input = styled.input`
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-`
-
-const TextArea = styled.textarea`
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-`
-
-const Select = styled.select`
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-`
-
-const AmenitiesSelect = styled(Select)`
-    height: 245px;
-`
-
-const Button = styled.button`
-    color: white;
-`
 
 export default NewRoom ;
 

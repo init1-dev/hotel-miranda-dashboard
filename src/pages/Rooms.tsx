@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Table, { Data } from "../components/Table/Table";
 import roomsData from '../Data/rooms.json';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { rooms } from "../helpers/Tabs/tabs";
-import { ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
+import { orderBy, rooms } from "../helpers/Tabs/tabs";
+import { ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
 import { MessageTitle } from "../styled/Message";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
@@ -11,12 +11,14 @@ import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { FaPlus } from "react-icons/fa";
 import { action } from "../helpers/action";
+import { SectionSelect } from "../styled/Form";
 
 const MySwal = withReactContent(Swal)
 
 function Rooms() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
+    const roomSelect = orderBy.rooms;
     
     return (
         <>
@@ -24,10 +26,19 @@ function Rooms() {
                 location === "/dashboard/rooms"
                     ?   <>  
                             <TabsComponent section={rooms}>
-                                <NewButton to={"/dashboard/rooms/new"}>
-                                    <FaPlus />
-                                    NEW ROOM
-                                </NewButton>
+                                <ButtonContainer>
+                                    <SectionSelect name="room-type" id="room-type" required>
+                                        {
+                                            roomSelect.map((type, index) => {
+                                                return <option key={index} value={type.accesor}>{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                    <NewButton to={"/dashboard/rooms/new"}>
+                                        <FaPlus />
+                                        NEW ROOM
+                                    </NewButton>
+                                </ButtonContainer>
                             </TabsComponent>
                             <Table columns={roomsHeaders} data={roomsData} action={action(navigate)}/>
                         </>

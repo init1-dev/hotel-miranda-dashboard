@@ -1,11 +1,10 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { messages } from "../helpers/Tabs/tabs";
+import { messages, orderBy } from "../helpers/Tabs/tabs";
 import messagesData from '../Data/messages.json';
 import Table, { Data } from "../components/Table/Table";
 // import MessagesSlider from "../components/Dashboard/Messages/MessagesSlide";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { Archive, ButtonContainer, NewButton, Publish } from "../styled/Button";
-import { TiArrowUnsorted } from "react-icons/ti";
+import { Archive, ButtonContainer, Publish } from "../styled/Button";
 import { format } from "date-fns";
 import { CiMail } from "react-icons/ci";
 import { MdOutlinePhone } from "react-icons/md";
@@ -15,6 +14,7 @@ import { MessageText, MessageTitle } from "../styled/Message";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { SpanContainer } from "../styled/Span";
+import { SectionSelect } from "../styled/Form";
 
 const MySwal = withReactContent(Swal);
 
@@ -30,6 +30,7 @@ const messageStars = (row: number) => {
 
 function Messages() {
     const location=useLocation().pathname;
+    const messagesSelect = orderBy.messages;
     const action = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
         return (
@@ -60,10 +61,15 @@ function Messages() {
                             {/* <MessagesSlider />
                             <br></br> */}
                             <TabsComponent section={messages}>
-                                <NewButton>
-                                    <TiArrowUnsorted />
-                                    MESSAGE ORDER
-                                </NewButton>
+                                <ButtonContainer>
+                                    <SectionSelect name="room-type" id="room-type" required>
+                                        {
+                                            messagesSelect.map((type, index) => {
+                                                return <option key={index} value={type.accesor}>{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                </ButtonContainer>
                             </TabsComponent>
                             <Table columns={messagesHeaders} data={messagesData} action={action}/>
                         </>

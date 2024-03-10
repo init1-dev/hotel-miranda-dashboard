@@ -1,9 +1,9 @@
 import Table, { Data } from "../components/Table/Table";
 import employeesData from "../Data/employees.json";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { employees } from "../helpers/Tabs/tabs";
+import { employees, orderBy } from "../helpers/Tabs/tabs";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { NewButton } from "../styled/Button";
+import { ButtonContainer, NewButton } from "../styled/Button";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { MessageText, MessageTitle } from "../styled/Message";
@@ -12,12 +12,14 @@ import { format } from "date-fns";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
 import { FaPlus } from "react-icons/fa";
 import { action } from "../helpers/action";
+import { SectionSelect } from "../styled/Form";
 
 const MySwal = withReactContent(Swal)
 
 function Employees() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
+    const employeesSelect = orderBy.employees;
     
     return (
         <>
@@ -25,10 +27,19 @@ function Employees() {
                 location === "/dashboard/employees"
                     ?   <>
                                 <TabsComponent section={employees}>
-                                    <NewButton to={"/dashboard/employees/new"}>
-                                        <FaPlus />
-                                        NEW EMPLOYEE
-                                    </NewButton>
+                                    <ButtonContainer>
+                                        <SectionSelect name="room-type" id="room-type" required>
+                                            {
+                                                employeesSelect.map((type, index) => {
+                                                    return <option key={index} value={type.accesor}>{type.label}</option>
+                                                })
+                                            }
+                                        </SectionSelect>
+                                        <NewButton to={"/dashboard/employees/new"}>
+                                            <FaPlus />
+                                            NEW EMPLOYEE
+                                        </NewButton>
+                                    </ButtonContainer>
                                 </TabsComponent>
                             <Table columns={usersTable} data={employeesData} action={action(navigate)} />
                         </>

@@ -21,11 +21,26 @@ const tabs = {
     ],
 }
 
-export const OrderBy = {
-    bookings: ["Guest", "Order Date", "Check In", "Check Out"],
-    rooms: ["", "", ""],
-    messages: ["", "", "", ""],
-    employees: ["", "", "", ""]
+export const orderBy = {
+    bookings: [
+        { label: "Order Date", accesor: "order-date"},
+        { label: "Guest", accesor: "guest"},
+        { label: "Check In", accesor: "check-in"},
+        { label: "Check Out", accesor: "check-out"}
+    ],
+    rooms: [
+        { label: "Newest", accesor: "newest"},
+        { label: "Status", accesor: "status"},
+        { label: "Price", accesor: "price"},
+    ],
+    messages: [
+        { label: "Newest", accesor: "newest"},
+        { label: "Older", accesor: "older"}
+    ],
+    employees: [
+        { label: "Newest", accesor: "newest"},
+        { label: "Alphabetical", accesor: "alphabetical"}
+    ],
 }
 
 export const { bookings, rooms, messages, employees } = tabs;

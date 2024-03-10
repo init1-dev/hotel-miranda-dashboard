@@ -1,22 +1,23 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { bookings } from "../helpers/Tabs/tabs";
+import { bookings, orderBy } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
 import bookingsData from '../Data/bookings.json';
 import { format } from "date-fns";
-import { ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
+import { ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled } from "../styled/Button";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
 import Swal from 'sweetalert2'
 import withReactContent from "sweetalert2-react-content";
 import { MessageText, MessageTitle } from "../styled/Message";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { TiArrowUnsorted } from "react-icons/ti";
 import { action } from "../helpers/action";
+import { SectionSelect } from "../styled/Form";
 
 const MySwal = withReactContent(Swal)
 
 function Bookings() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
+    const bookingsSelect = orderBy.bookings;
     
     return (
         <>
@@ -24,10 +25,15 @@ function Bookings() {
                 location === "/dashboard/bookings"
                     ?   <>  
                             <TabsComponent section={bookings}>
-                                <NewButton>
-                                    <TiArrowUnsorted />
-                                    ROOM ORDER
-                                </NewButton>
+                                <ButtonContainer>
+                                    <SectionSelect name="room-type" id="room-type" required>
+                                        {
+                                            bookingsSelect.map((type, index) => {
+                                                return <option key={index} value={type.accesor}>{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                </ButtonContainer>
                             </TabsComponent>
                             <Table columns={bookingsHeaders} data={bookingsData} action={action(navigate)}/>
                         </>

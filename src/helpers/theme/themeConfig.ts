@@ -8,6 +8,7 @@ export interface Theme {
     menuActive: string;
     iconsColor: string;
     menuBox: string;
+    tabButtonColor: string; 
 }
 
 export const lightTheme: Theme = {
@@ -18,6 +19,7 @@ export const lightTheme: Theme = {
     menuActive: '#E23428',
     iconsColor: '#135846',
     menuBox: '#FFFFFF',
+    tabButtonColor: 'black'
 };
 
 export const darkTheme: Theme = {
@@ -28,6 +30,7 @@ export const darkTheme: Theme = {
     menuActive: '#E23428',
     iconsColor: '#808080',
     menuBox: '#292828',
+    tabButtonColor: '#7bcf92'
 };
 
 export const GlobalStyles = createGlobalStyle<{ theme?: Theme }>`
