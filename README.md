@@ -19,4 +19,5 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 
 # TODO:
 
-- Create view details for bookings, rooms and employees
+- Finish view details for bookings, rooms and employees
+- When click a table row and navigate to details, save last table page to get back instead of page 1
