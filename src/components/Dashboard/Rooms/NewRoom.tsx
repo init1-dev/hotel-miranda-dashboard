@@ -5,6 +5,7 @@ function NewRoom () {
     return (
         <>
             <Title>NEW ROOM</Title>
+
             <Form id="new-room" name="new-room" action="">
                 <GridContainer>
                     <Label htmlFor="room-type">Room Type:</Label>
@@ -61,7 +62,7 @@ function NewRoom () {
 }
 
 const Title = styled.h1`
-    margin: 0 15%;
+    margin: 0 15% 0 15%;
 `
 
 const Form = styled.form`
@@ -71,7 +72,8 @@ const Form = styled.form`
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
-    margin: 2rem 15%;
+    margin: 1rem 15% 0 15%;
+    box-shadow: 1px 1px 5px black;
 `
 
 const GridContainer = styled.div`
