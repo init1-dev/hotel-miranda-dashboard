@@ -25,7 +25,7 @@ function Employees() {
                 location === "/dashboard/employees"
                     ?   <>
                                 <TabsComponent section={employees}>
-                                    <NewButton>
+                                    <NewButton to={"/dashboard/employees/new"}>
                                         <FaPlus />
                                         NEW EMPLOYEE
                                     </NewButton>

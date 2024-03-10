@@ -4,21 +4,28 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoPersonOutline } from "react-icons/io5";
 import { Dashboard, Bookings, Rooms, Contact, Users } from "../../../pages/pages-module";
+import Booking from "../../../components/Dashboard/Bookings/Booking";
+import Room from "../../../components/Dashboard/Rooms/Room";
+import Employee from "../../../components/Dashboard/Employees/Employee";
+import NewEmployee from "../../../components/Dashboard/Employees/NewEmployee";
+import NewRoom from "../../../components/Dashboard/Rooms/NewRoom";
 
 export const RouterMenuOptions = [
     { path: '', component: Dashboard, children: [] },
     { path: 'bookings', component: Bookings, children: [
-        { path: ':id', Component: Bookings },
-        { path: 'edit/:id', Component: Bookings }
+        { path: ':id', Component: Booking },
+        // { path: 'edit/:id', Component: EditBooking }
     ] },
     { path: 'rooms', component: Rooms, children: [
-        { path: ':id', Component: Rooms },
-        { path: 'edit/:id', Component: Rooms }
+        { path: ':id', Component: Room },
+        // { path: 'edit/:id', Component: Room },
+        { path: 'new', Component: NewRoom },
     ] },
     { path: 'messages', component: Contact, children: [] },
     { path: 'employees', component: Users, children: [
-        { path: ':id', Component: Users },
-        { path: 'edit/:id', Component: Users }
+        { path: ':id', Component: Employee },
+        // { path: 'edit/:id', Component: Employee },
+        { path: 'new', Component: NewEmployee }
     ]}
 ];
 

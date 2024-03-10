@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 53,
         "description": "Etiam faucibus cursus urna. Ut tellus.",
@@ -29,7 +29,7 @@
     {
         "id": 2,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Suite",
         "room_number": 81,
         "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem.",
@@ -57,7 +57,7 @@
     {
         "id": 3,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 94,
         "description": "Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla.",
@@ -82,7 +82,7 @@
     {
         "id": 4,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 42,
         "description": "Sed vel enim sit amet nunc viverra dapibus.",
@@ -100,7 +100,7 @@
     {
         "id": 5,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 23,
         "description": "Morbi non lectus.",
@@ -125,7 +125,7 @@
     {
         "id": 6,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 66,
         "description": "Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus.",
@@ -143,7 +143,7 @@
     {
         "id": 7,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 81,
         "description": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.",
@@ -163,7 +163,7 @@
     {
         "id": 8,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 60,
         "description": "Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum.",
@@ -182,7 +182,7 @@
     {
         "id": 9,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Suite",
         "room_number": 62,
         "description": "Ut at dolor quis odio consequat varius.",
@@ -209,7 +209,7 @@
     {
         "id": 10,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Suite",
         "room_number": 66,
         "description": "In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt.",
@@ -237,7 +237,7 @@
     {
         "id": 11,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 19,
         "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.",
@@ -264,7 +264,7 @@
     {
         "id": 12,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 27,
         "description": "Morbi a ipsum. Integer a nibh.",
@@ -282,7 +282,7 @@
     {
         "id": 13,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Suite",
         "room_number": 49,
         "description": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy.",
@@ -306,7 +306,7 @@
     {
         "id": 14,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Suite",
         "room_number": 13,
         "description": "Donec dapibus. Duis at velit eu est congue elementum.",
@@ -329,7 +329,7 @@
     {
         "id": 15,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 76,
         "description": "Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
@@ -349,7 +349,7 @@
     {
         "id": 16,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 100,
         "description": "In quis justo.",
@@ -372,7 +372,7 @@
     {
         "id": 17,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 29,
         "description": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
@@ -396,7 +396,7 @@
     {
         "id": 18,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 49,
         "description": "Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
@@ -413,7 +413,7 @@
     {
         "id": 19,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 81,
         "description": "Nam tristique tortor eu pede.",
@@ -438,7 +438,7 @@
     {
         "id": 20,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 75,
         "description": "Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
@@ -455,7 +455,7 @@
     {
         "id": 21,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 47,
         "description": "Nunc rhoncus dui vel sem. Sed sagittis.",
@@ -484,7 +484,7 @@
     {
         "id": 22,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Single Bed",
         "room_number": 84,
         "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.",
@@ -511,7 +511,7 @@
     {
         "id": 23,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 93,
         "description": "Duis bibendum. Morbi non quam nec dui luctus rutrum.",
@@ -528,7 +528,7 @@
     {
         "id": 24,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 77,
         "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
@@ -549,7 +549,7 @@
     {
         "id": 25,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 85,
         "description": "Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
@@ -572,7 +572,7 @@
     {
         "id": 26,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 3,
         "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
@@ -590,7 +590,7 @@
     {
         "id": 27,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 84,
         "description": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.",
@@ -609,7 +609,7 @@
     {
         "id": 28,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 10,
         "description": "Donec semper sapien a libero.",
@@ -629,7 +629,7 @@
     {
         "id": 29,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Suite",
         "room_number": 76,
         "description": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.",
@@ -647,7 +647,7 @@
     {
         "id": 30,
         "name": "Room name",
-        "photo": "/public/room.jpg",
+        "photo": "/room.jpg",
         "room_type": "Double Bed",
         "room_number": 59,
         "description": "Etiam faucibus cursus urna.",

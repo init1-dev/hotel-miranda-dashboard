@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const ButtonContainer = styled.div`
@@ -43,10 +44,13 @@ export const Archive = styled(ActionButton)`
     background-color: #E23428;
 `
 
-export const NewButton = styled.button`
+export const NewButton = styled(NavLink)`
     background-color: #7bcf92;
     display: flex;
     align-items: center;
+    border-radius: 0.5rem;
+    color: black;
+    text-decoration: unset;
     padding: 0.5rem 1rem 0.5rem 1rem;
     font-size: 13px;
     font-weight: 600;

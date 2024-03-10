@@ -24,7 +24,7 @@ function Rooms() {
                 location === "/dashboard/rooms"
                     ?   <>  
                             <TabsComponent section={rooms}>
-                                <NewButton>
+                                <NewButton to={"/dashboard/rooms/new"}>
                                     <FaPlus />
                                     NEW ROOM
                                 </NewButton>
