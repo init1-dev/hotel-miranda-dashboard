@@ -31,18 +31,24 @@ export const Input = styled.input`
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    background-color: ${({ theme }) => theme.bg};
+    color: ${({ theme }) => theme.text};;
 `
 
 export const TextArea = styled.textarea`
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    background-color: ${({ theme }) => theme.bg};
+    color: ${({ theme }) => theme.text};;
 `
 
 export const Select = styled.select`
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    color: ${({ theme }) => theme.text};;
+    background-color: ${({ theme }) => theme.bg};
 `
 
 export const SectionSelect = styled(Select)`
