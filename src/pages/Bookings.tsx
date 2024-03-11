@@ -1,7 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { bookings, orderBy } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
-import bookingsData from '../Data/bookings.json';
 import { format } from "date-fns";
 import { ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled } from "../styled/Button";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
@@ -11,6 +10,11 @@ import { MessageText, MessageTitle } from "../styled/Message";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { action } from "../helpers/action";
 import { SectionSelect } from "../styled/Form";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { selectBookings } from "../store/Bookings/bookingsSlice";
+import { useEffect } from "react";
+import { getBookingsThunk } from "../store/Bookings/bookingsThunk";
+import { Loader, Loading } from "../styled/Loading";
 
 const MySwal = withReactContent(Swal)
 
@@ -18,25 +22,37 @@ function Bookings() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
     const bookingsSelect = orderBy.bookings;
+
+    const dispatch = useAppDispatch();
+    const bookingsData = useAppSelector(selectBookings);
+
+    useEffect(() => {
+        dispatch(getBookingsThunk());
+    }, [dispatch]);
     
     return (
         <>
             {
                 location === "/dashboard/bookings"
-                    ?   <>  
-                            <TabsComponent section={bookings}>
-                                <ButtonContainer>
-                                    <SectionSelect name="room-type" id="room-type" required>
-                                        {
-                                            bookingsSelect.map((type, index) => {
-                                                return <option key={index} value={type.accesor}>{type.label}</option>
-                                            })
-                                        }
-                                    </SectionSelect>
-                                </ButtonContainer>
-                            </TabsComponent>
-                            <Table columns={bookingsHeaders} data={bookingsData} action={action(navigate)}/>
-                        </>
+                    ?   bookingsData.loading === false
+                            ?
+                                <>  
+                                    <TabsComponent section={bookings}>
+                                        <ButtonContainer>
+                                            <SectionSelect name="room-type" id="room-type" required>
+                                                {
+                                                    bookingsSelect.map((type, index) => {
+                                                        return <option key={index} value={type.accesor}>{type.label}</option>
+                                                    })
+                                                }
+                                            </SectionSelect>
+                                        </ButtonContainer>
+                                    </TabsComponent>
+                                    <Table columns={bookingsHeaders} data={bookingsData.data} action={action(navigate)}/>
+                                </>
+                            : <Loading>
+                                <Loader />
+                            </Loading>
                     : <Outlet />
             }
         </>
