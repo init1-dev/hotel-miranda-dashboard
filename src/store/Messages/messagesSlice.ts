@@ -1,33 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { getMessagesThunk } from './messagesThunk';
-import { Data } from '../../components/Table/Table';
-
-interface MessageData extends Data{
-    id: number;
-    message_id: string;
-    full_name: string;
-    email: string;
-    phone: string;
-    subject: string;
-    message: string;
-    stars: number;
-    date: string;
-    read: boolean;
-    archived: boolean;
-    foto: string;
-    time_passed: string;
-}
-
-interface MessagesState {
-    data: MessageData[];
-    loading: boolean;
-    status: string;
-    error: string | null;
-}
+import { MessagesState } from '../interfaces';
 
 const DEFAULT_STATE: MessagesState = {
     data: [],
+    item: {
+        itemData: null,
+        status: 'idle',
+        error: null
+    },
     loading: false,
     status: "not_ready",
     error: null,

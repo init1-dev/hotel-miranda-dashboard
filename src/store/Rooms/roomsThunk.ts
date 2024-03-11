@@ -10,3 +10,11 @@ export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
         throw new Error(`Error: ${error}`);
     }
 })
+
+// GET ONE
+
+// EDIT ONE
+
+// DELETE ONE
+
+// NEW

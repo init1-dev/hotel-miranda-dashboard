@@ -13,7 +13,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectBookings } from "../store/Bookings/bookingsSlice";
 import { useEffect } from "react";
-import { getBookingsThunk } from "../store/Bookings/bookingsThunk";
+import { getBookings } from "../store/Bookings/bookingsThunk";
 import { Loader, Loading } from "../styled/Loading";
 
 const MySwal = withReactContent(Swal)
@@ -27,7 +27,7 @@ function Bookings() {
     const bookingsData = useAppSelector(selectBookings);
 
     useEffect(() => {
-        dispatch(getBookingsThunk());
+        dispatch(getBookings());
     }, [dispatch]);
     
     return (

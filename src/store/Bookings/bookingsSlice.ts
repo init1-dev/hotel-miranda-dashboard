@@ -1,36 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { getBookingsThunk } from './bookingsThunk';
-import { Data } from '../../components/Table/Table';
-
-interface BookingData extends Data{
-    id: number;
-    full_name: string;
-    order_date: string;
-    check_in: string;
-    check_out: string;
-    special_request: string;
-    number: number;
-    price: number;
-    type: string;
-    status: string;
-    amenities: string[];
-    room_status: string;
-    foto: string;
-    description: string;
-}
-
-interface BookingsState {
-    data: BookingData[];
-    loading: boolean;
-    status: string;
-    error: string | null;
-}
+import { deleteBooking, editBooking, getBooking, getBookings, newBooking } from './bookingsThunk';
+import { BookingsState } from '../interfaces';
 
 const DEFAULT_STATE: BookingsState = {
     data: [],
+    item: {
+        itemData: null,
+        status: 'idle',
+        error: null
+    },
     loading: false,
-    status: "not_ready",
+    status: 'idle',
     error: null,
 };
 
@@ -45,21 +26,78 @@ const bookingsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getBookingsThunk.pending, (bookings) => {
-                bookings.loading = true;
-                bookings.status = 'pending';
-                bookings.error = null;
+            .addCase(getBookings.pending, (state) => {
+                state.loading = true;
+                state.status = 'pending';
+                state.error = null;
             })
-            .addCase(getBookingsThunk.fulfilled, (bookings, action) => {
-                bookings.loading = false;
-                bookings.status = 'fulfilled';
-                bookings.data = action.payload;
+            .addCase(getBookings.fulfilled, (state, action) => {
+                state.loading = false;
+                state.status = 'fulfilled';
+                state.error = null;
+                state.data = action.payload;
             })
-            .addCase(getBookingsThunk.rejected, (bookings, action) => {
-                bookings.loading = false;
-                bookings.status = 'rejected';
-                bookings.error = action.error?.message ?? "Unknown error occurred";
-            });
+            .addCase(getBookings.rejected, (state, action) => {
+                state.loading = false;
+                state.status = 'rejected';
+                state.error = action.error?.message ?? "Unknown error occurred";
+            })
+
+            .addCase(getBooking.pending, (state) => {
+                state.item.status = 'pending';
+                state.item.error = null;
+            })
+            .addCase(getBooking.fulfilled, (state, action) => {
+                state.item.status = 'fulfilled';
+                state.item.error = null;
+                state.item.itemData = action.payload;
+            })
+            .addCase(getBooking.rejected, (state, action) => {
+                state.item.status = 'rejected';
+                state.item.error = action.error?.message ?? "Unknown error occurred";
+            })
+
+            .addCase(newBooking.pending, (state) => {
+                state.item.status = 'pending';
+                state.item.error = null;
+            })
+            .addCase(newBooking.fulfilled, (state, action) => {
+                state.item.status = 'fulfilled';
+                state.item.error = null;
+                state.data = action.payload;
+            })
+            .addCase(newBooking.rejected, (state, action) => {
+                state.item.status = 'rejected';
+                state.item.error = action.error?.message ?? "Unknown error occurred";
+            })
+
+            .addCase(editBooking.pending, (state) => {
+                state.item.status = 'pending';
+                state.item.error = null;
+            })
+            .addCase(editBooking.fulfilled, (state, action) => {
+                state.item.status = 'fulfilled';
+                state.item.error = null;
+                state.data = action.payload;
+            })
+            .addCase(editBooking.rejected, (state, action) => {
+                state.item.status = 'rejected';
+                state.item.error = action.error?.message ?? "Unknown error occurred";
+            })
+
+            .addCase(deleteBooking.pending, (state) => {
+                state.item.status = 'pending';
+                state.item.error = null;
+            })
+            .addCase(deleteBooking.fulfilled, (state, action) => {
+                state.item.status = 'fulfilled';
+                state.item.error = null;
+                state.data = action.payload;
+            })
+            .addCase(deleteBooking.rejected, (state, action) => {
+                state.item.status = 'rejected';
+                state.item.error = action.error?.message ?? "Unknown error occurred";
+            })
     },
 });
 

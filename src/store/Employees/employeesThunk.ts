@@ -10,3 +10,11 @@ export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', as
         throw new Error(`Error: ${error}`);
     }
 })
+
+// GET ONE
+
+// EDIT ONE
+
+// DELETE ONE
+
+// NEW

@@ -1,32 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { getRoomsThunk } from './roomsThunk';
-import { Data } from '../../components/Table/Table';
-
-interface RoomData extends Data{
-    id: number;
-    name: string;
-    photo: string;
-    room_type: string;
-    room_number: number;
-    description: string;
-    offer: number;
-    price: number;
-    cancellation: boolean;
-    amenities: string[];
-    discount: number;
-    status: string;
-}
-
-interface RoomState {
-    data: RoomData[];
-    loading: boolean;
-    status: string;
-    error: string | null;
-}
+import { RoomState } from '../interfaces';
 
 const DEFAULT_STATE: RoomState = {
     data: [],
+    item: {
+        itemData: null,
+        status: 'idle',
+        error: null
+    },
     loading: false,
     status: "not_ready",
     error: null,

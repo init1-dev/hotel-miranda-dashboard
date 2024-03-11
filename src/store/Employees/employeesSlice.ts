@@ -1,31 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { getEmployeesThunk } from './employeesThunk';
-import { Data } from '../../components/Table/Table';
-
-interface EmployeeData extends Data{
-    id: number;
-    photo: string;
-    name: string;
-    lastname: string;
-    fullname: string;
-    employee_id: string;
-    email: string;
-    start_date: string;
-    description: string;
-    phone: string;
-    status: boolean;
-}
-
-interface EmployeesState {
-    data: EmployeeData[];
-    loading: boolean;
-    status: string;
-    error: string | null;
-}
+import { EmployeesState } from '../interfaces';
 
 const DEFAULT_STATE: EmployeesState = {
     data: [],
+    item: {
+        itemData: null,
+        status: 'idle',
+        error: null
+    },
     loading: false,
     status: "not_ready",
     error: null,
