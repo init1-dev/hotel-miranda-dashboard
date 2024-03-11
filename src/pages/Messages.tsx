@@ -1,8 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { messages, orderBy } from "../helpers/Tabs/tabs";
-import messagesData from '../Data/messages.json';
 import Table, { Data } from "../components/Table/Table";
-// import MessagesSlider from "../components/Dashboard/Messages/MessagesSlide";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { Archive, ButtonContainer, Publish } from "../styled/Button";
 import { format } from "date-fns";
@@ -15,6 +13,11 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { SpanContainer } from "../styled/Span";
 import { SectionSelect } from "../styled/Form";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { selectMessages } from "../store/Messages/messagesSlice";
+import { getMessagesThunk } from "../store/Messages/messagesThunk";
+import { useEffect } from "react";
+import { Loader, Loading } from "../styled/Loading";
 
 const MySwal = withReactContent(Swal);
 
@@ -31,6 +34,14 @@ const messageStars = (row: number) => {
 function Messages() {
     const location=useLocation().pathname;
     const messagesSelect = orderBy.messages;
+
+    const dispatch = useAppDispatch();
+    const messagesData = useAppSelector(selectMessages);
+
+    useEffect(() => {
+        dispatch(getMessagesThunk());
+    }, [dispatch]);
+
     const action = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
         return (
@@ -57,22 +68,25 @@ function Messages() {
         <>
             {
                 location === "/dashboard/messages"
-                    ?   <>
-                            {/* <MessagesSlider />
-                            <br></br> */}
-                            <TabsComponent section={messages}>
-                                <ButtonContainer>
-                                    <SectionSelect name="room-type" id="room-type" required>
-                                        {
-                                            messagesSelect.map((type, index) => {
-                                                return <option key={index} value={type.accesor}>{type.label}</option>
-                                            })
-                                        }
-                                    </SectionSelect>
-                                </ButtonContainer>
-                            </TabsComponent>
-                            <Table columns={messagesHeaders} data={messagesData} action={action}/>
-                        </>
+                    ?   messagesData.loading === false
+                            ?
+                                <>
+                                    <TabsComponent section={messages}>
+                                        <ButtonContainer>
+                                            <SectionSelect name="room-type" id="room-type" required>
+                                                {
+                                                    messagesSelect.map((type, index) => {
+                                                        return <option key={index} value={type.accesor}>{type.label}</option>
+                                                    })
+                                                }
+                                            </SectionSelect>
+                                        </ButtonContainer>
+                                    </TabsComponent>
+                                    <Table columns={messagesHeaders} data={messagesData.data} action={action}/>
+                                </>
+                            : <Loading>
+                                <Loader />
+                            </Loading>
                     : <Outlet />
             }
         </>

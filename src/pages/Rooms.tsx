@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Table, { Data } from "../components/Table/Table";
-import roomsData from '../Data/rooms.json';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { orderBy, rooms } from "../helpers/Tabs/tabs";
 import { ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
@@ -12,6 +11,11 @@ import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { FaPlus } from "react-icons/fa";
 import { action } from "../helpers/action";
 import { SectionSelect } from "../styled/Form";
+import { selectRooms } from "../store/Rooms/roomsSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { useEffect } from "react";
+import { getRoomsThunk } from "../store/Rooms/roomsThunk";
+import { Loader, Loading } from "../styled/Loading";
 
 const MySwal = withReactContent(Swal)
 
@@ -19,29 +23,41 @@ function Rooms() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
     const roomSelect = orderBy.rooms;
+
+    const dispatch = useAppDispatch();
+    const roomsData = useAppSelector(selectRooms);
+
+    useEffect(() => {
+        dispatch(getRoomsThunk());
+    }, [dispatch]);
     
     return (
         <>
             {
                 location === "/dashboard/rooms"
-                    ?   <>  
-                            <TabsComponent section={rooms}>
-                                <ButtonContainer>
-                                    <SectionSelect name="room-type" id="room-type" required>
-                                        {
-                                            roomSelect.map((type, index) => {
-                                                return <option key={index} value={type.accesor}>{type.label}</option>
-                                            })
-                                        }
-                                    </SectionSelect>
-                                    <NewButton to={"/dashboard/rooms/new"}>
-                                        <FaPlus />
-                                        NEW ROOM
-                                    </NewButton>
-                                </ButtonContainer>
-                            </TabsComponent>
-                            <Table columns={roomsHeaders} data={roomsData} action={action(navigate)}/>
-                        </>
+                    ?   roomsData.loading === false
+                            ?
+                                <>  
+                                    <TabsComponent section={rooms}>
+                                        <ButtonContainer>
+                                            <SectionSelect name="room-type" id="room-type" required>
+                                                {
+                                                    roomSelect.map((type, index) => {
+                                                        return <option key={index} value={type.accesor}>{type.label}</option>
+                                                    })
+                                                }
+                                            </SectionSelect>
+                                            <NewButton to={"/dashboard/rooms/new"}>
+                                                <FaPlus />
+                                                NEW ROOM
+                                            </NewButton>
+                                        </ButtonContainer>
+                                    </TabsComponent>
+                                    <Table columns={roomsHeaders} data={roomsData.data} action={action(navigate)}/>
+                                </>
+                            : <Loading>
+                                <Loader />
+                            </Loading>
                     : <Outlet />
             }
         </>
