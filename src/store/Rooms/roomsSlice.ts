@@ -25,12 +25,17 @@ interface RoomState {
     error: string | null;
 }
 
-const initialState: RoomState = {
+const DEFAULT_STATE: RoomState = {
     data: [],
     loading: false,
     status: "not_ready",
     error: null,
 };
+
+const initialState: RoomState = (() => {
+    const persistedState = localStorage.getItem("__hotel__app__state__");
+    return (persistedState) ? JSON.parse(persistedState).rooms : DEFAULT_STATE;
+})();
 
 const roomSlice = createSlice({
     name: 'rooms',

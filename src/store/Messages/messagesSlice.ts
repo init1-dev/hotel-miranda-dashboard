@@ -26,12 +26,17 @@ interface MessagesState {
     error: string | null;
 }
 
-const initialState: MessagesState = {
+const DEFAULT_STATE: MessagesState = {
     data: [],
     loading: false,
     status: "not_ready",
     error: null,
 };
+
+const initialState: MessagesState = (() => {
+    const persistedState = localStorage.getItem("__hotel__app__state__");
+    return (persistedState) ? JSON.parse(persistedState).messages : DEFAULT_STATE;
+})();
 
 const messagesSlice = createSlice({
     name: 'messages',
