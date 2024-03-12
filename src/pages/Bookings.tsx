@@ -122,6 +122,7 @@ function Bookings() {
                     <ButtonContainer>
                         <ActionButtonIcon onClick={(e) => {
                             e.stopPropagation()
+                            navigate(`edit/${bookingRow.id}`)
                         }}>
                             <FaRegEdit />
                         </ActionButtonIcon>

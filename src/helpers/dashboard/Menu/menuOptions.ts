@@ -15,7 +15,7 @@ export const RouterMenuOptions = [
     { path: '', component: Dashboard, children: [] },
     { path: 'bookings', component: Bookings, children: [
         { path: ':id', Component: Booking },
-        // { path: 'edit/:id', Component: EditBooking }
+        { path: 'edit/:id', Component: NewBooking },
         { path: 'new', Component: NewBooking },
     ] },
     { path: 'rooms', component: Rooms, children: [
