@@ -3,6 +3,9 @@ import { Data } from "../components/Table/Table";
 export interface BookingData extends Data{
     id: number;
     full_name: string;
+    email: string;
+    phone: string;
+    image: string;
     order_date: string;
     check_in: string;
     check_out: string;
@@ -17,7 +20,7 @@ export interface BookingData extends Data{
     description: string;
 }
 export interface Booking {
-    itemData: BookingData | null;
+    itemData: BookingData | undefined;
     status: string;
     error: string | null;
 }
@@ -41,6 +44,7 @@ export interface EmployeeData extends Data{
     description: string;
     phone: string;
     status: boolean;
+    password: string;
 }
 export interface Employee {
     itemData: EmployeeData | null;
@@ -92,7 +96,7 @@ export interface RoomData extends Data{
     description: string;
     offer: number;
     price: number;
-    cancellation: boolean;
+    cancellation: string;
     amenities: string[];
     discount: number;
     status: string;

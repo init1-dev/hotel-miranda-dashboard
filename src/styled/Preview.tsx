@@ -7,7 +7,7 @@ import styled from "styled-components"
 
 export const Preview = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
-    padding: 2rem;
+    padding: 1rem 0;
     border-radius: 0.5rem;
     display: grid;
     justify-items: center;
@@ -24,11 +24,90 @@ export const PreviewContainer = styled.div`
 `
 
 export const InfoContainer = styled(PreviewContainer)`
+    background-color: ${({ theme }) => theme.contentBg};    
+`
 
+export const TopContainerRow = styled.div`
+    display: flex;
+`
+
+export const InfoContainerRow = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+
+    span {
+        margin-top: 1rem;
+    }
+`
+
+export const Amenities = styled.div`
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    span {
+        font-size: 14px;
+        text-align: center;
+        border-radius: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        background-color: green;
+        color: white;
+    }
+`
+
+export const ImageDiv = styled.div`
+    
+`
+
+export const TextDiv = styled.div`
+    display: block;
+
+    span {
+        margin-right: 2rem;
+    }
 `
 
 export const ImageContainer = styled(PreviewContainer)`
+    position: relative;
+    background-color: grey;
+    border-radius: 0.5rem;
 
+    span {
+        position: absolute;
+        padding: 0.5rem;
+        margin: 0;
+        border-radius: 0.5rem;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    div {
+        width: 100%;
+        position: absolute;
+        background-color: grey;
+        bottom: 0;
+        padding: 2rem 2rem;
+
+        h4 {
+            font-size: 16px;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 `
 
 export const SwiperItem = styled(Swiper)`

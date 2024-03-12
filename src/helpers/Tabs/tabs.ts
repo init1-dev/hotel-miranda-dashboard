@@ -1,9 +1,9 @@
 const tabs = {
     bookings: [
-        { label: "All Bookings", accesor: "all"},
-        { label: "Checking In", accesor: "check_in"},
-        { label: "Checking Out", accesor: "check_out"},
-        { label: "In Progress", accesor: "status"}
+        { label: "All Bookings"},
+        { label: "Check In"},
+        { label: "Check Out"},
+        { label: "In Progress"}
     ],
     rooms: [
         { label: "All Rooms", accesor: "all"},
@@ -23,10 +23,10 @@ const tabs = {
 
 export const orderBy = {
     bookings: [
-        { label: "Order Date", accesor: "order-date"},
-        { label: "Guest", accesor: "guest"},
-        { label: "Check In", accesor: "check-in"},
-        { label: "Check Out", accesor: "check-out"}
+        { label: "Order Date", accesor: "order_date"},
+        { label: "Guest", accesor: "full_name"},
+        { label: "Check In", accesor: "check_in"},
+        { label: "Check Out", accesor: "check_out"}
     ],
     rooms: [
         { label: "Newest", accesor: "newest"},

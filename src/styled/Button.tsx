@@ -48,6 +48,18 @@ export const ActionButton = styled.button`
     }
 `
 
+export const ActionButtonIcon = styled(ActionButton)`
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+
+    svg {
+        font-size: 18px;
+    }
+`
+
 export const Publish = styled(ActionButton)`
     background-color: #5AD07A;
 `

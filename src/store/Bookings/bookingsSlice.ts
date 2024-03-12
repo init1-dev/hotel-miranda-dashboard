@@ -6,7 +6,7 @@ import { BookingsState } from '../interfaces';
 const DEFAULT_STATE: BookingsState = {
     data: [],
     item: {
-        itemData: null,
+        itemData: undefined,
         status: 'idle',
         error: null
     },
@@ -17,7 +17,7 @@ const DEFAULT_STATE: BookingsState = {
 
 const initialState: BookingsState = (() => {
     const persistedState = localStorage.getItem("__hotel__app__state__");
-    return (persistedState) ? JSON.parse(persistedState).bookings : DEFAULT_STATE;
+    return (persistedState) ? JSON.parse(persistedState)["bookings"] : DEFAULT_STATE;
 })();
 
 const bookingsSlice = createSlice({
@@ -64,7 +64,10 @@ const bookingsSlice = createSlice({
             .addCase(newBooking.fulfilled, (state, action) => {
                 state.item.status = 'fulfilled';
                 state.item.error = null;
-                state.data = action.payload;
+                state.data = [
+                    ...state.data,
+                    action.payload 
+                ];
             })
             .addCase(newBooking.rejected, (state, action) => {
                 state.item.status = 'rejected';
@@ -92,7 +95,7 @@ const bookingsSlice = createSlice({
             .addCase(deleteBooking.fulfilled, (state, action) => {
                 state.item.status = 'fulfilled';
                 state.item.error = null;
-                state.data = action.payload;
+                state.data = state.data.filter(item => item.id !== action.payload);
             })
             .addCase(deleteBooking.rejected, (state, action) => {
                 state.item.status = 'rejected';
@@ -102,5 +105,6 @@ const bookingsSlice = createSlice({
 });
 
 export const selectBookings = (state: RootState) => state.bookings;
+export const selectBooking = (state: RootState) => state.bookings.item;
 
 export default bookingsSlice.reducer;

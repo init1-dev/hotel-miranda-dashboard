@@ -9,12 +9,14 @@ import Room from "../../../components/Dashboard/Rooms/Room";
 import Employee from "../../../components/Dashboard/Employees/Employee";
 import NewEmployee from "../../../components/Dashboard/Employees/NewEmployee";
 import NewRoom from "../../../components/Dashboard/Rooms/NewRoom";
+import NewBooking from "../../../components/Dashboard/Bookings/NewBooking";
 
 export const RouterMenuOptions = [
     { path: '', component: Dashboard, children: [] },
     { path: 'bookings', component: Bookings, children: [
         { path: ':id', Component: Booking },
         // { path: 'edit/:id', Component: EditBooking }
+        { path: 'new', Component: NewBooking },
     ] },
     { path: 'rooms', component: Rooms, children: [
         { path: ':id', Component: Room },

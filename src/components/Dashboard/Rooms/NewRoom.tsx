@@ -8,8 +8,8 @@ function NewRoom () {
 
             <Form id="new-room" name="new-room" action="">
                 <GridContainer>
-                    <Label htmlFor="room-type">Room Type:</Label>
-                    <Select name="room-type" id="room-type" required>
+                    <Label htmlFor="room_type">Room Type:</Label>
+                    <Select name="room_type" id="room_type" required>
                         <option value="" selected hidden>Click to see options</option>
                         {
                             roomTypes.map((type, index) => {
@@ -18,21 +18,21 @@ function NewRoom () {
                         }
                     </Select>
 
-                    <Label htmlFor="room-number">Room Number:</Label>
-                    <Input type="number" name="room-number" id="room-number" placeholder="Room number" required/>
+                    <Label htmlFor="room_number">Room Number:</Label>
+                    <Input type="number" name="room_number" id="room_number" placeholder="Room number" required/>
 
                     <Label htmlFor="description">Description:</Label>
                     <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert room description" required>
                     </TextArea>
 
-                    <Label htmlFor="cancelation-policy">Cancelation Policy:</Label>
-                    <TextArea name="cancelation-policy" id="cancelation-policy" cols={30} rows={10} placeholder="Insert cancelation policy" required>
+                    <Label htmlFor="cancellation">Cancelation Policy:</Label>
+                    <TextArea name="cancellation" id="cancellation" cols={30} rows={10} placeholder="Insert cancelation policy" required>
                     </TextArea>
                 </GridContainer>
 
                 <GridContainer>
-                    <Label htmlFor="files">Load Images:</Label>
-                    <Input type="file" name="files" id="files"/>
+                    <Label htmlFor="photo">Load Images:</Label>
+                    <Input type="file" name="photo" id="photo"/>
 
                     <Label htmlFor="offer">Offer:</Label>
                     <Input type="number" name="offer" id="offer" placeholder="Insert offer price"/>

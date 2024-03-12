@@ -5,8 +5,8 @@ const title = (location: string) => {
     switch (true) {
         // case location.startsWith('/dashboard/bookings/edit/'):
         //     return { route: "Bookings", sub: "/ Edit Booking"}
-        // case location.startsWith('/dashboard/bookings/new'):
-        //     return { route: "Bookings", sub: "/ New Booking"}
+        case location.startsWith('/dashboard/bookings/new'):
+            return { route: "Bookings", sub: "Dashboard > Bookings > New Booking"}
         case location.startsWith('/dashboard/bookings/'):
             return { route: "Bookings", sub: "Dashboard > Bookings > Booking Details"}
         case location.startsWith('/dashboard/bookings'):

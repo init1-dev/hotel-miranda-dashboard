@@ -8,7 +8,7 @@
         "description": "Etiam faucibus cursus urna. Ut tellus.",
         "offer": 300,
         "price": 477.7,
-        "cancellation": true,
+        "cancellation": "lorem ipsum",
         "amenities": [
             "Shop near",
             "Kitchen",
@@ -35,7 +35,7 @@
         "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem.",
         "offer": 0,
         "price": 389.5,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "High speed WiFi",
             "Strong Locker",
@@ -63,7 +63,7 @@
         "description": "Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla.",
         "offer": 0,
         "price": 482.46,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Towels",
             "Expert Team",
@@ -88,7 +88,7 @@
         "description": "Sed vel enim sit amet nunc viverra dapibus.",
         "offer": 0,
         "price": 345.99,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "24/7 Online Support",
             "Single bed",
@@ -106,7 +106,7 @@
         "description": "Morbi non lectus.",
         "offer": 320,
         "price": 392.63,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "24/7 Online Support",
             "Grocery",
@@ -131,7 +131,7 @@
         "description": "Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus.",
         "offer": 340,
         "price": 389.35,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Breakfast",
             "Expert Team",
@@ -149,7 +149,7 @@
         "description": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.",
         "offer": 0,
         "price": 495.93,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Breakfast",
             "Expert Team",
@@ -169,7 +169,7 @@
         "description": "Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum.",
         "offer": 400,
         "price": 440.89,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Kitchen",
             "Smart Security",
@@ -188,7 +188,7 @@
         "description": "Ut at dolor quis odio consequat varius.",
         "offer": 420,
         "price": 483.62,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Grocery",
             "Single bed",
@@ -215,7 +215,7 @@
         "description": "In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt.",
         "offer": 435,
         "price": 497.84,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "High speed WiFi",
             "Cleaning",
@@ -243,7 +243,7 @@
         "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.",
         "offer": 450,
         "price": 497.94,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Towels",
             "Smart Security",
@@ -270,7 +270,7 @@
         "description": "Morbi a ipsum. Integer a nibh.",
         "offer": 0,
         "price": 328.23,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Single bed",
             "Air conditioner",
@@ -288,7 +288,7 @@
         "description": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy.",
         "offer": 310,
         "price": 336.33,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "High speed WiFi",
             "Smart Security",
@@ -312,7 +312,7 @@
         "description": "Donec dapibus. Duis at velit eu est congue elementum.",
         "offer": 0,
         "price": 480.88,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "High speed WiFi",
             "Shower",
@@ -335,7 +335,7 @@
         "description": "Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
         "offer": 435,
         "price": 484.07,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Expert Team",
             "Strong Locker",
@@ -355,7 +355,7 @@
         "description": "In quis justo.",
         "offer": 402,
         "price": 420.96,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Expert Team",
             "Grocery",
@@ -378,7 +378,7 @@
         "description": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
         "offer": 0,
         "price": 471.35,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Strong Locker",
             "Shower",
@@ -402,7 +402,7 @@
         "description": "Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
         "offer": 305,
         "price": 342.76,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Shower",
             "Expert Team"
@@ -419,7 +419,7 @@
         "description": "Nam tristique tortor eu pede.",
         "offer": 425,
         "price": 459.89,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Grocery",
             "Shop near",
@@ -444,7 +444,7 @@
         "description": "Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
         "offer": 0,
         "price": 396.29,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Strong Locker",
             "Towels"
@@ -461,7 +461,7 @@
         "description": "Nunc rhoncus dui vel sem. Sed sagittis.",
         "offer": 387,
         "price": 409.04,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Breakfast",
             "Smart Security",
@@ -490,7 +490,7 @@
         "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.",
         "offer": 0,
         "price": 427.05,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Expert Team",
             "Strong Locker",
@@ -517,7 +517,7 @@
         "description": "Duis bibendum. Morbi non quam nec dui luctus rutrum.",
         "offer": 397,
         "price": 437.26,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Smart Security",
             "Towels"
@@ -534,7 +534,7 @@
         "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
         "offer": 0,
         "price": 394.09,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Expert Team",
             "Shop near",
@@ -555,7 +555,7 @@
         "description": "Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
         "offer": 420,
         "price": 457.94,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Breakfast",
             "Shower",
@@ -578,7 +578,7 @@
         "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
         "offer": 268,
         "price": 303.61,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Expert Team",
             "Smart Security",
@@ -596,7 +596,7 @@
         "description": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.",
         "offer": 443,
         "price": 486.27,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Smart Security",
             "High speed WiFi",
@@ -615,7 +615,7 @@
         "description": "Donec semper sapien a libero.",
         "offer": 0,
         "price": 345.44,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Single bed",
             "Expert Team",
@@ -635,7 +635,7 @@
         "description": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.",
         "offer": 0,
         "price": 382.22,
-        "cancellation": false,
+        "cancellation": "",
         "amenities": [
             "Expert Team",
             "Shower",
@@ -653,7 +653,7 @@
         "description": "Etiam faucibus cursus urna.",
         "offer": 0,
         "price": 340.52,
-        "cancellation": true,
+        "cancellation": "",
         "amenities": [
             "Smart Security",
             "Breakfast",
