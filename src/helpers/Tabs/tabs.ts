@@ -1,14 +1,14 @@
 const tabs = {
     bookings: [
-        { label: "All Bookings", accesor: "all"},
-        { label: "Checking In", accesor: "check_in"},
-        { label: "Checking Out", accesor: "check_out"},
-        { label: "In Progress", accesor: "status"}
+        { label: "All Bookings"},
+        { label: "Check In"},
+        { label: "Check Out"},
+        { label: "In Progress"}
     ],
     rooms: [
-        { label: "All Rooms", accesor: "all"},
-        { label: "Available Rooms", accesor: "status"},
-        { label: "Unavailable Rooms", accesor: "status"}
+        { label: "All Rooms", accesor: "All Rooms"},
+        { label: "Available", accesor: "Available"},
+        { label: "Booked", accesor: "Booked"}
     ],
     messages: [
         { label: "All Messages", accesor: "all"},
@@ -21,11 +21,25 @@ const tabs = {
     ],
 }
 
-export const OrderBy = {
-    bookings: ["Guest", "Order Date", "Check In", "Check Out"],
-    rooms: ["", "", ""],
-    messages: ["", "", "", ""],
-    employees: ["", "", "", ""]
+export const orderBy = {
+    bookings: [
+        { label: "Order Date", accesor: "order_date"},
+        { label: "Guest", accesor: "full_name"},
+        { label: "Check In", accesor: "check_in"},
+        { label: "Check Out", accesor: "check_out"}
+    ],
+    rooms: [
+        { label: "Price", accesor: "price"},
+        { label: "Offer", accesor: "offer"},
+    ],
+    messages: [
+        { label: "Newest", accesor: "newest"},
+        { label: "Older", accesor: "older"}
+    ],
+    employees: [
+        { label: "Newest", accesor: "newest"},
+        { label: "Alphabetical", accesor: "alphabetical"}
+    ],
 }
 
 export const { bookings, rooms, messages, employees } = tabs;

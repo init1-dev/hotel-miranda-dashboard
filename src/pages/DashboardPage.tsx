@@ -1,35 +1,30 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SideBarComponent } from "../components/Dashboard/Menu/SideBarComponent";
 import { TopbarComponent } from "../components/Dashboard/Menu/TopbarComponent";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const DashboardPage = () => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
-    const currentLocation = useLocation().pathname;
-    const prevLocationRef = useRef("");
-    const nextLocationRef = useRef("");
-    const firstMount = useRef(true);
+    const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
     useEffect(() => {
-        if(firstMount.current){
-            firstMount.current = false;
-            return;
-        }
-        prevLocationRef.current = nextLocationRef.current;
-        nextLocationRef.current = currentLocation;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                navigate(-1);
+            }
+        };
 
-        localStorage.setItem('__path__handler__', JSON.stringify({
-            prevPath: prevLocationRef.current === "" ? currentLocation : prevLocationRef.current,
-            currentPath: nextLocationRef.current
-        }));
-    }, [currentLocation])
+        window.onkeyup = handleKeyDown;
 
-    
+        return () => {
+            window.onkeyup = null;
+        };
+    }, [navigate]);
 
     return (
         <div>
@@ -114,7 +109,7 @@ const Content = styled.div`
     position: absolute;
     overflow-y: auto;
     top: 100px;
-    padding: 1rem 1.5rem 2rem 1.5rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
     margin-left: 260px;
     margin-right: auto;
 `

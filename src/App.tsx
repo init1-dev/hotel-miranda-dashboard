@@ -19,7 +19,7 @@ function App() {
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <Wrapper>
           <GlobalStyles />
-            <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
+          <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
         </Wrapper>
       </ThemeProvider>
     </ThemeContext.Provider>

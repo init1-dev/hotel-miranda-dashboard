@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import styled from "styled-components";
 
 export interface SectionData {
@@ -9,10 +9,11 @@ export interface SectionData {
 
 export interface TabsProps  {
     section: SectionData[],
-    children: ReactNode
+    children: ReactNode,
+    setCurrentTab: Dispatch<SetStateAction<string | undefined>>;
 }
 
-export const TabsComponent = ({section, children}: TabsProps ) => {
+export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) => {
 
     return (
         <>
@@ -20,7 +21,7 @@ export const TabsComponent = ({section, children}: TabsProps ) => {
                 <TabsContent>
                     { 
                         section.map((item, index) => (
-                            <Tab key={index}>{item.label}</Tab>
+                            <Tab key={index} onClick={() => setCurrentTab(item.label)}>{item.label}</Tab>
                         )) 
                     }
                 </TabsContent>

@@ -7,8 +7,9 @@ export const CalendarStyle = styled.div`
     min-height: 100%;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 12px;
-    max-width: 32%;
+    max-width: 420px;
     margin-bottom: 1.5rem;
+    box-shadow: 2px 2px 6px -4px black;
 
     .calendar-sidebar {
         width: 300px;

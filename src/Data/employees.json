@@ -10,7 +10,8 @@
         "start_date": "1/22/2024",
         "description": "Maintenance",
         "phone": "173-125-4724",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 2,
@@ -23,7 +24,8 @@
         "start_date": "2/17/2024",
         "description": "Receptionist",
         "phone": "747-729-9412",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 3,
@@ -36,7 +38,8 @@
         "start_date": "3/12/2023",
         "description": "Maintenance",
         "phone": "944-699-6146",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 4,
@@ -49,7 +52,8 @@
         "start_date": "5/10/2023",
         "description": "Kitchen",
         "phone": "155-706-6673",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 5,
@@ -62,7 +66,8 @@
         "start_date": "4/3/2023",
         "description": "Rooms",
         "phone": "394-385-8690",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 6,
@@ -75,7 +80,8 @@
         "start_date": "1/20/2024",
         "description": "Receptionist",
         "phone": "978-466-6917",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 7,
@@ -88,7 +94,8 @@
         "start_date": "3/22/2023",
         "description": "Support",
         "phone": "799-635-7402",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 8,
@@ -101,7 +108,8 @@
         "start_date": "11/16/2023",
         "description": "Receptionist",
         "phone": "402-276-1050",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 9,
@@ -114,7 +122,8 @@
         "start_date": "4/19/2023",
         "description": "Rooms",
         "phone": "113-721-8230",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 10,
@@ -127,7 +136,8 @@
         "start_date": "8/14/2023",
         "description": "Sales",
         "phone": "440-574-2549",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 11,
@@ -140,7 +150,8 @@
         "start_date": "11/22/2023",
         "description": "Maintenance",
         "phone": "351-230-0259",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 12,
@@ -153,7 +164,8 @@
         "start_date": "1/2/2024",
         "description": "Rooms",
         "phone": "334-818-4506",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 13,
@@ -166,7 +178,8 @@
         "start_date": "9/21/2023",
         "description": "Receptionist",
         "phone": "973-124-9578",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 14,
@@ -179,7 +192,8 @@
         "start_date": "5/15/2023",
         "description": "Rooms",
         "phone": "958-691-3336",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 15,
@@ -192,7 +206,8 @@
         "start_date": "11/18/2023",
         "description": "Kitchen",
         "phone": "365-328-3257",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 16,
@@ -205,7 +220,8 @@
         "start_date": "3/27/2023",
         "description": "Maintenance",
         "phone": "196-465-9261",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 17,
@@ -218,7 +234,8 @@
         "start_date": "7/1/2023",
         "description": "Marketing",
         "phone": "738-624-7427",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 18,
@@ -231,7 +248,8 @@
         "start_date": "1/1/2024",
         "description": "Kitchen",
         "phone": "101-901-8145",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 19,
@@ -244,7 +262,8 @@
         "start_date": "7/30/2023",
         "description": "Receptionist",
         "phone": "374-447-6518",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 20,
@@ -257,7 +276,8 @@
         "start_date": "3/3/2024",
         "description": "Rooms",
         "phone": "485-914-4457",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 21,
@@ -270,7 +290,8 @@
         "start_date": "11/3/2023",
         "description": "Sales",
         "phone": "504-495-6530",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 22,
@@ -283,7 +304,8 @@
         "start_date": "1/21/2024",
         "description": "Kitchen",
         "phone": "203-221-0775",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 23,
@@ -296,7 +318,8 @@
         "start_date": "5/18/2023",
         "description": "Kitchen",
         "phone": "194-984-5780",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 24,
@@ -309,7 +332,8 @@
         "start_date": "4/13/2023",
         "description": "Marketing",
         "phone": "182-706-6829",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 25,
@@ -322,7 +346,8 @@
         "start_date": "2/25/2024",
         "description": "Rooms",
         "phone": "690-146-8583",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 26,
@@ -335,7 +360,8 @@
         "start_date": "4/8/2023",
         "description": "Sales",
         "phone": "989-709-4103",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 27,
@@ -348,7 +374,8 @@
         "start_date": "11/22/2023",
         "description": "Marketing",
         "phone": "519-490-6540",
-        "status": true
+        "status": true,
+        "password": "12345"
     },
     {
         "id": 28,
@@ -361,7 +388,8 @@
         "start_date": "10/13/2023",
         "description": "Maintenance",
         "phone": "718-507-5731",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 29,
@@ -374,7 +402,8 @@
         "start_date": "12/17/2023",
         "description": "Marketing",
         "phone": "821-730-2248",
-        "status": false
+        "status": false,
+        "password": "12345"
     },
     {
         "id": 30,
@@ -387,6 +416,7 @@
         "start_date": "5/2/2023",
         "description": "Receptionist",
         "phone": "880-355-8492",
-        "status": false
+        "status": false,
+        "password": "12345"
     }
 ]
