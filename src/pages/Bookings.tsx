@@ -174,8 +174,8 @@ function Bookings() {
                                         <ButtonContainer>
                                             <SectionSelect 
                                                 onChange={(e) => setCurrentOrder(e.target.value)}
-                                                name="room-type" 
-                                                id="room-type" 
+                                                name="booking-type" 
+                                                id="booking-type" 
                                                 required>
                                                 {
                                                     bookingsSelect.map((type, index) => {

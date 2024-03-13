@@ -6,9 +6,9 @@ const tabs = {
         { label: "In Progress"}
     ],
     rooms: [
-        { label: "All Rooms", accesor: "all"},
-        { label: "Available Rooms", accesor: "status"},
-        { label: "Unavailable Rooms", accesor: "status"}
+        { label: "All Rooms", accesor: "All Rooms"},
+        { label: "Available", accesor: "Available"},
+        { label: "Booked", accesor: "Booked"}
     ],
     messages: [
         { label: "All Messages", accesor: "all"},
@@ -29,9 +29,8 @@ export const orderBy = {
         { label: "Check Out", accesor: "check_out"}
     ],
     rooms: [
-        { label: "Newest", accesor: "newest"},
-        { label: "Status", accesor: "status"},
         { label: "Price", accesor: "price"},
+        { label: "Offer", accesor: "offer"},
     ],
     messages: [
         { label: "Newest", accesor: "newest"},

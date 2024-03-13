@@ -102,7 +102,7 @@ export interface RoomData extends Data{
     status: string;
 }
 export interface Room {
-    itemData: RoomData | null;
+    itemData: RoomData | undefined;
     status: string;
     error: string | null;
 }
