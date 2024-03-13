@@ -14,6 +14,8 @@ export const getBookings = createAsyncThunk('bookings/fetchBookings', async () =
 })
 
 export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: number) => {    
+    console.log("peticion: getBooking");
+    
     try {
         await delay();
 
@@ -23,7 +25,9 @@ export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: n
     }
 })
 
-export const newBooking = createAsyncThunk('bookings/newBooking', async (newData: BookingData) => {    
+export const newBooking = createAsyncThunk('bookings/newBooking', async (newData: BookingData) => {
+    console.log("peticion: newBooking");
+
     try {
         await delay();
         
@@ -34,19 +38,25 @@ export const newBooking = createAsyncThunk('bookings/newBooking', async (newData
 })
 
 export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, newData}: {id: number, newData: BookingData} ) => {
+    console.log("peticion: editBooking");
+    console.log(newData);
     
     try {
         await delay();
 
-        const index = bookingsData.findIndex((item) => item.id === id);
+        console.log(id);
+        
+        // const index = bookingsData.findIndex((item) => item.id === id);
 
-        if (index !== -1) {
-            bookingsData[index] = { ...bookingsData[index], ...newData };
+        // if (index !== -1) {
+        //     const edited = { ...bookingsData[index], ...newData };
 
-            return bookingsData;
-        } else {
-            throw new Error(`Booking with ID ${id} not found`);
-        }
+        //     return edited;
+        // } else {
+        //     throw new Error(`Booking with ID ${id} not found`);
+        // }
+
+        return newData;
 
     } catch (error) {
         throw new Error(`Error: ${error}`);
@@ -54,6 +64,7 @@ export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, 
 })
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({id}: BookingData) => {
+    console.log("peticion: deleteBooking");
     try {
         await delay();
 

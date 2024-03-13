@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { deleteBooking, editBooking, getBooking, getBookings, newBooking } from './bookingsThunk';
 import { BookingsState } from '../interfaces';
@@ -15,14 +15,14 @@ const DEFAULT_STATE: BookingsState = {
     error: null,
 };
 
-const initialState: BookingsState = (() => {
-    const persistedState = localStorage.getItem("__hotel__app__state__");
-    return (persistedState) ? JSON.parse(persistedState)["bookings"] : DEFAULT_STATE;
-})();
+// const initialState: BookingsState = (() => {
+//     const persistedState = localStorage.getItem("__hotel__app__state__");
+//     return (persistedState) ? JSON.parse(persistedState)["bookings"] : DEFAULT_STATE;
+// })();
 
 const bookingsSlice = createSlice({
     name: 'bookings',
-    initialState,
+    initialState: DEFAULT_STATE,
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -36,6 +36,7 @@ const bookingsSlice = createSlice({
                 state.status = 'fulfilled';
                 state.error = null;
                 state.data = action.payload;
+                // state.item = DEFAULT_STATE.item;
             })
             .addCase(getBookings.rejected, (state, action) => {
                 state.loading = false;
@@ -79,9 +80,12 @@ const bookingsSlice = createSlice({
                 state.item.error = null;
             })
             .addCase(editBooking.fulfilled, (state, action) => {
-                state.item.status = 'fulfilled';
-                state.item.error = null;
-                state.data = action.payload;
+                const index = state.data.findIndex((item) => item.id === action.payload.id);
+                if (index !== -1) {
+                    state.status = 'fulfilled';
+                    state.error = null;
+                    state.data[index] = action.payload;
+                }
             })
             .addCase(editBooking.rejected, (state, action) => {
                 state.item.status = 'rejected';
@@ -106,5 +110,11 @@ const bookingsSlice = createSlice({
 
 export const selectBookings = (state: RootState) => state.bookings;
 export const selectBooking = (state: RootState) => state.bookings.item;
+export const availableRooms = createSelector(
+    (state: RootState) => state.rooms.data,
+    (rooms) => {
+        return rooms.filter(room => room.status === "Available").sort((a, b) => a.room_number - b.room_number);
+    }
+);
 
 export default bookingsSlice.reducer;

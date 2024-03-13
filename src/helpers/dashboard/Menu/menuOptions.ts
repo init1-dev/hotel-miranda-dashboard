@@ -20,13 +20,13 @@ export const RouterMenuOptions = [
     ] },
     { path: 'rooms', component: Rooms, children: [
         { path: ':id', Component: Room },
-        // { path: 'edit/:id', Component: Room },
+        { path: 'edit/:id', Component: NewRoom },
         { path: 'new', Component: NewRoom },
     ] },
     { path: 'messages', component: Contact, children: [] },
     { path: 'employees', component: Users, children: [
         { path: ':id', Component: Employee },
-        // { path: 'edit/:id', Component: Employee },
+        { path: 'edit/:id', Component: NewEmployee },
         { path: 'new', Component: NewEmployee }
     ]}
 ];

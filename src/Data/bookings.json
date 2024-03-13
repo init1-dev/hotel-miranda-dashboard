@@ -13,20 +13,7 @@
         "price": 477.7,
         "type": "Double Bed",
         "status": "In Progress",
-        "amenities": [
-            "Shop near",
-            "Kitchen",
-            "Shower",
-            "Towels",
-            "Smart Security",
-            "Air conditioner",
-            "Single bed",
-            "Expert Team",
-            "Breakfast",
-            "24/7 Online Support",
-            "Grocery",
-            "Cleaning"
-        ],
+        "amenities": [ "Shop near", "Kitchen", "Shower", "Towels", "Smart Security", "Air conditioner", "Single bed", "Expert Team", "Breakfast", "24/7 Online Support", "Grocery", "Cleaning" ],
         "room_status": "Booked",
         "foto": "https://images.unsplash.com/photo-1592229506151-845940174bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1Njg5ODJ8MHwxfHNlYXJjaHwxMnx8bHV4dXJ5JTIwcm9vbXxlbnwwfHx8fDE3MDk4MDU3MDF8MA&ixlib=rb-4.0.3&q=80&w=200",
         "description": "Etiam faucibus cursus urna. Ut tellus, lorem Etiam faucibus cursus urna. Ut tellus fistrum Etiam faucibus cursus urna. Ut tellus."

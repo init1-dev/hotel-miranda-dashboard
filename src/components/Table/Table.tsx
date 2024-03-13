@@ -95,7 +95,7 @@ const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow 
                 </tbody>
             </TableStyle>
             <Pagination>
-                <ArrowButton onClick={prevPage} disabled={currentPage === 1}>{'<'}</ArrowButton>
+                <ArrowButton onClick={prevPage} disabled={currentPage === 1}>{'Prev'}</ArrowButton>
                 {getPageNumbers().map((pageNumber, index) => (
                     <PageNumber key={index} onClick={() => {
                         if (typeof pageNumber === 'number') {
@@ -105,7 +105,7 @@ const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow 
                         {pageNumber}
                     </PageNumber>
                 ))}
-                <ArrowButton onClick={nextPage} disabled={currentPage === totalPages}>{'>'}</ArrowButton>
+                <ArrowButton onClick={nextPage} disabled={currentPage === totalPages}>{'Next'}</ArrowButton>
             </Pagination>
         </div>
     );

@@ -12,7 +12,7 @@ import { action } from "../helpers/action";
 import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectBookings } from "../store/Bookings/bookingsSlice";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../store/Bookings/bookingsThunk";
 import { Loader, Loading } from "../styled/Loading";
 import { FaPlus } from "react-icons/fa";
@@ -53,9 +53,13 @@ function Bookings() {
         
     }, [bookingsData, currentTab, currentOrder])
 
+    const initialFetch = useCallback(async () => {
+        await dispatch(getBookings()).unwrap();
+    }, [dispatch])
+
     useEffect(() => {
-        dispatch(getBookings());
-    }, [dispatch]);
+        initialFetch()
+    }, [initialFetch]);
 
     // display: (row: Data) => format( new Date(`${row.order_date}`), 'MMM do, yyyy HH:mm')
     const bookingsHeaders = [
@@ -129,7 +133,27 @@ function Bookings() {
 
                         <ActionButtonIcon onClick={(e) => {
                             e.stopPropagation()
-                            dispatch(deleteBooking(bookingRow));
+                            MySwal.fire({
+                                title: `<small>You're going to delete booking #${bookingRow.id}</small>`,
+                                text: `This action is irreversible`,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Delete',
+                                confirmButtonColor: '#ff0000',
+                                cancelButtonText: 'Cancel',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    dispatch(deleteBooking(bookingRow));
+                                    MySwal.fire({
+                                        text: `Booking #${bookingRow.id} deleted successfuly`,
+                                        icon: 'success',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        showConfirmButton: false
+                                    });
+                                }
+                            });
                         }}>
                             <RiDeleteBin5Line />
                         </ActionButtonIcon>
