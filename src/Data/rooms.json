@@ -1,14 +1,14 @@
 [
     {
         "id": 1,
-        "name": "Room name",
+        "name": "Suite Double Delux Plus",
         "photo": "/room.jpg",
         "room_type": "Double Superior",
         "room_number": 53,
-        "description": "Etiam faucibus cursus urna. Ut tellus.",
-        "offer": 300,
-        "price": 477.7,
-        "cancellation": "lorem ipsum",
+        "description": "A room description typically includes details such as the room's size, amenities, furnishings, and any unique features or characteristics it may have.",
+        "offer": 350,
+        "price": 500,
+        "cancellation": "A cancellation policy outlines the terms and conditions under which reservations can be canceled, including any applicable fees, deadlines, and procedures.",
         "amenities": [ "Shop near", "Kitchen", "Shower", "Towels", "Smart Security", "Air conditioner", "Single bed", "Expert Team", "Breakfast", "24/7 Online Support", "Grocery", "Cleaning" ],
         "discount": 4,
         "status": "Available"

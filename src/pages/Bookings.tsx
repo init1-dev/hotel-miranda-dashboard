@@ -1,23 +1,22 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { bookings, orderBy } from "../helpers/Tabs/tabs";
-import Table, { Data } from "../components/Table/Table";
 import { format } from "date-fns";
-import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
-import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
 import Swal from 'sweetalert2'
 import withReactContent from "sweetalert2-react-content";
-import { MessageText, MessageTitle } from "../styled/Message";
-import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { action } from "../helpers/action";
-import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { selectBookings } from "../store/Bookings/bookingsSlice";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { deleteBooking, getBookings } from "../store/Bookings/bookingsThunk";
+import { bookings, orderBy } from "../helpers/Tabs/tabs";
+import Table, { Data } from "../components/Table/Table";
+import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
+import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
 import { Loader, Loading } from "../styled/Loading";
-import { FaPlus } from "react-icons/fa";
+import { SectionSelect } from "../styled/Form";
+import { MessageText, MessageTitle } from "../styled/Message";
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
+import { FaPlus, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
+import { action } from "../helpers/action";
+import { selectBookings } from "../store/Bookings/bookingsSlice";
+import { deleteBooking, getBookings } from "../store/Bookings/bookingsThunk";
 import { BookingData } from "../store/interfaces";
 
 const MySwal = withReactContent(Swal)

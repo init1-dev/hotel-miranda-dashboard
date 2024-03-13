@@ -1,21 +1,23 @@
 import styled from "styled-components";
-import Table, { Data } from "../components/Table/Table";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { orderBy, rooms } from "../helpers/Tabs/tabs";
-import { ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
-import { MessageTitle } from "../styled/Message";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
-import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
-import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { FaPlus } from "react-icons/fa";
-import { action } from "../helpers/action";
-import { SectionSelect } from "../styled/Form";
-import { selectRooms } from "../store/Rooms/roomsSlice";
-import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getRoomsThunk } from "../store/Rooms/roomsThunk";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { orderBy, rooms } from "../helpers/Tabs/tabs";
+import Table, { Data } from "../components/Table/Table";
+import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
+import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
 import { Loader, Loading } from "../styled/Loading";
+import { SectionSelect } from "../styled/Form";
+import { MessageTitle } from "../styled/Message";
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
+import { FaPlus, FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { action } from "../helpers/action";
+import { selectRooms } from "../store/Rooms/roomsSlice";
+import { deleteRoom, getRoomsThunk } from "../store/Rooms/roomsThunk";
+import { RoomData } from "../store/interfaces";
 
 const MySwal = withReactContent(Swal)
 
@@ -137,6 +139,49 @@ function Rooms() {
                 }
             }
         },
+        {
+            'label': 'Actions',
+            display : (row: Data) => {
+                const roomRow = row as RoomData
+                return (
+                    <ButtonContainer>
+                        <ActionButtonIcon onClick={(e) => {
+                            e.stopPropagation()
+                            navigate(`edit/${roomRow.id}`)
+                        }}>
+                            <FaRegEdit />
+                        </ActionButtonIcon>
+
+                        <ActionButtonIcon onClick={(e) => {
+                            e.stopPropagation()
+                            MySwal.fire({
+                                title: `<small>You're going to delete room #${roomRow.id}</small>`,
+                                text: `This action is irreversible`,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Delete',
+                                confirmButtonColor: '#ff0000',
+                                cancelButtonText: 'Cancel',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    dispatch(deleteRoom(roomRow));
+                                    MySwal.fire({
+                                        text: `Room #${roomRow.id} deleted successfuly`,
+                                        icon: 'success',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        showConfirmButton: false
+                                    });
+                                }
+                            });
+                        }}>
+                            <RiDeleteBin5Line />
+                        </ActionButtonIcon>
+                    </ButtonContainer>
+                )
+            }
+        }
     ];
 
     return (
