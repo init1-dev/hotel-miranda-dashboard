@@ -145,7 +145,7 @@ function Bookings() {
                                 if (result.isConfirmed) {
                                     dispatch(deleteBooking(bookingRow));
                                     MySwal.fire({
-                                        text: `Booking #${bookingRow.id} deleted successfuly`,
+                                        text: `Booking #${bookingRow.id} deleted successfully`,
                                         icon: 'success',
                                         timer: 2000,
                                         timerProgressBar: true,

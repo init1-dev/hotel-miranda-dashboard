@@ -96,8 +96,8 @@ function NewBooking () {
 
         MySwal.fire({
             text: currentId
-                    ? `Booking #${id} successfuly edited`
-                    : `Booking #${formDataToUpdate.id} successfuly created`,
+                    ? `Booking #${id} successfully edited`
+                    : `Booking #${formDataToUpdate.id} successfully created`,
             icon: 'success',
             timer: 2000,
             timerProgressBar: true,

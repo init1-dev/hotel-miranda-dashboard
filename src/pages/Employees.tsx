@@ -154,7 +154,7 @@ function Employees() {
                                 if (result.isConfirmed) {
                                     dispatch(deleteEmployee(employeeRow));
                                     MySwal.fire({
-                                        text: `Employee #${employeeRow.id} deleted successfuly`,
+                                        text: `Employee #${employeeRow.id} deleted successfully`,
                                         icon: 'success',
                                         timer: 2000,
                                         timerProgressBar: true,

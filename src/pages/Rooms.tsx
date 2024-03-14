@@ -167,7 +167,7 @@ function Rooms() {
                                 if (result.isConfirmed) {
                                     dispatch(deleteRoom(roomRow));
                                     MySwal.fire({
-                                        text: `Room #${roomRow.id} deleted successfuly`,
+                                        text: `Room #${roomRow.id} deleted successfully`,
                                         icon: 'success',
                                         timer: 2000,
                                         timerProgressBar: true,

@@ -85,8 +85,8 @@ function NewRoom () {
 
         MySwal.fire({
             text: currentId
-                    ? `Room #${id} successfuly edited`
-                    : `Room #${formDataToUpdate.id} successfuly created`,
+                    ? `Room #${id} successfully edited`
+                    : `Room #${formDataToUpdate.id} successfully created`,
             icon: 'success',
             timer: 2000,
             timerProgressBar: true,

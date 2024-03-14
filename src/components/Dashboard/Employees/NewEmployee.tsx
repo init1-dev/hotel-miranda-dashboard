@@ -85,8 +85,8 @@ function NewEmployee () {
 
         MySwal.fire({
             text: currentId
-                    ? `Employee #${id} successfuly edited`
-                    : `Employee #${formDataToUpdate.id} successfuly created`,
+                    ? `Employee #${id} successfully edited`
+                    : `Employee #${formDataToUpdate.id} successfully created`,
             icon: 'success',
             timer: 2000,
             timerProgressBar: true,
