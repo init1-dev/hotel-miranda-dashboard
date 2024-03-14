@@ -1,5 +1,5 @@
 import { Form, redirect, useActionData, useLocation, useNavigate } from "react-router-dom";
-import AuthStatus from "../helpers/login/authStatus";
+import AuthStatus from "../helpers/login/AuthStatus";
 import styled from "styled-components";
 import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
@@ -39,7 +39,7 @@ function LoginPage() {
         await delay();
 
         try {
-            if (username === "init.dev" && password === "12345"){
+            if (username === user ? user : 'init.dev' && password === "12345"){
                 setIsLogingIn(false);
                 icon.current = 'success';
                 message.current = 'Logged in successfully';

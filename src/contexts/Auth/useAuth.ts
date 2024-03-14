@@ -26,6 +26,7 @@ const reducer = (state: State, action: Action): State => {
         case 'edit':
             return {
                 ...state,
+                user: action.payload?.user ?? state.user,
                 email: action.payload?.email ?? state.email
             }
         case 'logout':

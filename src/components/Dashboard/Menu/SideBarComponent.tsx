@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
-import AuthStatus from "../../../helpers/login/authStatus";
+import AuthStatus from "../../../helpers/login/AuthStatus";
 import { useState } from "react";
 import { menuOptions } from "../../../helpers/dashboard/Menu/menuOptions";
 import travl from "../../../assets/travl.png";

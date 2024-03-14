@@ -1,14 +1,69 @@
 import styled from "styled-components";
 import init from "../../assets/init.png";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { UserContext } from "../../contexts/Auth/AuthContext";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+
+const MySwal = withReactContent(Swal);
 
 function AuthStatus() {
     const auth = useContext(UserContext);
     const { user, email } = auth.state;
+    const formUser = useRef(String(user));
+    const formEmail = useRef(String(email));
 
     if (!user) {
         return <p>You are not logged in</p>;
+    }
+
+    const handleSubmit = (user: string, email: string) => {
+        auth.dispatch({type: 'edit', payload: {user: user, email: email}})
+        MySwal.fire({
+            title: 'Successfuly Updated!',
+            icon: 'success',
+        });
+    };
+
+    const handleEditUser = () => {
+        MySwal.fire({
+            text: 'Edit:',
+            html: (
+                <form>
+                    <div>
+                        <label htmlFor="username">Nombre de usuario:</label>
+                        <br />
+                        <InputStyle
+                            type="text"
+                            name="username"
+                            placeholder="Insert new username"
+                            defaultValue={user ?? ''}
+                            onChange={(e) => formUser.current = e.target.value}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email">Correo electrónico:</label>
+                        <br />
+                        <InputStyle
+                            type="email"
+                            name="email"
+                            placeholder="Insert new email"
+                            defaultValue={email ?? ''}
+                            onChange={(e) => formEmail.current = e.target.value}
+                        />
+                    </div>
+                </form>
+            ),
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            confirmButtonColor: 'green',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleSubmit(formUser.current, formEmail.current)
+            }
+        });
     }
 
     return (
@@ -17,7 +72,7 @@ function AuthStatus() {
                 <ProfileImage src={init} alt="imagen de perfil" />
                 <ProfileName>{user}</ProfileName>
                 <ProfileEmail>{email}</ProfileEmail>
-                <Button type="submit">
+                <Button onClick={handleEditUser}>
                     Edit User
                 </Button>
             </UserContainer>
@@ -29,6 +84,20 @@ function AuthStatus() {
         </Container>
     );
 }
+
+
+const InputStyle = styled.input`
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 14px;
+    width: 75%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    outline: unset;
+    border: 1px solid grey;
+`
 
 const Container = styled.div`
     width: 100%;
