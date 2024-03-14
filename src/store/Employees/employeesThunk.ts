@@ -39,7 +39,6 @@ export const editEmployee = createAsyncThunk('employees/editEmployee', async ({i
 
         console.log(id);
         
-
         return newData;
 
     } catch (error) {

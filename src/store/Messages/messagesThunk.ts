@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import messagesData from '../../Data/messages.json';
+import { delay } from '../../helpers/delay';
 
 export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async () => {
     try {
-        await new Promise((r) => setTimeout(r, 1000));
+        await delay();
 
         return messagesData;
     } catch (error) {

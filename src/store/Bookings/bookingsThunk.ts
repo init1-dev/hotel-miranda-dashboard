@@ -14,8 +14,6 @@ export const getBookings = createAsyncThunk('bookings/fetchBookings', async () =
 })
 
 export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: number) => {    
-    console.log("peticion: getBooking");
-    
     try {
         await delay();
 
@@ -26,8 +24,6 @@ export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: n
 })
 
 export const newBooking = createAsyncThunk('bookings/newBooking', async (newData: BookingData) => {
-    console.log("peticion: newBooking");
-
     try {
         await delay();
         
@@ -38,9 +34,6 @@ export const newBooking = createAsyncThunk('bookings/newBooking', async (newData
 })
 
 export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, newData}: {id: number, newData: BookingData} ) => {
-    console.log("peticion: editBooking");
-    console.log(newData);
-    
     try {
         await delay();
 
@@ -64,7 +57,6 @@ export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, 
 })
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({id}: BookingData) => {
-    console.log("peticion: deleteBooking");
     try {
         await delay();
 
