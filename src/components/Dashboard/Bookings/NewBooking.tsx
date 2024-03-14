@@ -7,6 +7,7 @@ import { selectBooking, availableRooms } from "../../../store/Bookings/bookingsS
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { Loader, Loading } from "../../../styled/Loading";
 
 const MySwal = withReactContent(Swal)
 
@@ -154,7 +155,9 @@ function NewBooking () {
                     </GridContainer>
                 </Form>
             </>
-        : "loading"        
+        : <Loading>
+            <Loader />
+        </Loading>
     );
 }
 

@@ -47,7 +47,7 @@ export interface EmployeeData extends Data{
     password: string;
 }
 export interface Employee {
-    itemData: EmployeeData | null;
+    itemData: EmployeeData | undefined;
     status: string;
     error: string | null;
 }

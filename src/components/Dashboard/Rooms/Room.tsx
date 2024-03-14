@@ -71,15 +71,11 @@ function Room () {
                                 </InfoContainer>
 
                                 <ImageContainer>
-                                        {roomData.itemData && roomData.itemData.status === "In Progress" 
-                                            && <SpanStyledInProgress>
-                                                    {roomData.itemData.status}
-                                                </SpanStyledInProgress> }
-                                        {roomData.itemData && roomData.itemData.status === "Check In" 
+                                        {roomData.itemData && roomData.itemData.status === "Available" 
                                             && <SpanStyledCheckIn>
                                                     {roomData.itemData.status}
                                                 </SpanStyledCheckIn> }
-                                        {roomData.itemData && roomData.itemData.status === "Check Out"
+                                        {roomData.itemData && roomData.itemData.status === "Booked" 
                                             && <SpanStyledCheckOut>
                                                     {roomData.itemData.status}
                                                 </SpanStyledCheckOut> }

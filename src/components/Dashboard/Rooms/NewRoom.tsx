@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { editRoom, getRoom, newRoom } from "../../../store/Rooms/roomsThunk";
 import { selectRoom } from "../../../store/Rooms/roomsSlice";
+import { Loader, Loading } from "../../../styled/Loading";
 
 const MySwal = withReactContent(Swal)
 
@@ -148,7 +149,9 @@ function NewRoom () {
                     </GridContainer>
                 </Form>
             </>
-            : "loading"
+            : <Loading>
+                <Loader />
+            </Loading>
     );
 }
 

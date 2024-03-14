@@ -26,21 +26,21 @@ const roomSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getRoomsThunk.pending, (rooms) => {
-                rooms.loading = true;
-                rooms.status = 'pending';
-                rooms.error = null;
+            .addCase(getRoomsThunk.pending, (state) => {
+                state.loading = true;
+                state.status = 'pending';
+                state.error = null;
             })
-            .addCase(getRoomsThunk.fulfilled, (rooms, action) => {
-                rooms.loading = false;
-                rooms.status = 'fulfilled';
-                rooms.error = null;
-                rooms.data = action.payload;
+            .addCase(getRoomsThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.status = 'fulfilled';
+                state.error = null;
+                state.data = action.payload;
             })
-            .addCase(getRoomsThunk.rejected, (rooms, action) => {
-                rooms.loading = false;
-                rooms.status = 'rejected';
-                rooms.error = action.error?.message ?? "Unknown error occurred";
+            .addCase(getRoomsThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.status = 'rejected';
+                state.error = action.error?.message ?? "Unknown error occurred";
             })
 
             .addCase(getRoom.pending, (state) => {
