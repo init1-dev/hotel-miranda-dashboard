@@ -25,7 +25,7 @@ function Bookings() {
     const location = useLocation().pathname;
     const navigate = useNavigate();
     const bookingsSelect = orderBy.bookings;
-    const [currentTab, setCurrentTab] = useState<string | undefined>("All Bookings");
+    const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Bookings");
     const [currentOrder, setCurrentOrder] = useState("order_date");
     
     const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ function Bookings() {
         const all = (currentTab === "All Bookings")
             ? bookingsData.data
             : bookingsData.data.filter((item) => item.status === currentTab)
-
+        
         return [...all].sort((a, b) => {
             switch (currentOrder) {
                 case 'check_in':

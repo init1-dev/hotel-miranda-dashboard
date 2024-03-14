@@ -25,7 +25,7 @@ function Rooms() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
     const roomSelect = orderBy.rooms;
-    const [currentTab, setCurrentTab] = useState<string | undefined>("All Rooms");
+    const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Rooms");
     const [currentOrder, setCurrentOrder] = useState("order_date");
 
     const dispatch = useAppDispatch();

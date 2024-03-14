@@ -15,7 +15,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectEmployees } from "../store/Employees/employeesSlice";
 import { deleteEmployee, getEmployeesThunk } from "../store/Employees/employeesThunk";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 import { EmployeeData } from "../store/interfaces";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -26,9 +26,26 @@ function Employees() {
     const location=useLocation().pathname;
     const navigate = useNavigate();
     const employeesSelect = orderBy.employees;
+    const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Employees");
+    const [currentOrder, setCurrentOrder] = useState("order_date");
 
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);
+    const filteredEmployees = useMemo(() => {
+        const all = (currentTab === "All Employees")
+            ? employeesData.data
+            : employeesData.data.filter((item) => item.status === currentTab)
+
+        return [...all].sort((a, b) => {
+            switch (currentOrder) {
+                case 'alphabetical':
+                    return a.fullname.localeCompare(b.fullname);
+                default:
+                    return new Date(b.start_date).getTime() - new Date(a.start_date).getTime();
+            }
+        })
+        
+    }, [employeesData, currentTab, currentOrder])
 
     useEffect(() => {
         dispatch(getEmployeesThunk());
@@ -161,9 +178,13 @@ function Employees() {
                     ?   employeesData.loading === false
                             ?
                                 <>
-                                        <TabsComponent section={employees}>
+                                        <TabsComponent section={employees} setCurrentTab={setCurrentTab}>
                                             <ButtonContainer>
-                                                <SectionSelect name="room-type" id="room-type" required>
+                                                <SectionSelect 
+                                                    onChange={(e) => setCurrentOrder(e.target.value)}
+                                                    name="room-type" 
+                                                    id="room-type" 
+                                                    required>
                                                     {
                                                         employeesSelect.map((type, index) => {
                                                             return <option key={index} value={type.accesor}>{type.label}</option>
@@ -176,7 +197,7 @@ function Employees() {
                                                 </NewButton>
                                             </ButtonContainer>
                                         </TabsComponent>
-                                    <Table columns={usersHeaders} data={employeesData.data} action={action(navigate)} />
+                                    <Table columns={usersHeaders} data={filteredEmployees} action={action(navigate)} />
                                 </>
                             : <Loading>
                                 <Loader />

@@ -1,9 +1,9 @@
 const tabs = {
     bookings: [
-        { label: "All Bookings"},
-        { label: "Check In"},
-        { label: "Check Out"},
-        { label: "In Progress"}
+        { label: "All Bookings", accesor: "All Bookings"},
+        { label: "Check In", accesor: "Check In"},
+        { label: "Check Out", accesor: "Check Out"},
+        { label: "In Progress", accesor: "In Progress"}
     ],
     rooms: [
         { label: "All Rooms", accesor: "All Rooms"},
@@ -15,9 +15,9 @@ const tabs = {
         { label: "Archived", accesor: "archived"}
     ],
     employees: [
-        { label: "All Employee", accesor: "all"},
-        { label: "Active Employee", accesor: "status"},
-        { label: "Inactive Employee", accesor: "status"}
+        { label: "All Employees", accesor: "All Employees"},
+        { label: "Active Employees", accesor: true},
+        { label: "Inactive Employees", accesor: false}
     ],
 }
 

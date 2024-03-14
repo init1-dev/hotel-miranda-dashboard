@@ -3,25 +3,25 @@ import styled from "styled-components";
 
 export interface SectionData {
     label: string;
-    accessor?: string;
+    accesor?: string | boolean;
     display?: () => void;
 }
 
 export interface TabsProps  {
     section: SectionData[],
     children: ReactNode,
-    setCurrentTab: Dispatch<SetStateAction<string | undefined>>;
+    setCurrentTab: Dispatch<SetStateAction<string | boolean | undefined>>;
 }
 
 export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) => {
-
+    
     return (
         <>
             <TabsContainer>
                 <TabsContent>
                     { 
                         section.map((item, index) => (
-                            <Tab key={index} onClick={() => setCurrentTab(item.label)}>{item.label}</Tab>
+                            <Tab key={index} onClick={() => setCurrentTab(item.accesor)}>{item.label}</Tab>
                         )) 
                     }
                 </TabsContent>
