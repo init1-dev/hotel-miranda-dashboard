@@ -106,7 +106,7 @@ function Employees() {
         },
         {
             'label': 'Start Date',
-            'value': 'start_date'
+            display: (row: Data) => format( new Date(`${row.start_date}`), 'MMM do, yyyy')
         },
         {
             'label': 'Description',

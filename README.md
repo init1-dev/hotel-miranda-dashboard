@@ -20,7 +20,5 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 # TODO:
 
 - currentTab and currentOrder must store their values instead of replace it with initial value when new booking is created or other action is dispatched
-- Edit: employees
-- Create: employees
 - Message archive action functinality
 - When click a table row and navigate to details, save last table page to get back instead of page 1
