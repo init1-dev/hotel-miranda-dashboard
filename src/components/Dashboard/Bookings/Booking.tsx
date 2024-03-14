@@ -68,7 +68,8 @@ function Booking () {
                                     </InfoContainerRow>
 
                                     <small>
-                                        <i>{bookingData.itemData && bookingData.itemData.special_request}</i>
+                                        <p>Price:</p>
+                                        <p><i>{bookingData.itemData && bookingData.itemData.special_request}</i></p>
                                     </small>
 
                                     <small>Amenities:</small>
