@@ -1,25 +1,57 @@
-import { Form, redirect, useActionData, useLocation, useNavigation, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useLocation, useNavigate } from "react-router-dom";
 import AuthStatus from "../helpers/login/authStatus";
 import styled from "styled-components";
-import { useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
 import { FaUserCircle } from "react-icons/fa";
+import { UserContext } from "../contexts/Auth/AuthContext";
+import { delay } from "../helpers/delay";
 
 function LoginPage() {
+    const auth = useContext(UserContext);
+    const navigate = useNavigate();
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const navigation = useNavigation();
-    const isLoggingIn = navigation.formData?.get("username") != null;
+    const [isLogingIn, setIsLogingIn] = useState(false);
 
     const actionData = useActionData() as { error: string } | undefined;
 
-    const { user } = useRouteLoaderData("root") as { user: string | null };
+    const { user } = auth.state;
 
     if(user === null) redirect("/");
+
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsLogingIn(true);
+
+        const formData = new FormData(e.currentTarget);
+        const username = String(formData.get('username')).trim();
+        const password = String(formData.get('password')).trim();
+        
+        await delay();
+
+        try {
+            if (username === "init.dev" && password === "12345"){
+                auth.dispatch({type: 'login', payload: {user: username, email: 'init1.dev@gmail.com'}})
+                console.log("login correcto");
+                
+                navigate("/dashboard")
+                setIsLogingIn(false);
+            } else {
+                console.log("login mal");
+                setIsLogingIn(false);
+                return {
+                    error: "Invalid login attempt",
+                }
+            }
+        } catch (error) {
+            throw (error instanceof Error)
+                ? error
+                : new Error("Unknown error occurred")
+        }
+    }
 
     return (
         <>
@@ -34,19 +66,15 @@ function LoginPage() {
                             <AuthStatus />
                         </LoginInfo>
 
-                        <Form method="post"  style={{marginTop: '2rem'}} replace>
+                        <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="username" value={username}
-                                placeholder="init.dev"
-                                onChange={(e) => setUsername(e.target.value)}/>
+                            <Input type="text" name="username" defaultValue="init.dev"/>
 
-                            <Input type="password" name="password" value={password}
-                                placeholder="12345"
-                                onChange={(e) => setPassword(e.target.value)}/>
+                            <Input type="password" name="password" defaultValue="12345"/>
 
-                            <Button type="submit" disabled={isLoggingIn}>
-                                {isLoggingIn ? "Logging in..." : "Login"}
+                            <Button type="submit" disabled={isLogingIn}>
+                                {isLogingIn ? "Logging in..." : "Login"}
                             </Button>
 
                             {actionData && actionData.error 

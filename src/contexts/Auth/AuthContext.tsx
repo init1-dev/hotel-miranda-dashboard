@@ -2,21 +2,19 @@ import { createContext } from 'react';
 import { Action, State, UserAuth } from "./useAuth";
 
 export const UserContext = createContext<{ state: State; dispatch: React.Dispatch<Action> }>({ 
-    state: {auth: false, user: '', email: ''}, dispatch: () => {}
+    state: {auth: false, user: null, email: null}, dispatch: () => {}
 });
 
 export const AuthProvider = ({ children }: {children: React.ReactNode}) => {
-    const initAuth = localStorage.getItem('auth') ? localStorage.getItem('auth') : null;
-    const initUserString = localStorage.getItem('user');
+    const initUserString = localStorage.getItem('__auth__');
     const initUser = initUserString ? JSON.parse(initUserString) : null;
     const {state, dispatch} = UserAuth({
-        auth: initAuth ? initAuth === '1' : false,
-        user: initUser ? initUser.user : '',
-        email: initUser ? initUser.email : ''
+        auth: initUser ? initUser.auth : false,
+        user: initUser ? initUser.user : null,
+        email: initUser ? initUser.email : null
     });
 
-    localStorage.setItem('auth', state?.auth ? '1' : '0');
-    localStorage.setItem('user', JSON.stringify({user: state?.user, email: state?.email}))
+    localStorage.setItem('__auth__', JSON.stringify({auth: state?.auth, user: state?.user, email: state?.email}))
 
     return (
         <UserContext.Provider value={{state: state, dispatch: dispatch}}>

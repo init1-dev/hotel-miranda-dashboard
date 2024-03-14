@@ -1,9 +1,11 @@
-import { useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import init from "../../assets/init.png";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/Auth/AuthContext";
 
 function AuthStatus() {
-    const { user, email } = useRouteLoaderData("root") as { user: string | null, email: string | null };
+    const auth = useContext(UserContext);
+    const { user, email } = auth.state;
 
     if (!user) {
         return <p>You are not logged in</p>;

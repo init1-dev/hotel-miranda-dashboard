@@ -1,20 +1,28 @@
-import { useFetcher } from "react-router-dom";
 import styled from "styled-components";
 import { MdLogout } from "react-icons/md";
+import { useContext, useState } from "react";
+import { UserContext } from "../../contexts/Auth/AuthContext";
+import { delay } from "../../helpers/delay";
 
 function Logout() {
-    const fetcher = useFetcher();
+    const auth = useContext(UserContext);
 
-    const isLoggingOut = fetcher.formData != null;
+    const [isLogingOut, setIsLogingOut] = useState(false);
+
+    const handleLogout = async() => {
+        setIsLogingOut(true);
+        
+        await delay();
+
+        auth.dispatch({type: 'logout'})
+    }
 
     return (
         <>
-            <fetcher.Form method="post" action="/logout">
-                <LogButton type="submit" disabled={isLoggingOut}>
-                    <MdLogout />
-                    {isLoggingOut ? "Loging out..." : "Log out"}
-                </LogButton>
-            </fetcher.Form>
+            <LogButton onClick={handleLogout} disabled={isLogingOut}>
+                <MdLogout />
+                {isLogingOut ? "Loging out..." : "Log out"}
+            </LogButton>
         </>
     );
 }

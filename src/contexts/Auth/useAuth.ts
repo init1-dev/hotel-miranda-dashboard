@@ -2,13 +2,13 @@ import { useReducer } from "react";
 
 export interface State {
     auth: boolean;
-    user: string;
-    email: string;
+    user: string | null;
+    email: string | null;
 }
 
 export interface Action {
     type: string;
-    payload: {
+    payload?: {
         user?: string;
         email?: string;
     };
@@ -20,13 +20,13 @@ const reducer = (state: State, action: Action): State => {
         return {
                 ...state,
                 auth: true,
-                user: action.payload.user || state.user,
-                email: action.payload.email || state.email
+                user: action.payload?.user ?? state.user,
+                email: action.payload?.email ?? state.email
             }
         case 'edit':
             return {
                 ...state,
-                email: action.payload.email || state.email
+                email: action.payload?.email ?? state.email
             }
         case 'logout':
             return {
