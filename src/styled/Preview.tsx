@@ -88,8 +88,9 @@ export const ImageContainer = styled(PreviewContainer)`
     div {
         width: 100%;
         position: absolute;
-        background-color: rgba(0, 0, 0, 75%);
+        background-color: rgba(0, 0, 0, 50%);
         text-shadow: 1px 1px 1px black;
+        border-radius: 0 0 0.5rem 0.5rem;
         bottom: 0;
         padding: 2rem 2rem;
 
