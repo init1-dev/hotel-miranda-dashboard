@@ -26,7 +26,7 @@ function Rooms() {
     const navigate = useNavigate();
     const roomSelect = orderBy.rooms;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Rooms");
-    const [currentOrder, setCurrentOrder] = useState("order_date");
+    const [currentOrder, setCurrentOrder] = useState("price-high-low");
 
     const dispatch = useAppDispatch();
     const roomsData = useAppSelector(selectRooms);
@@ -37,8 +37,12 @@ function Rooms() {
 
         return [...all].sort((a, b) => {
             switch (currentOrder) {
-                case "offer":
+                case "offer-high-low":
                     return b.offer - a.offer;
+                case "offer-low-high":
+                    return a.offer - b.offer;
+                case "price-low-high":
+                    return a.price - b.price;
                 default:
                     return b.price - a.price;
             }
@@ -126,7 +130,10 @@ function Rooms() {
                         <p>{row.offer}€</p>
                         <Night>/Night</Night>
                     </>
-                ) : "-";
+                ) : <>
+                        <p>{row.price}€</p>
+                        <Night>/Night</Night>
+                    </>
             }
         },
         {
