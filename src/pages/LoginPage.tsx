@@ -1,11 +1,15 @@
 import { Form, redirect, useActionData, useLocation, useNavigate } from "react-router-dom";
 import AuthStatus from "../helpers/login/authStatus";
 import styled from "styled-components";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
 import { FaUserCircle } from "react-icons/fa";
 import { UserContext } from "../contexts/Auth/AuthContext";
 import { delay } from "../helpers/delay";
+import withReactContent from "sweetalert2-react-content";
+import Swal, { SweetAlertIcon } from "sweetalert2";
+
+const MySwal = withReactContent(Swal);
 
 function LoginPage() {
     const auth = useContext(UserContext);
@@ -15,6 +19,8 @@ function LoginPage() {
     const from = params.get("from") || "/";
 
     const [isLogingIn, setIsLogingIn] = useState(false);
+    const message = useRef('');
+    const icon = useRef<SweetAlertIcon | undefined>(undefined);
 
     const actionData = useActionData() as { error: string } | undefined;
 
@@ -29,28 +35,34 @@ function LoginPage() {
         const formData = new FormData(e.currentTarget);
         const username = String(formData.get('username')).trim();
         const password = String(formData.get('password')).trim();
-        
+
         await delay();
 
         try {
             if (username === "init.dev" && password === "12345"){
+                setIsLogingIn(false);
+                icon.current = 'success';
+                message.current = 'Logged in successfully';
                 auth.dispatch({type: 'login', payload: {user: username, email: 'init1.dev@gmail.com'}})
-                console.log("login correcto");
-                
                 navigate("/dashboard")
-                setIsLogingIn(false);
             } else {
-                console.log("login mal");
                 setIsLogingIn(false);
-                return {
-                    error: "Invalid login attempt",
-                }
+                icon.current = 'warning';
+                message.current = 'Error: Incorrect username/password';
             }
         } catch (error) {
             throw (error instanceof Error)
                 ? error
                 : new Error("Unknown error occurred")
         }
+
+        MySwal.fire({
+            text: message.current,
+            icon: icon.current ? icon.current : undefined,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
     }
 
     return (
@@ -71,7 +83,7 @@ function LoginPage() {
 
                             <Input type="text" name="username" defaultValue="init.dev"/>
 
-                            <Input type="password" name="password" defaultValue="12345"/>
+                            <Input type="password" name="password" placeholder="12345"/>
 
                             <Button type="submit" disabled={isLogingIn}>
                                 {isLogingIn ? "Logging in..." : "Login"}

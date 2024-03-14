@@ -3,6 +3,10 @@ import { MdLogout } from "react-icons/md";
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/Auth/AuthContext";
 import { delay } from "../../helpers/delay";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 function Logout() {
     const auth = useContext(UserContext);
@@ -13,6 +17,15 @@ function Logout() {
         setIsLogingOut(true);
         
         await delay();
+
+        
+        MySwal.fire({
+            text: 'Logged out successfully',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
 
         auth.dispatch({type: 'logout'})
     }
