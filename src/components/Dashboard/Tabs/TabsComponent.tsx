@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import styled from "styled-components";
 
 export interface SectionData {
@@ -14,6 +14,7 @@ export interface TabsProps  {
 }
 
 export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) => {
+    const [activeTab, setActiveTab] = useState<string | boolean | undefined>(section[0]?.accesor);
     
     return (
         <>
@@ -21,7 +22,16 @@ export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) =>
                 <TabsContent>
                     { 
                         section.map((item, index) => (
-                            <Tab key={index} onClick={() => setCurrentTab(item.accesor)}>{item.label}</Tab>
+                            <Tab 
+                                key={index} 
+                                onClick={() => {
+                                    setActiveTab(item.accesor);
+                                    setCurrentTab(item.accesor);
+                                }}
+                                active={item.accesor === activeTab}
+                            >
+                                {item.label}
+                            </Tab>
                         )) 
                     }
                 </TabsContent>
@@ -47,8 +57,36 @@ const TabsContent = styled.div`
     gap: 5rem;
 `
 
-const Tab = styled.button`
+interface TabProps {
+    active: boolean;
+}
+
+const Tab = styled.button<TabProps>`
     all: unset;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
+
+    &:focus, &:focus-visible {
+        outline: unset;
+    }
+
+    &:hover {
+        border-color: unset;
+    }
+
+    ${({ active }) => active && `
+        font-weight: bold;
+        color: #7bcf92;
+        filter: brightness(0.7);
+
+        &:before {
+            content: '<';
+            margin-right: 0.2rem;
+        }
+
+        &:after {
+            content: '>';
+            margin-left: 0.2rem;
+        }
+    `}
 `
