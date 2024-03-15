@@ -8,7 +8,7 @@ import { selectRoom } from '../../../store/Rooms/roomsSlice';
 import { useEffect } from 'react';
 import { getRoom } from '../../../store/Rooms/roomsThunk';
 import { Loader, Loading } from '../../../styled/Loading';
-import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../../styled/Span';
+import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
 
 SwiperCore.use([Navigation]);
 

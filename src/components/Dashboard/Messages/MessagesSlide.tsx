@@ -7,11 +7,50 @@ import 'swiper/css/navigation';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import styled from 'styled-components';
+import { MessageText, MessageTitle } from '../../../styled/Message';
+import { format } from 'date-fns';
+import { Star } from '../../../pages/Messages';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+import { Data } from '../../Table/Table';
 
 SwiperCore.use([Navigation]);
+const MySwal = withReactContent(Swal);
 
 function MessagesSlider() {
     const selectedData = messagesData.slice(0, 10);
+
+    const messageStars = (row: number) => {
+        const messageStars = [];
+                
+        for (let index = 0; index < row; index++) {
+            messageStars.push(<Star key={index} />);
+        }
+    
+        return <span>{messageStars}</span>;
+    }
+
+    const action = (e: React.MouseEvent<HTMLElement, MouseEvent>, row: Data) => {
+        e.stopPropagation()
+        return (
+            MySwal.fire({
+                title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+                html: (
+                    <>
+                        <MessageText><strong>Email:</strong> {row.email}</MessageText>
+                        <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
+                        <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
+                        <MessageText><strong>Rating:</strong> { messageStars(Number(row.stars)) }</MessageText>
+                        <br />
+                        <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
+                        <br />
+                        <MessageText><strong>Message:</strong> {row.message}</MessageText>
+                    </>
+                ),
+                showConfirmButton: false
+            })
+        )
+    }
 
     return (
         <>
@@ -25,7 +64,7 @@ function MessagesSlider() {
             >
                 <h2>Latest Reviews by Customers</h2>
                 {selectedData.map((message, messageIndex) => (
-                    <SwiperSlideItem key={messageIndex}>
+                    <SwiperSlideItem key={messageIndex} onClick={(e) => action(e, message)}>
                         <h4>
                             {message.message.slice(0, 200) + "..."}
                         </h4>

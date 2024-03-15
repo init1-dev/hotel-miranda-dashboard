@@ -185,7 +185,7 @@ const CustomerDiv = styled.div`
     }
 `
 
-const Star = styled(IoIosStar)`
+export const Star = styled(IoIosStar)`
     color: #bebe0e;
 `
 
