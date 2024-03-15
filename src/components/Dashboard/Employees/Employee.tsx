@@ -81,16 +81,6 @@ function Employee () {
                                             && <SpanStyledCheckOut>
                                                     {employeeData.itemData.status ? "Activo" : "Inactivo"}
                                                 </SpanStyledCheckOut> }
-                                    <div>
-                                        <h4>
-                                            {employeeData.itemData && employeeData.itemData.type}
-                                        </h4>
-
-                                        <p>
-                                            {employeeData.itemData && employeeData.itemData.description}
-                                        </p>
-                                    </div>
-
                                     <img src={employeeData.itemData && employeeData.itemData.photo} alt="" />
                                 </ImageContainer>
 

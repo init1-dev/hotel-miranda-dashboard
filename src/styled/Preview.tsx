@@ -61,6 +61,11 @@ export const Amenities = styled.div`
 
 export const ImageDiv = styled.div`
     
+    img {
+        max-height: 80px;
+        border-radius: 0.5rem;
+        margin-right: 0.7rem;
+    }
 `
 
 export const TextDiv = styled.div`

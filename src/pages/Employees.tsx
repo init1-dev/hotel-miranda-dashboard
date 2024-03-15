@@ -215,9 +215,10 @@ const Container = styled.div`
 `
 
 const Imagen = styled.img`
-    max-height: auto;
-    width: 70px;
-    aspect-ratio: 16/9;
+    max-height: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
     object-fit: contain;
     object-position: center;
 `
