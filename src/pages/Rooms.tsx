@@ -1,8 +1,6 @@
-import styled from "styled-components";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import styled, { ThemeContext } from "styled-components";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { orderBy, rooms } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
@@ -18,8 +16,7 @@ import { action } from "../helpers/action";
 import { selectRooms } from "../store/Rooms/roomsSlice";
 import { deleteRoom, getRoomsThunk } from "../store/Rooms/roomsThunk";
 import { RoomData } from "../store/interfaces";
-
-const MySwal = withReactContent(Swal)
+import CustomSwal from "../helpers/Swal/CustomSwal";
 
 function Rooms() {
     const location=useLocation().pathname;
@@ -27,6 +24,7 @@ function Rooms() {
     const roomSelect = orderBy.rooms;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Rooms");
     const [currentOrder, setCurrentOrder] = useState("price-high-low");
+    const theme = useContext(ThemeContext);
 
     const dispatch = useAppDispatch();
     const roomsData = useAppSelector(selectRooms);
@@ -63,16 +61,14 @@ function Rooms() {
             'label': 'Room Name',
             display: (row: Data) => {
                 return <Container>
-                    <Imagen src={`${row.photo}`} alt="imagen de la habitacion" onClick={(e) => {
+                    <Imagen src={`${row.photo}`} alt="imagen de la habitacion" onClick={async(e) => {
                         e.stopPropagation();
-                        return (
-                            MySwal.fire({
-                                title: <MessageTitle>Room #{row.room_number}: {row.room_type}</MessageTitle>,
-                                html: <ImagePreview src={String(row.photo)} alt="imagen de la habitacion" />,
-                                width: 1000,
-                                showConfirmButton: false
-                            })
-                        )
+                        const swalProps = {
+                            title: <MessageTitle>Room #{row.room_number}: {row.room_type}</MessageTitle>,
+                            html: <ImagePreview src={String(row.photo)} alt="imagen de la habitacion" />,
+                            width: 1000
+                        }
+                        await CustomSwal({data: swalProps, theme: theme})
                     }}/>
                     <SpanContainer>
                         <h4>{row.name} Nº{row.room_number}</h4>
@@ -88,7 +84,7 @@ function Rooms() {
         {
             'label': 'Amenities',
             display: (row: Data) => row.amenities ?
-                <ButtonStyledViewNotes onClick={(event) => {
+                <ButtonStyledViewNotes onClick={async(event) => {
                     event.stopPropagation()
                     const amenitiesArray = Array.isArray(row.amenities) 
                         ? row.amenities 
@@ -102,13 +98,12 @@ function Rooms() {
                             })}
                         </ul>
                     )
-                    return (
-                        MySwal.fire({
-                            title: <MessageTitle>Room #{row.room_number}: {row.room_type}</MessageTitle>,
-                            html: htmlCode,
-                            showConfirmButton: false
-                        })
-                    )
+                    const swalProps = {
+                        title: <MessageTitle>Room #{row.room_number}: {row.room_type}</MessageTitle>,
+                        html: htmlCode,
+                        showConfirmButton: false
+                    }
+                    await CustomSwal({data: swalProps, theme: theme})
                 }}>View</ButtonStyledViewNotes>
                 :
                 <ButtonStyledViewNotesDisabled disabled>None</ButtonStyledViewNotesDisabled>
@@ -159,27 +154,31 @@ function Rooms() {
                             <FaRegEdit />
                         </ActionButtonIcon>
 
-                        <ActionButtonIcon onClick={(e) => {
-                            e.stopPropagation()
-                            MySwal.fire({
+                        <ActionButtonIcon onClick={async(e) => {
+                            e.stopPropagation();
+                            const swalProps = {
                                 title: `<small>You're going to delete room #${roomRow.id}</small>`,
                                 text: `This action is irreversible`,
-                                icon: 'warning',
+                                icon: 'warning' as const,
+                                showConfirmButton: true,
                                 showCancelButton: true,
                                 confirmButtonText: 'Delete',
                                 confirmButtonColor: '#ff0000',
                                 cancelButtonText: 'Cancel',
                                 reverseButtons: true
-                            }).then((result) => {
+                            }
+                            await CustomSwal({data: swalProps, theme: theme})
+                            .then(async(result) => {
                                 if (result.isConfirmed) {
                                     dispatch(deleteRoom(roomRow));
-                                    MySwal.fire({
+                                    const swalProps = {
                                         text: `Room #${roomRow.id} deleted successfully`,
-                                        icon: 'success',
+                                        icon: 'success' as const,
                                         timer: 2000,
                                         timerProgressBar: true,
                                         showConfirmButton: false
-                                    });
+                                    }
+                                    await CustomSwal({data: swalProps, theme: theme})
                                 }
                             });
                         }}>

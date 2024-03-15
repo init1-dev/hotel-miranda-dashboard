@@ -6,21 +6,18 @@ import { Archive, ButtonContainer, Publish } from "../styled/Button";
 import { format } from "date-fns";
 import { CiMail } from "react-icons/ci";
 import { MdOutlinePhone } from "react-icons/md";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { IoIosStar } from "react-icons/io";
 import { MessageText, MessageTitle } from "../styled/Message";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { SpanContainer } from "../styled/Span";
 import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
 import { archiveMsg, getMessagesThunk } from "../store/Messages/messagesThunk";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 import { MessageData } from "../store/interfaces";
-
-const MySwal = withReactContent(Swal);
+import CustomSwal from "../helpers/Swal/CustomSwal";
 
 const messageStars = (row: number) => {
     const messageStars = [];
@@ -38,6 +35,7 @@ function Messages() {
 
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Messages");
     const [currentOrder, setCurrentOrder] = useState("default");
+    const theme = useContext(ThemeContext);
 
     const dispatch = useAppDispatch();
     const messagesData = useAppSelector(selectMessages);
@@ -61,11 +59,10 @@ function Messages() {
         dispatch(getMessagesThunk());
     }, [dispatch]);
 
-    const action = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
+    const action = async(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
-        return (
-            MySwal.fire({
-                title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+        const swalProps = {
+            title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
                 html: (
                     <>
                         <MessageText><strong>Email:</strong> {row.email}</MessageText>
@@ -79,8 +76,8 @@ function Messages() {
                     </>
                 ),
                 showConfirmButton: false
-            })
-        )
+        }
+        await CustomSwal({data: swalProps, theme: theme})
     };
 
     const messagesHeaders = [

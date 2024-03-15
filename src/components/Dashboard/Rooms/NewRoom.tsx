@@ -1,14 +1,12 @@
-import Swal from "sweetalert2";
 import { AmenitiesSelect, Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../../styled/Form";
-import withReactContent from "sweetalert2-react-content";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { editRoom, getRoom, newRoom } from "../../../store/Rooms/roomsThunk";
 import { selectRoom } from "../../../store/Rooms/roomsSlice";
 import { Loader, Loading } from "../../../styled/Loading";
-
-const MySwal = withReactContent(Swal)
+import { ThemeContext } from "styled-components";
+import CustomSwal from "../../../helpers/Swal/CustomSwal";
 
 function NewRoom () {
     const navigate = useNavigate();
@@ -19,6 +17,7 @@ function NewRoom () {
     const isEdit = location.includes("edit");
     const currentId = isEdit ? id : null;
     const [fetched, setFetched] = useState(false);
+    const theme = useContext(ThemeContext);
     
     const initialFetch = useCallback(async () => {
         if(currentId){
@@ -61,7 +60,7 @@ function NewRoom () {
         return values;
     }
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         navigate("/dashboard/rooms");
 
@@ -83,15 +82,17 @@ function NewRoom () {
             }))
             : dispatch(newRoom(formDataToUpdate))
 
-        MySwal.fire({
+        const swalProps = {
             text: currentId
                     ? `Room #${id} successfully edited`
                     : `Room #${formDataToUpdate.id} successfully created`,
-            icon: 'success',
+            icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,
             showConfirmButton: false
-        });
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (

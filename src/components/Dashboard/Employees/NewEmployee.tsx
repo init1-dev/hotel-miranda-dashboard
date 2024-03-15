@@ -1,15 +1,13 @@
-import withReactContent from "sweetalert2-react-content";
 import { Button, Form, GridContainer, Input, Label, Select, Title } from "../../../styled/Form";
-import Swal from "sweetalert2";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { selecEmployee } from "../../../store/Employees/employeesSlice";
 import { editEmployee, getEmployee, newEmployee } from "../../../store/Employees/employeesThunk";
 import { Loader, Loading } from "../../../styled/Loading";
 import { format } from "date-fns";
-
-const MySwal = withReactContent(Swal);
+import { ThemeContext } from "styled-components";
+import CustomSwal from "../../../helpers/Swal/CustomSwal";
 
 function NewEmployee () {
     const navigate = useNavigate();
@@ -20,6 +18,7 @@ function NewEmployee () {
     const isEdit = location.includes("edit");
     const currentId = isEdit ? id : null;
     const [fetched, setFetched] = useState(false);
+    const theme = useContext(ThemeContext);
     
     const initialFetch = useCallback(async () => {
         if(currentId){
@@ -58,7 +57,7 @@ function NewEmployee () {
 
     const defaultStatus = formData.status ? "Active" : "Inactive";
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         navigate("/dashboard/employees");
 
@@ -82,16 +81,18 @@ function NewEmployee () {
                 }
             }))
             : dispatch(newEmployee(formDataToUpdate))
-
-        MySwal.fire({
+        
+        const swalProps = {
             text: currentId
                     ? `Employee #${id} successfully edited`
                     : `Employee #${formDataToUpdate.id} successfully created`,
-            icon: 'success',
+            icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,
             showConfirmButton: false
-        });
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (

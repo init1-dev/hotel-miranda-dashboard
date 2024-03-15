@@ -1,14 +1,12 @@
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import init from "../../assets/init.png";
 import { useContext, useRef } from "react";
 import { UserContext } from "../../contexts/Auth/AuthContext";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
-
-const MySwal = withReactContent(Swal);
+import CustomSwal from "../Swal/CustomSwal";
 
 function AuthStatus() {
     const auth = useContext(UserContext);
+    const theme = useContext(ThemeContext);
     const { user, email } = auth.state;
     const formUser = useRef(String(user));
     const formEmail = useRef(String(email));
@@ -17,16 +15,18 @@ function AuthStatus() {
         return <p>You are not logged in</p>;
     }
 
-    const handleSubmit = (user: string, email: string) => {
+    const handleSubmit = async(user: string, email: string) => {
         auth.dispatch({type: 'edit', payload: {user: user, email: email}})
-        MySwal.fire({
+        const swalProps = {
             title: 'Successfuly Updated!',
-            icon: 'success',
-        });
+            icon: 'success' as const,
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
     };
 
-    const handleEditUser = () => {
-        MySwal.fire({
+    const handleEditUser = async() => {
+        const swalProps = {
             text: 'Edit:',
             html: (
                 <form>
@@ -54,12 +54,16 @@ function AuthStatus() {
                     </div>
                 </form>
             ),
+            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: 'Update',
             confirmButtonColor: 'green',
             cancelButtonText: 'Cancel',
             reverseButtons: true
-        }).then((result) => {
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
+        .then((result) => {
             if (result.isConfirmed) {
                 handleSubmit(formUser.current, formEmail.current)
             }

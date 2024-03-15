@@ -10,13 +10,11 @@ import styled, { ThemeContext } from 'styled-components';
 import { MessageText, MessageTitle } from '../../../styled/Message';
 import { format } from 'date-fns';
 import { Star } from '../../../pages/Messages';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
 import { Data } from '../../Table/Table';
 import { useContext } from 'react';
+import CustomSwal from '../../../helpers/Swal/CustomSwal';
 
 SwiperCore.use([Navigation]);
-const MySwal = withReactContent(Swal);
 
 function MessagesSlider() {
     const selectedData = messagesData.slice(0, 10);
@@ -32,28 +30,26 @@ function MessagesSlider() {
         return <span>{messageStars}</span>;
     }
 
-    const action = (e: React.MouseEvent<HTMLElement, MouseEvent>, row: Data) => {
+    const action = async(e: React.MouseEvent<HTMLElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
-        return (
-            MySwal.fire({
-                title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
-                html: (
-                    <>
-                        <MessageText><strong>Email:</strong> {row.email}</MessageText>
-                        <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
-                        <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
-                        <MessageText><strong>Rating:</strong> { messageStars(Number(row.stars)) }</MessageText>
-                        <br />
-                        <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
-                        <br />
-                        <MessageText><strong>Message:</strong> {row.message}</MessageText>
-                    </>
-                ),
-                color: theme && theme.text,
-                background: theme && theme.contentBg,
-                showConfirmButton: false
-            })
-        )
+        const swalProps = {
+            title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+            html: (
+                <>
+                    <MessageText><strong>Email:</strong> {row.email}</MessageText>
+                    <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
+                    <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
+                    <MessageText><strong>Rating:</strong> { messageStars(Number(row.stars)) }</MessageText>
+                    <br />
+                    <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
+                    <br />
+                    <MessageText><strong>Message:</strong> {row.message}</MessageText>
+                </>
+            ),
+            showConfirmButton: false
+        }
+        
+        await CustomSwal({data: swalProps, theme: theme});
     }
 
     return (

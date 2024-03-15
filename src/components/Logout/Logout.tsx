@@ -1,15 +1,13 @@
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { MdLogout } from "react-icons/md";
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/Auth/AuthContext";
 import { delay } from "../../helpers/delay";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-const MySwal = withReactContent(Swal);
+import CustomSwal from "../../helpers/Swal/CustomSwal";
 
 function Logout() {
     const auth = useContext(UserContext);
+    const theme = useContext(ThemeContext);
 
     const [isLogingOut, setIsLogingOut] = useState(false);
 
@@ -18,16 +16,17 @@ function Logout() {
         
         await delay();
 
-        
-        MySwal.fire({
+        const swalProps = {
             text: 'Logged out successfully',
-            icon: 'success',
+            icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,
             showConfirmButton: false
-        });
+        }
 
         auth.dispatch({type: 'logout'})
+
+        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (

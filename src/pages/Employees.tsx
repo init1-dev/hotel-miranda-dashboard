@@ -3,10 +3,8 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { employees, orderBy } from "../helpers/Tabs/tabs";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { ActionButtonIcon, ButtonContainer, NewButton } from "../styled/Button";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
 import { MessageText, MessageTitle } from "../styled/Message";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { format } from "date-fns";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
@@ -15,12 +13,11 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectEmployees } from "../store/Employees/employeesSlice";
 import { deleteEmployee, getEmployeesThunk } from "../store/Employees/employeesThunk";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 import { EmployeeData } from "../store/interfaces";
 import { RiDeleteBin5Line } from "react-icons/ri";
-
-const MySwal = withReactContent(Swal)
+import CustomSwal from "../helpers/Swal/CustomSwal";
 
 function Employees() {
     const location=useLocation().pathname;
@@ -28,6 +25,7 @@ function Employees() {
     const employeesSelect = orderBy.employees;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Employees");
     const [currentOrder, setCurrentOrder] = useState("default");
+    const theme = useContext(ThemeContext);
 
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);
@@ -56,26 +54,25 @@ function Employees() {
             'label': 'Employee',
             display: (row: Data) => {
                 return <Container>
-                    <Imagen src={`${row.photo}`} alt="imagen de la habitacion" onClick={(e) => {
+                    <Imagen src={`${row.photo}`} alt="imagen del empleado" onClick={async(e) => {
                         e.stopPropagation();
-                        return (
-                            MySwal.fire({
-                                title: <MessageTitle>Employee #{row.employee_id}</MessageTitle>,
-                                html: (
-                                    <>
-                                        <img src={String(row.photo)} alt="imagen de la habitacion" />
-                                        <MessageText><strong>Name:</strong> {row.fullname}</MessageText>
-                                        <MessageText><strong>Email:</strong> {row.email}</MessageText>
-                                        <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
-                                        <MessageText><strong>Description:</strong> {row.description} </MessageText>
-                                        <br />
-                                        <MessageText><strong>Start Date:</strong> {row.start_date}</MessageText>
-                                        <MessageText><strong>Status:</strong> {row.status ? "Active" : "Inactive"}</MessageText>
-                                    </>
-                                ),
-                                showConfirmButton: false
-                            })
-                        )
+                        const swalProps = {
+                            title: <MessageTitle>Employee #{row.employee_id}</MessageTitle>,
+                            html: (
+                                <>
+                                    <img src={String(row.photo)} alt="imagen del empleado" />
+                                    <MessageText><strong>Name:</strong> {row.fullname}</MessageText>
+                                    <MessageText><strong>Email:</strong> {row.email}</MessageText>
+                                    <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
+                                    <MessageText><strong>Description:</strong> {row.description} </MessageText>
+                                    <br />
+                                    <MessageText><strong>Start Date:</strong> {row.start_date}</MessageText>
+                                    <MessageText><strong>Status:</strong> {row.status ? "Active" : "Inactive"}</MessageText>
+                                </>
+                            ),
+                            showConfirmButton: false
+                        }
+                        await CustomSwal({data: swalProps, theme: theme})
                     }}/>
                     <SpanContainer>
                         <h4>{row.fullname}</h4>
@@ -139,27 +136,32 @@ function Employees() {
                             <FaRegEdit />
                         </ActionButtonIcon>
 
-                        <ActionButtonIcon onClick={(e) => {
+                        <ActionButtonIcon onClick={async(e) => {
                             e.stopPropagation()
-                            MySwal.fire({
+                            const swalProps = {
                                 title: `<small>You're going to delete employee #${employeeRow.id}</small>`,
                                 text: `This action is irreversible`,
-                                icon: 'warning',
+                                icon: 'warning' as const,
+                                showConfirmButton: true,
                                 showCancelButton: true,
                                 confirmButtonText: 'Delete',
                                 confirmButtonColor: '#ff0000',
                                 cancelButtonText: 'Cancel',
                                 reverseButtons: true
-                            }).then((result) => {
+                            }
+
+                            await CustomSwal({data: swalProps, theme: theme})
+                            .then(async(result) => {
                                 if (result.isConfirmed) {
                                     dispatch(deleteEmployee(employeeRow));
-                                    MySwal.fire({
+                                    const swalProps = {
                                         text: `Employee #${employeeRow.id} deleted successfully`,
-                                        icon: 'success',
+                                        icon: 'success' as const,
                                         timer: 2000,
                                         timerProgressBar: true,
                                         showConfirmButton: false
-                                    });
+                                    }
+                                    await CustomSwal({data: swalProps, theme: theme})
                                 }
                             });
                         }}>

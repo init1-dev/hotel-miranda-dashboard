@@ -1,15 +1,13 @@
 import { Form, redirect, useActionData, useLocation, useNavigate } from "react-router-dom";
 import AuthStatus from "../helpers/login/AuthStatus";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
 import { FaUserCircle } from "react-icons/fa";
 import { UserContext } from "../contexts/Auth/AuthContext";
 import { delay } from "../helpers/delay";
-import withReactContent from "sweetalert2-react-content";
-import Swal, { SweetAlertIcon } from "sweetalert2";
-
-const MySwal = withReactContent(Swal);
+import CustomSwal from "../helpers/Swal/CustomSwal";
+import { SweetAlertIcon } from "sweetalert2";
 
 function LoginPage() {
     const auth = useContext(UserContext);
@@ -17,6 +15,7 @@ function LoginPage() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
+    const theme = useContext(ThemeContext);
 
     const [isLogingIn, setIsLogingIn] = useState(false);
     const message = useRef('');
@@ -56,13 +55,14 @@ function LoginPage() {
                 : new Error("Unknown error occurred")
         }
 
-        MySwal.fire({
+        const swalProps = {
             text: message.current,
             icon: icon.current ? icon.current : undefined,
             timer: 2000,
             timerProgressBar: true,
             showConfirmButton: false
-        });
+        }
+        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (
