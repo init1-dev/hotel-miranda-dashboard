@@ -27,7 +27,7 @@ function Employees() {
     const navigate = useNavigate();
     const employeesSelect = orderBy.employees;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Employees");
-    const [currentOrder, setCurrentOrder] = useState("order_date");
+    const [currentOrder, setCurrentOrder] = useState("default");
 
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);

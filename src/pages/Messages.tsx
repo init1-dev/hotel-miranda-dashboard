@@ -16,7 +16,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
 import { getMessagesThunk } from "../store/Messages/messagesThunk";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 
 const MySwal = withReactContent(Swal);
@@ -35,8 +35,26 @@ function Messages() {
     const location=useLocation().pathname;
     const messagesSelect = orderBy.messages;
 
+    const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Messages");
+    const [currentOrder, setCurrentOrder] = useState("default");
+
     const dispatch = useAppDispatch();
     const messagesData = useAppSelector(selectMessages);
+    const filteredMessages = useMemo(() => {
+        const all = (currentTab === "All Messages")
+            ? messagesData.data
+            : messagesData.data.filter((item) => item.archived === currentTab)
+
+        return [...all].sort((a, b) => {
+            switch (currentOrder) {
+                case 'older':
+                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                default:
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+            }
+        })
+        
+    }, [messagesData, currentTab, currentOrder])
 
     useEffect(() => {
         dispatch(getMessagesThunk());
@@ -71,9 +89,13 @@ function Messages() {
                     ?   messagesData.loading === false
                             ?
                                 <>
-                                    <TabsComponent section={messages}>
+                                    <TabsComponent section={messages} setCurrentTab={setCurrentTab}>
                                         <ButtonContainer>
-                                            <SectionSelect name="room-type" id="room-type" required>
+                                            <SectionSelect 
+                                                onChange={(e) => setCurrentOrder(e.target.value)}
+                                                name="room-type" 
+                                                id="room-type" 
+                                                required>
                                                 {
                                                     messagesSelect.map((type, index) => {
                                                         return <option key={index} value={type.accesor}>{type.label}</option>
@@ -82,7 +104,7 @@ function Messages() {
                                             </SectionSelect>
                                         </ButtonContainer>
                                     </TabsComponent>
-                                    <Table columns={messagesHeaders} data={messagesData.data} action={action}/>
+                                    <Table columns={messagesHeaders} data={filteredMessages} action={action}/>
                                 </>
                             : <Loading>
                                 <Loader />
