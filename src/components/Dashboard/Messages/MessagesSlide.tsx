@@ -6,19 +6,21 @@ import 'swiper/css/navigation';
 
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { MessageText, MessageTitle } from '../../../styled/Message';
 import { format } from 'date-fns';
 import { Star } from '../../../pages/Messages';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { Data } from '../../Table/Table';
+import { useContext } from 'react';
 
 SwiperCore.use([Navigation]);
 const MySwal = withReactContent(Swal);
 
 function MessagesSlider() {
     const selectedData = messagesData.slice(0, 10);
+    const theme = useContext(ThemeContext);
 
     const messageStars = (row: number) => {
         const messageStars = [];
@@ -47,6 +49,8 @@ function MessagesSlider() {
                         <MessageText><strong>Message:</strong> {row.message}</MessageText>
                     </>
                 ),
+                color: theme && theme.text,
+                background: theme && theme.contentBg,
                 showConfirmButton: false
             })
         )

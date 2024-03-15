@@ -28,7 +28,7 @@ export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) =>
                                     setActiveTab(item.accesor);
                                     setCurrentTab(item.accesor);
                                 }}
-                                active={item.accesor === activeTab}
+                                aria-selected={item.accesor === activeTab ? "true" : "false"}
                             >
                                 {item.label}
                             </Tab>
@@ -57,11 +57,7 @@ const TabsContent = styled.div`
     gap: 5rem;
 `
 
-interface TabProps {
-    active: boolean;
-}
-
-const Tab = styled.button<TabProps>`
+const Tab = styled.button`
     all: unset;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
@@ -74,7 +70,7 @@ const Tab = styled.button<TabProps>`
         border-color: unset;
     }
 
-    ${({ active }) => active && `
+    &[aria-selected="true"] {
         font-weight: bold;
         color: #7bcf92;
         filter: brightness(0.7);
@@ -88,5 +84,5 @@ const Tab = styled.button<TabProps>`
             content: '>';
             margin-left: 0.2rem;
         }
-    `}
+    }
 `
