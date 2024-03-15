@@ -15,9 +15,10 @@ import { SpanContainer } from "../styled/Span";
 import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
-import { getMessagesThunk } from "../store/Messages/messagesThunk";
+import { archiveMsg, getMessagesThunk } from "../store/Messages/messagesThunk";
 import { useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
+import { MessageData } from "../store/interfaces";
 
 const MySwal = withReactContent(Swal);
 
@@ -80,7 +81,87 @@ function Messages() {
                 showConfirmButton: false
             })
         )
-    }
+    };
+
+    const messagesHeaders = [
+        {
+            'label': 'ID / Name',
+            display: (row: Data) => (
+                <SpanContainer>
+                    <h4>{row.full_name}</h4>
+                    <small>
+                        #{row.message_id}
+                    </small>
+                </SpanContainer>
+            )
+        },
+        {
+            'label': 'Date',
+            display: (row: Data) => format( new Date(`${row.date}`), 'MMM do, yyyy')
+        },
+        {
+            'label': 'Contact',
+            display: (row: Data) => (
+                <CustomerDiv>
+                    <p>
+                        <CiMail />
+                        {row.email}
+                    </p>
+                    <p>
+                        <MdOutlinePhone />
+                        {row.phone}
+                    </p>
+                </CustomerDiv>
+            )
+        },
+        {
+            'label': 'Comment',
+            display: (row: Data) => {
+                return (
+                    <>  
+                        <p>
+                            {}
+                        </p>
+        
+                        <h3>
+                            {messageStars(Number(row.stars))} / <SmallText>
+                                                            {String(row.subject).slice(0,30)}..
+                                                        </SmallText>
+                        </h3>
+        
+                        <Message>
+                            {String(row.message).slice(0,50)}..
+                        </Message>
+                    </>
+                )
+            }
+        },
+        {
+            'label': 'Actions',
+            display : (row: Data) => {
+                const employeeRow = row as MessageData;
+                if (row.archived === false) {
+                    return (
+                        <ButtonContainer>
+                            <Publish onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(archiveMsg(employeeRow));
+                            }}>Archive</Publish>
+                        </ButtonContainer>
+                    )
+                } else {
+                    return (
+                        <ButtonContainer>
+                            <Archive onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(archiveMsg(employeeRow));
+                            }}>Publish</Archive>
+                        </ButtonContainer>
+                    )
+                }
+            }
+        }
+    ];
 
     return (
         <>
@@ -114,83 +195,6 @@ function Messages() {
         </>
     );
 }
-
-const messagesHeaders = [
-    {
-        'label': 'ID / Name',
-        display: (row: Data) => (
-            <SpanContainer>
-                <h4>{row.full_name}</h4>
-                <small>
-                    #{row.message_id}
-                </small>
-            </SpanContainer>
-        )
-    },
-    {
-        'label': 'Date',
-        display: (row: Data) => format( new Date(`${row.date}`), 'MMM do, yyyy')
-    },
-    {
-        'label': 'Contact',
-        display: (row: Data) => (
-            <CustomerDiv>
-                <p>
-                    <CiMail />
-                    {row.email}
-                </p>
-                <p>
-                    <MdOutlinePhone />
-                    {row.phone}
-                </p>
-            </CustomerDiv>
-        )
-    },
-    {
-        'label': 'Comment',
-        display: (row: Data) => {
-            return (
-                <>  
-                    <p>
-                        {}
-                    </p>
-    
-                    <h3>
-                        {messageStars(Number(row.stars))} / <SmallText>
-                                                        {String(row.subject).slice(0,30)}..
-                                                    </SmallText>
-                    </h3>
-    
-                    <Message>
-                        {String(row.message).slice(0,50)}..
-                    </Message>
-                </>
-            )
-        }
-    },
-    {
-        'label': 'Actions',
-        display : (row: Data) => {
-            if (row.archived === false) {
-                return (
-                    <ButtonContainer>
-                        <Publish onClick={(e) => {
-                            e.stopPropagation()
-                        }}>Archive</Publish>
-                    </ButtonContainer>
-                )
-            } else {
-                return (
-                    <ButtonContainer>
-                        <Archive onClick={(e) => {
-                            e.stopPropagation()
-                        }}>Publish</Archive>
-                    </ButtonContainer>
-                )
-            }
-        }
-    }
-];
 
 const CustomerDiv = styled.div`
     font-size: 13px;

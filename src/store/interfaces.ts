@@ -75,7 +75,7 @@ export interface MessageData extends Data{
     time_passed: string;
 }
 export interface Message {
-    itemData: MessageData | null;
+    itemData: MessageData | undefined;
     status: string;
     error: string | null;
 }
