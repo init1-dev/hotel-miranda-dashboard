@@ -40,7 +40,6 @@ function LoginPage() {
         try {
             await dispatch(getEmployeeAuth(employeeId)).unwrap()
                 .then((result) => {
-                    console.log(result);
                     if(result?.employee_id === employeeId && result.password === password){
                         setIsLogingIn(false);
                         icon.current = 'success';

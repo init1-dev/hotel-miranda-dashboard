@@ -166,7 +166,7 @@ const ProfileName = styled.p`
 
 const ProfileEmail = styled.small`
     color: #888888;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
 `
 

@@ -11,7 +11,7 @@ export const UserContext = createContext<{ state: State; dispatch: React.Dispatc
     }, dispatch: () => {}
 });
 
-export const AuthProvider = ({ children }: {children: React.ReactNode}) => {
+const AuthProvider = ({ children }: {children: React.ReactNode}) => {
     const initUserString = localStorage.getItem('__auth__');
     const initUser = initUserString ? JSON.parse(initUserString) : null;
     const {state, dispatch} = UserAuth({
@@ -37,3 +37,4 @@ export const AuthProvider = ({ children }: {children: React.ReactNode}) => {
     )
 };
 
+export default AuthProvider;
