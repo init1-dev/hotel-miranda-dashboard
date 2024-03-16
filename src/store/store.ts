@@ -3,10 +3,26 @@ import bookingsReducer from './Bookings/bookingsSlice';
 import employeesReducer from './Employees/employeesSlice';
 import roomsReducer from './Rooms/roomsSlice';
 import messagesReducer from './Messages/messagesSlice';
+import { HotelState } from "./interfaces";
 
 const persistanceLocalStorageMiddleware: Middleware = (store) => (next) => (action) => {
     next(action);
-    localStorage.setItem("__hotel__app__state__", JSON.stringify(store.getState()))
+    const initAppState = localStorage.getItem('__hotel__app__state__');
+
+    const initState: HotelState = initAppState ? JSON.parse(initAppState) : {
+        auth: null,
+        app: null
+    };
+    
+    localStorage.setItem("__hotel__app__state__", JSON.stringify({
+        ...initState,
+        app: {
+            bookings: store.getState().bookings,
+            employees: store.getState().employees,
+            messages: store.getState().messages,
+            rooms: store.getState().rooms
+        }
+    }));
 }
 
 export const store = configureStore({

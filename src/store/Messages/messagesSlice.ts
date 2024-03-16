@@ -15,11 +15,6 @@ const DEFAULT_STATE: MessagesState = {
     error: null,
 };
 
-// const initialState: MessagesState = (() => {
-//     const persistedState = localStorage.getItem("__hotel__app__state__");
-//     return (persistedState) ? JSON.parse(persistedState).messages : DEFAULT_STATE;
-// })();
-
 const messagesSlice = createSlice({
     name: 'messages',
     initialState: DEFAULT_STATE,

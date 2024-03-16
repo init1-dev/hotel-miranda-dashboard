@@ -25,6 +25,7 @@ function Logout() {
         }
 
         auth.dispatch({type: 'logout'})
+        localStorage.removeItem('__hotel__app__state__');
 
         await CustomSwal({data: swalProps, theme: theme})
     }

@@ -15,11 +15,6 @@ const DEFAULT_STATE: EmployeesState = {
     error: null,
 };
 
-// const initialState: EmployeesState = (() => {
-//     const persistedState = localStorage.getItem("__hotel__app__state__");
-//     return (persistedState) ? JSON.parse(persistedState).employees : DEFAULT_STATE;
-// })();
-
 const employeesSlice = createSlice({
     name: 'employees',
     initialState: DEFAULT_STATE,

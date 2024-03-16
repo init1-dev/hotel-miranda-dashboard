@@ -15,11 +15,6 @@ const DEFAULT_STATE: RoomState = {
     error: null,
 };
 
-// const initialState: RoomState = (() => {
-//     const persistedState = localStorage.getItem("__hotel__app__state__");
-//     return (persistedState) ? JSON.parse(persistedState).rooms : DEFAULT_STATE;
-// })();
-
 const roomSlice = createSlice({
     name: 'rooms',
     initialState: DEFAULT_STATE,

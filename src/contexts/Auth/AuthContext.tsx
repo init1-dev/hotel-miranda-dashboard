@@ -1,9 +1,17 @@
+import { HotelState } from "../../store/interfaces";
 import { UserAuth } from "./useAuth";
 import UserContext from './UserContext';
 
 const AuthProvider = ({ children }: {children: React.ReactNode}) => {
-    const initUserString = localStorage.getItem('__auth__');
-    const initUser = initUserString ? JSON.parse(initUserString) : null;
+    const initAppState = localStorage.getItem('__hotel__app__state__');
+    
+    const initState: HotelState = initAppState ? JSON.parse(initAppState) : {
+        auth: null,
+        app: null
+    };
+
+    const initUser = initAppState ? JSON.parse(initAppState).auth : null;
+    
     const {state, dispatch} = UserAuth({
         auth: initUser ? initUser.auth : false,
         user: initUser ? initUser.user : null,
@@ -12,12 +20,15 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
         photo: initUser ? initUser.photo : null
     });
 
-    localStorage.setItem('__auth__', JSON.stringify({
-        auth: state?.auth,
-        user: state?.user,
-        email: state?.email,
-        employeeId: state?.employeeId,
-        photo: state?.photo
+    localStorage.setItem('__hotel__app__state__', JSON.stringify({
+        ...initState,
+        auth: {
+            auth: state?.auth,
+            user: state?.user,
+            email: state?.email,
+            employeeId: state?.employeeId,
+            photo: state?.photo
+        }
     }))
 
     return (

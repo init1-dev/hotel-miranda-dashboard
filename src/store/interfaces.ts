@@ -1,5 +1,25 @@
 import { Data } from "../components/Table/Table";
 
+export interface HotelState {
+    auth: AuthState | null;
+    app: AppState | null;
+}
+
+export interface AuthState {
+    auth: boolean;
+    user: string;
+    email: string;
+    employeeId: string;
+    photo: string;
+}
+
+export interface AppState {
+    bookings: BookingsState;
+    employees: EmployeesState;
+    messages: MessagesState;
+    rooms: RoomState;
+}
+
 export interface BookingData extends Data{
     id: number;
     full_name: string;
