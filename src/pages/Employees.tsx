@@ -60,7 +60,7 @@ function Employees() {
                             title: <MessageTitle>Employee #{row.employee_id}</MessageTitle>,
                             html: (
                                 <>
-                                    <img src={String(row.photo)} alt="imagen del empleado" />
+                                    <img src={String(row.photo)} style={{maxWidth:"50%", marginBottom:"1rem"}} alt="imagen del empleado" />
                                     <MessageText><strong>Name:</strong> {row.fullname}</MessageText>
                                     <MessageText><strong>Email:</strong> {row.email}</MessageText>
                                     <MessageText><strong>Phone:</strong> {row.phone}</MessageText>

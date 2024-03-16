@@ -23,6 +23,16 @@ export const getEmployee = createAsyncThunk('employees/fetchEmployee', async (id
     }
 })
 
+export const getEmployeeAuth = createAsyncThunk('employees/fetchEmployee', async (employee_id: string | null) => {
+    try {
+        await delay();
+
+        return employeesData.find((item) => item.employee_id === employee_id );
+    } catch (error) {
+        throw new Error(`Error: ${error}`);
+    }
+})
+
 export const newEmployee = createAsyncThunk('employees/newEmployee', async (newData: EmployeeData) => {
     try {
         await delay();

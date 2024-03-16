@@ -5,9 +5,10 @@ import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
 import { FaUserCircle } from "react-icons/fa";
 import { UserContext } from "../contexts/Auth/AuthContext";
-import { delay } from "../helpers/delay";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { SweetAlertIcon } from "sweetalert2";
+import { useAppDispatch } from "../hooks/store";
+import { getEmployeeAuth } from "../store/Employees/employeesThunk";
 
 function LoginPage() {
     const auth = useContext(UserContext);
@@ -16,6 +17,7 @@ function LoginPage() {
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
     const theme = useContext(ThemeContext);
+    const dispatch = useAppDispatch();
 
     const [isLogingIn, setIsLogingIn] = useState(false);
     const message = useRef('');
@@ -32,23 +34,30 @@ function LoginPage() {
         setIsLogingIn(true);
 
         const formData = new FormData(e.currentTarget);
-        const username = String(formData.get('username')).trim();
+        const employeeId = String(formData.get('employee-id')).trim();
         const password = String(formData.get('password')).trim();
 
-        await delay();
-
         try {
-            if (username === user ? user : 'init.dev' && password === "12345"){
-                setIsLogingIn(false);
-                icon.current = 'success';
-                message.current = 'Logged in successfully';
-                auth.dispatch({type: 'login', payload: {user: username, email: 'init1.dev@gmail.com'}})
-                navigate("/dashboard")
-            } else {
-                setIsLogingIn(false);
-                icon.current = 'warning';
-                message.current = 'Error: Incorrect username/password';
-            }
+            await dispatch(getEmployeeAuth(employeeId)).unwrap()
+                .then((result) => {
+                    console.log(result);
+                    if(result?.employee_id === employeeId && result.password === password){
+                        setIsLogingIn(false);
+                        icon.current = 'success';
+                        message.current = 'Logged in successfully';
+                        auth.dispatch({type: 'login', payload: {
+                            user: result.fullname, 
+                            email: result.email, 
+                            employeeId: result.employee_id,
+                            photo: result.photo
+                        }})
+                        navigate("/dashboard")
+                    } else {
+                        setIsLogingIn(false);
+                        icon.current = 'warning';
+                        message.current = 'Error: Incorrect username/password';
+                    }
+                });
         } catch (error) {
             throw (error instanceof Error)
                 ? error
@@ -81,7 +90,7 @@ function LoginPage() {
                         <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="username" defaultValue="init.dev"/>
+                            <Input type="text" name="employee-id" defaultValue="3bc45dfe-8286"/>
 
                             <Input type="password" name="password" placeholder="12345"/>
 

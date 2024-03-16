@@ -15,11 +15,6 @@ const DEFAULT_STATE: BookingsState = {
     error: null,
 };
 
-// const initialState: BookingsState = (() => {
-//     const persistedState = localStorage.getItem("__hotel__app__state__");
-//     return (persistedState) ? JSON.parse(persistedState)["bookings"] : DEFAULT_STATE;
-// })();
-
 const bookingsSlice = createSlice({
     name: 'bookings',
     initialState: DEFAULT_STATE,
@@ -36,7 +31,6 @@ const bookingsSlice = createSlice({
                 state.status = 'fulfilled';
                 state.error = null;
                 state.data = action.payload;
-                // state.item = DEFAULT_STATE.item;
             })
             .addCase(getBookings.rejected, (state, action) => {
                 state.loading = false;

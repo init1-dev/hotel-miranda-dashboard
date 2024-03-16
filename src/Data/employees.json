@@ -1,14 +1,14 @@
 [
     {
         "id": 1,
-        "photo": "https://randomuser.me/api/portraits/men/1.jpg",
-        "name": "Kimberly",
-        "lastname": "MacCafferty",
-        "fullname": "Kimberly MacCafferty",
+        "photo": "https://avatars.githubusercontent.com/u/79700122?v=4",
+        "name": "Init",
+        "lastname": "Dev",
+        "fullname": "init.dev",
         "employee_id": "3bc45dfe-8286",
-        "email": "kmaccafferty0@joomla.org",
+        "email": "init1.dev@gmail.com",
         "start_date": "1/22/2024",
-        "description": "Maintenance",
+        "description": "CEO",
         "phone": "173-125-4724",
         "status": false,
         "password": "12345"

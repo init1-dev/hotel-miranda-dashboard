@@ -1,5 +1,4 @@
 import styled, { ThemeContext } from "styled-components";
-import init from "../../assets/init.png";
 import { useContext, useRef } from "react";
 import { UserContext } from "../../contexts/Auth/AuthContext";
 import CustomSwal from "../Swal/CustomSwal";
@@ -7,7 +6,7 @@ import CustomSwal from "../Swal/CustomSwal";
 function AuthStatus() {
     const auth = useContext(UserContext);
     const theme = useContext(ThemeContext);
-    const { user, email } = auth.state;
+    const { user, email, photo } = auth.state;
     const formUser = useRef(String(user));
     const formEmail = useRef(String(email));
 
@@ -20,6 +19,8 @@ function AuthStatus() {
         const swalProps = {
             title: 'Successfuly Updated!',
             icon: 'success' as const,
+            timer: 2000,
+            timerProgressBar: true,
         }
 
         await CustomSwal({data: swalProps, theme: theme})
@@ -29,7 +30,7 @@ function AuthStatus() {
         const swalProps = {
             text: 'Edit:',
             html: (
-                <form>
+                <form onSubmit={() => handleSubmit(formUser.current, formEmail.current)}>
                     <div>
                         <label htmlFor="username">Nombre de usuario:</label>
                         <br />
@@ -52,6 +53,7 @@ function AuthStatus() {
                             onChange={(e) => formEmail.current = e.target.value}
                         />
                     </div>
+                    <button type="submit" hidden></button>
                 </form>
             ),
             showConfirmButton: true,
@@ -73,7 +75,7 @@ function AuthStatus() {
     return (
         <Container>
             <UserContainer>
-                <ProfileImage src={init} alt="imagen de perfil" />
+                <ProfileImage src={photo ?? ""} alt="imagen de perfil" />
                 <ProfileName>{user}</ProfileName>
                 <ProfileEmail>{email}</ProfileEmail>
                 <Button onClick={handleEditUser}>
@@ -162,9 +164,9 @@ const ProfileName = styled.p`
     margin-bottom: 0.2rem;
 `
 
-const ProfileEmail = styled.p`
+const ProfileEmail = styled.small`
     color: #888888;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: normal;
 `
 
