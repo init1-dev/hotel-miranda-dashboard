@@ -14,8 +14,10 @@ function AuthStatus() {
         return <p>You are not logged in</p>;
     }
 
-    const handleSubmit = async(user: string, email: string) => {
-        auth.dispatch({type: 'edit', payload: {user: user, email: email}})
+    const handleSubmit = async(userInput: string, emailInput: string) => {
+        if(userInput !== user || emailInput !== email){
+            auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
+        }
         const swalProps = {
             title: 'Successfuly Updated!',
             icon: 'success' as const,
