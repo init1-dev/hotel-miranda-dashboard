@@ -1,15 +1,5 @@
-import { createContext } from 'react';
-import { Action, State, UserAuth } from "./useAuth";
-
-export const UserContext = createContext<{ state: State; dispatch: React.Dispatch<Action> }>({ 
-    state: {
-        auth: false, 
-        user: null, 
-        email: null, 
-        employeeId: null,
-        photo: null
-    }, dispatch: () => {}
-});
+import { UserAuth } from "./useAuth";
+import UserContext from './UserContext';
 
 const AuthProvider = ({ children }: {children: React.ReactNode}) => {
     const initUserString = localStorage.getItem('__auth__');

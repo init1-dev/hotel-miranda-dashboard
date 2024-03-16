@@ -1,7 +1,7 @@
 import styled, { ThemeContext } from "styled-components";
 import { MdLogout } from "react-icons/md";
 import { useContext, useState } from "react";
-import { UserContext } from "../../contexts/Auth/AuthContext";
+import UserContext from "../../contexts/Auth/UserContext";
 import { delay } from "../../helpers/delay";
 import CustomSwal from "../../helpers/Swal/CustomSwal";
 

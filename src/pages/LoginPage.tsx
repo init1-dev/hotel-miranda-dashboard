@@ -4,7 +4,7 @@ import styled, { ThemeContext } from "styled-components";
 import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
 import { FaUserCircle } from "react-icons/fa";
-import { UserContext } from "../contexts/Auth/AuthContext";
+import UserContext from "../contexts/Auth/UserContext";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { SweetAlertIcon } from "sweetalert2";
 import { useAppDispatch } from "../hooks/store";

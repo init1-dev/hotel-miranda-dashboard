@@ -1,6 +1,6 @@
 import styled, { ThemeContext } from "styled-components";
 import { useContext, useRef } from "react";
-import { UserContext } from "../../contexts/Auth/AuthContext";
+import UserContext from "../../contexts/Auth/UserContext";
 import CustomSwal from "../Swal/CustomSwal";
 
 function AuthStatus() {

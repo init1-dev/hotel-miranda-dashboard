@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import { useContext } from "react";
-import { UserContext } from "../contexts/Auth/AuthContext";
+import UserContext from "../contexts/Auth/UserContext";
 
 function Layout() {
     const auth = useContext(UserContext);
