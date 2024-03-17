@@ -25,3 +25,6 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 - improve input forms, tabs and order select styles
 - fix row height on tables (tableComponent)
 - General refactor
+
+- Improve bookings user img and MessagesSlide status display
+- Include __current__theme__ key in __hotel__app__state__

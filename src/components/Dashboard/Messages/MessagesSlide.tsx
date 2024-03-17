@@ -8,16 +8,18 @@ import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import styled, { ThemeContext } from 'styled-components';
 import { MessageText, MessageTitle } from '../../../styled/Message';
-import { format } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import { Star } from '../../../pages/Messages';
 import { Data } from '../../Table/Table';
 import { useContext } from 'react';
 import CustomSwal from '../../../helpers/Swal/CustomSwal';
+import { FaRegCheckCircle } from "react-icons/fa";
+import { FaRegTimesCircle } from "react-icons/fa";
 
 SwiperCore.use([Navigation]);
 
 function MessagesSlider() {
-    const selectedData = messagesData.slice(0, 10);
+    const selectedData = messagesData.slice(0, 10).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     const theme = useContext(ThemeContext);
 
     const messageStars = (row: number) => {
@@ -63,23 +65,38 @@ function MessagesSlider() {
                 className="mySwiper"
             >
                 <h2>Latest Reviews by Customers</h2>
-                {selectedData.map((message, messageIndex) => (
-                    <SwiperSlideItem key={messageIndex} onClick={(e) => action(e, message)}>
-                        <h4>
-                            {message.message.slice(0, 200) + "..."}
-                        </h4>
-                        <div>
-                            <SlideImg src={message.foto} alt="" />
-                            <div>
-                                <p>{message.full_name}</p>
-                                <p>{message.time_passed}</p>
-                            </div>
-                            <p>
-                                {message.archived ? "Archived" : "Not Archived"}
-                            </p>
-                        </div>
-                    </SwiperSlideItem>
-                ))}
+                {selectedData.map((message, messageIndex) => {
+                    const timeAgo = formatDistanceToNow(new Date(message.date), {
+                        addSuffix: true,
+                        includeSeconds: true
+                    });
+
+                    return (
+                        <SwiperSlideItem key={messageIndex} onClick={(e) => action(e, message)}>
+                            <h4>
+                                {message.message.slice(0, 200) + "..."}
+                            </h4>
+                            <InfoContainer>
+                                <div>
+                                    <SlideImg src={message.foto} alt="" />
+                                    <div>
+                                        <h6>{message.full_name}</h6>
+                                        <small>{timeAgo}</small>
+                                    </div>
+                                </div>
+                                <ButtonsContainer>
+                                    <StatusButtonArchive>
+                                        <FaRegCheckCircle />
+                                    </StatusButtonArchive>
+    
+                                    <StatusButtonUnarchive>
+                                        <FaRegTimesCircle />
+                                    </StatusButtonUnarchive>
+                                </ButtonsContainer>
+                            </InfoContainer>
+                        </SwiperSlideItem>
+                    )
+                })}
             </SwiperItem>
         </>
     );
@@ -90,7 +107,7 @@ const SwiperItem = styled(Swiper)`
     position: relative;
     width: 100%;
     height: 250px;
-    padding: 0.5rem 1rem 1rem 1rem;
+    padding: 0.5rem 1.2rem 1.2rem 1.2rem;
     display: flex;
     gap: 0.8rem;
     flex-direction: column-reverse;
@@ -98,6 +115,7 @@ const SwiperItem = styled(Swiper)`
     user-select: none;
     z-index: 0;
     margin-bottom: 1rem;
+    box-shadow: 2px 2px 6px -4px black;
 
     .swiper-button-prev, .swiper-button-next {
         position: absolute;
@@ -117,12 +135,12 @@ const SwiperItem = styled(Swiper)`
     }
 
     .swiper-button-next {
-        right: 1rem;
+        right: 1.2rem;
     }
 
     .swiper-button-prev {
         left: unset;
-        right: 4.5rem;
+        right: 4.8rem;
     }
 
     h2 {
@@ -150,41 +168,76 @@ const SwiperSlideItem = styled(SwiperSlide)`
     justify-content: space-between;
     align-items: flex-start;
     cursor: grab;
+    transition: scale 0.1s ease-in-out;
+    box-shadow: 0.5px 0.5px 5px -4px black;
+
+    &:hover {
+        scale: 1.03;
+        text-rendering: optimizeLegibility;
+        box-shadow: rgba(0, 0, 0, 0.08) 8px 8px 20px;
+    }
 
     &:active {
         cursor: grabbing;
     }
+`
 
-    p {
-        text-align: left;
+const InfoContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    h6 {
         font-size: 13px;
-        color: ${({ theme }) => theme.text};
     }
 
+    small {
+        font-size: 12px;
+        color: ${({ theme }) => theme.text};
+        filter: brightness(50%);
+    }
+    
     div {
-        display: flex;
-        align-items: center;
-        width: 100%;
-
-        p {
-            font-size: 14px;
-            color: ${({ theme }) => theme.text};
-        }
+        display: inline-flex;
+        flex-direction: row;
+        text-align: left;
+        justify-content: center;
 
         div {
-            align-items: flex-start;
             display: flex;
             flex-direction: column;
         }
     }
 `
 
+const ButtonsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-right: 1rem;
+`
+
+const StatusButtonArchive = styled.a`
+    cursor: pointer;
+    background-color: unset;
+    font-size: 20px;
+    color: #5AD07A;
+`
+
+const StatusButtonUnarchive = styled(StatusButtonArchive)`
+    color: #E23428;
+`
+
 const SlideImg = styled.img`
     display: block;
+    border-radius: 0.5rem;
     width: auto;
     height: 50px;
     aspect-ratio: 1/1;
     object-fit: cover;
+    margin-right: 0.5rem;
 `
 
 export default MessagesSlider;
