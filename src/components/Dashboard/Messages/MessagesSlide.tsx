@@ -168,11 +168,11 @@ const SwiperSlideItem = styled(SwiperSlide)`
     justify-content: space-between;
     align-items: flex-start;
     cursor: grab;
-    transition: scale 0.1s ease-in-out;
+    transition: scale 0.2s ease-in-out;
     box-shadow: 0.5px 0.5px 5px -4px black;
 
     &:hover {
-        scale: 1.03;
+        scale: 1.05;
         text-rendering: optimizeLegibility;
         box-shadow: rgba(0, 0, 0, 0.08) 8px 8px 20px;
     }
