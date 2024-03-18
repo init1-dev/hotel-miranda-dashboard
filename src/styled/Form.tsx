@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Title = styled.h1`
-    margin: 0 15% 0 15%;
+    margin: 1rem 20% 0 20%;
 `
 
 export const Form = styled.form`
@@ -11,7 +11,7 @@ export const Form = styled.form`
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
-    margin: 1rem 15% 0 15%;
+    margin: 1rem 20% 0 20%;
     box-shadow: 1px 1px 5px black;
 `
 

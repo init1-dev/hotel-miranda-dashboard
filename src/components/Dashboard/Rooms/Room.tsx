@@ -8,7 +8,7 @@ import { selectRoom } from '../../../store/Rooms/roomsSlice';
 import { useEffect } from 'react';
 import { getRoom } from '../../../store/Rooms/roomsThunk';
 import { Loader, Loading } from '../../../styled/Loading';
-import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../../styled/Span';
+import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
 
 SwiperCore.use([Navigation]);
 
@@ -71,15 +71,11 @@ function Room () {
                                 </InfoContainer>
 
                                 <ImageContainer>
-                                        {roomData.itemData && roomData.itemData.status === "In Progress" 
-                                            && <SpanStyledInProgress>
-                                                    {roomData.itemData.status}
-                                                </SpanStyledInProgress> }
-                                        {roomData.itemData && roomData.itemData.status === "Check In" 
+                                        {roomData.itemData && roomData.itemData.status === "Available" 
                                             && <SpanStyledCheckIn>
                                                     {roomData.itemData.status}
                                                 </SpanStyledCheckIn> }
-                                        {roomData.itemData && roomData.itemData.status === "Check Out"
+                                        {roomData.itemData && roomData.itemData.status === "Booked" 
                                             && <SpanStyledCheckOut>
                                                     {roomData.itemData.status}
                                                 </SpanStyledCheckOut> }

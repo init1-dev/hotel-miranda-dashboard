@@ -5,7 +5,7 @@ import { delay } from '../../helpers/delay';
 
 export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
     try {
-        await new Promise((r) => setTimeout(r, 1000));
+        await delay();
 
         return roomsData;
     } catch (error) {

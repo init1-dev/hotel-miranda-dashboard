@@ -1,5 +1,25 @@
 import { Data } from "../components/Table/Table";
 
+export interface HotelState {
+    auth: AuthState | null;
+    app: AppState | null;
+}
+
+export interface AuthState {
+    auth: boolean;
+    user: string;
+    email: string;
+    employeeId: string;
+    photo: string;
+}
+
+export interface AppState {
+    bookings: BookingsState;
+    employees: EmployeesState;
+    messages: MessagesState;
+    rooms: RoomState;
+}
+
 export interface BookingData extends Data{
     id: number;
     full_name: string;
@@ -47,7 +67,7 @@ export interface EmployeeData extends Data{
     password: string;
 }
 export interface Employee {
-    itemData: EmployeeData | null;
+    itemData: EmployeeData | undefined;
     status: string;
     error: string | null;
 }
@@ -75,7 +95,7 @@ export interface MessageData extends Data{
     time_passed: string;
 }
 export interface Message {
-    itemData: MessageData | null;
+    itemData: MessageData | undefined;
     status: string;
     error: string | null;
 }

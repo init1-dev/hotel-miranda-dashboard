@@ -6,20 +6,18 @@ import { Archive, ButtonContainer, Publish } from "../styled/Button";
 import { format } from "date-fns";
 import { CiMail } from "react-icons/ci";
 import { MdOutlinePhone } from "react-icons/md";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { IoIosStar } from "react-icons/io";
 import { MessageText, MessageTitle } from "../styled/Message";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { SpanContainer } from "../styled/Span";
 import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
-import { getMessagesThunk } from "../store/Messages/messagesThunk";
-import { useEffect } from "react";
+import { archiveMsg, getMessagesThunk } from "../store/Messages/messagesThunk";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
-
-const MySwal = withReactContent(Swal);
+import { MessageData } from "../store/interfaces";
+import CustomSwal from "../helpers/Swal/CustomSwal";
 
 const messageStars = (row: number) => {
     const messageStars = [];
@@ -35,18 +33,36 @@ function Messages() {
     const location=useLocation().pathname;
     const messagesSelect = orderBy.messages;
 
+    const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Messages");
+    const [currentOrder, setCurrentOrder] = useState("default");
+    const theme = useContext(ThemeContext);
+
     const dispatch = useAppDispatch();
     const messagesData = useAppSelector(selectMessages);
+    const filteredMessages = useMemo(() => {
+        const all = (currentTab === "All Messages")
+            ? messagesData.data
+            : messagesData.data.filter((item) => item.archived === currentTab)
+
+        return [...all].sort((a, b) => {
+            switch (currentOrder) {
+                case 'older':
+                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                default:
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+            }
+        })
+        
+    }, [messagesData, currentTab, currentOrder])
 
     useEffect(() => {
         dispatch(getMessagesThunk());
     }, [dispatch]);
 
-    const action = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
+    const action = async(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
-        return (
-            MySwal.fire({
-                title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+        const swalProps = {
+            title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
                 html: (
                     <>
                         <MessageText><strong>Email:</strong> {row.email}</MessageText>
@@ -60,9 +76,89 @@ function Messages() {
                     </>
                 ),
                 showConfirmButton: false
-            })
-        )
-    }
+        }
+        await CustomSwal({data: swalProps, theme: theme})
+    };
+
+    const messagesHeaders = [
+        {
+            'label': 'ID / Name',
+            display: (row: Data) => (
+                <SpanContainer>
+                    <h4>{row.full_name}</h4>
+                    <small>
+                        #{row.message_id}
+                    </small>
+                </SpanContainer>
+            )
+        },
+        {
+            'label': 'Date',
+            display: (row: Data) => format( new Date(`${row.date}`), 'MMM do, yyyy')
+        },
+        {
+            'label': 'Contact',
+            display: (row: Data) => (
+                <CustomerDiv>
+                    <p>
+                        <CiMail />
+                        {row.email}
+                    </p>
+                    <p>
+                        <MdOutlinePhone />
+                        {row.phone}
+                    </p>
+                </CustomerDiv>
+            )
+        },
+        {
+            'label': 'Comment',
+            display: (row: Data) => {
+                return (
+                    <>  
+                        <p>
+                            {}
+                        </p>
+        
+                        <h3>
+                            {messageStars(Number(row.stars))} / <SmallText>
+                                                            {String(row.subject).slice(0,30)}..
+                                                        </SmallText>
+                        </h3>
+        
+                        <Message>
+                            {String(row.message).slice(0,50)}..
+                        </Message>
+                    </>
+                )
+            }
+        },
+        {
+            'label': 'Actions',
+            display : (row: Data) => {
+                const employeeRow = row as MessageData;
+                if (row.archived === false) {
+                    return (
+                        <ButtonContainer>
+                            <Publish onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(archiveMsg(employeeRow));
+                            }}>Archive</Publish>
+                        </ButtonContainer>
+                    )
+                } else {
+                    return (
+                        <ButtonContainer>
+                            <Archive onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(archiveMsg(employeeRow));
+                            }}>Publish</Archive>
+                        </ButtonContainer>
+                    )
+                }
+            }
+        }
+    ];
 
     return (
         <>
@@ -71,9 +167,13 @@ function Messages() {
                     ?   messagesData.loading === false
                             ?
                                 <>
-                                    <TabsComponent section={messages}>
+                                    <TabsComponent section={messages} setCurrentTab={setCurrentTab}>
                                         <ButtonContainer>
-                                            <SectionSelect name="room-type" id="room-type" required>
+                                            <SectionSelect 
+                                                onChange={(e) => setCurrentOrder(e.target.value)}
+                                                name="room-type" 
+                                                id="room-type" 
+                                                required>
                                                 {
                                                     messagesSelect.map((type, index) => {
                                                         return <option key={index} value={type.accesor}>{type.label}</option>
@@ -82,7 +182,7 @@ function Messages() {
                                             </SectionSelect>
                                         </ButtonContainer>
                                     </TabsComponent>
-                                    <Table columns={messagesHeaders} data={messagesData.data} action={action}/>
+                                    <Table columns={messagesHeaders} data={filteredMessages} action={action}/>
                                 </>
                             : <Loading>
                                 <Loader />
@@ -92,83 +192,6 @@ function Messages() {
         </>
     );
 }
-
-const messagesHeaders = [
-    {
-        'label': 'ID / Name',
-        display: (row: Data) => (
-            <SpanContainer>
-                <h4>{row.full_name}</h4>
-                <small>
-                    #{row.message_id}
-                </small>
-            </SpanContainer>
-        )
-    },
-    {
-        'label': 'Date',
-        display: (row: Data) => format( new Date(`${row.date}`), 'MMM do, yyyy')
-    },
-    {
-        'label': 'Contact',
-        display: (row: Data) => (
-            <CustomerDiv>
-                <p>
-                    <CiMail />
-                    {row.email}
-                </p>
-                <p>
-                    <MdOutlinePhone />
-                    {row.phone}
-                </p>
-            </CustomerDiv>
-        )
-    },
-    {
-        'label': 'Comment',
-        display: (row: Data) => {
-            return (
-                <>  
-                    <p>
-                        {}
-                    </p>
-    
-                    <h3>
-                        {messageStars(Number(row.stars))} / <SmallText>
-                                                        {String(row.subject).slice(0,30)}..
-                                                    </SmallText>
-                    </h3>
-    
-                    <Message>
-                        {String(row.message).slice(0,50)}..
-                    </Message>
-                </>
-            )
-        }
-    },
-    {
-        'label': 'Actions',
-        display : (row: Data) => {
-            if (row.archived === false) {
-                return (
-                    <ButtonContainer>
-                        <Publish onClick={(e) => {
-                            e.stopPropagation()
-                        }}>Archive</Publish>
-                    </ButtonContainer>
-                )
-            } else {
-                return (
-                    <ButtonContainer>
-                        <Archive onClick={(e) => {
-                            e.stopPropagation()
-                        }}>Publish</Archive>
-                    </ButtonContainer>
-                )
-            }
-        }
-    }
-];
 
 const CustomerDiv = styled.div`
     font-size: 13px;
@@ -185,7 +208,7 @@ const CustomerDiv = styled.div`
     }
 `
 
-const Star = styled(IoIosStar)`
+export const Star = styled(IoIosStar)`
     color: #bebe0e;
 `
 

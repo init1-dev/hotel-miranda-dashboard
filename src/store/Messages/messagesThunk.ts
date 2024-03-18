@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import messagesData from '../../Data/messages.json';
+import { delay } from '../../helpers/delay';
+import { MessageData } from '../interfaces';
 
 export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async () => {
     try {
-        await new Promise((r) => setTimeout(r, 1000));
+        await delay();
 
         return messagesData;
     } catch (error) {
@@ -11,8 +13,17 @@ export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async
     }
 })
 
-// GET ONE
+export const archiveMsg = createAsyncThunk('messages/archive', async (row: MessageData) => {
+    try {
+        await delay();
 
-// EDIT ONE
+        const updatedRow: MessageData = {
+            ...row,
+            archived: !row.archived
+        }
 
-// DELETE ONE
+        return updatedRow;
+    } catch (error) {
+        throw new Error(`Error: ${error}`);
+    }
+})

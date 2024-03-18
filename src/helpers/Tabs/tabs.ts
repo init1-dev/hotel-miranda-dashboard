@@ -1,9 +1,9 @@
 const tabs = {
     bookings: [
-        { label: "All Bookings"},
-        { label: "Check In"},
-        { label: "Check Out"},
-        { label: "In Progress"}
+        { label: "All Bookings", accesor: "All Bookings"},
+        { label: "Check In", accesor: "Check In"},
+        { label: "Check Out", accesor: "Check Out"},
+        { label: "In Progress", accesor: "In Progress"}
     ],
     rooms: [
         { label: "All Rooms", accesor: "All Rooms"},
@@ -11,13 +11,13 @@ const tabs = {
         { label: "Booked", accesor: "Booked"}
     ],
     messages: [
-        { label: "All Messages", accesor: "all"},
-        { label: "Archived", accesor: "archived"}
+        { label: "All Messages", accesor: "All Messages"},
+        { label: "Archived", accesor: true}
     ],
     employees: [
-        { label: "All Employee", accesor: "all"},
-        { label: "Active Employee", accesor: "status"},
-        { label: "Inactive Employee", accesor: "status"}
+        { label: "All Employees", accesor: "All Employees"},
+        { label: "Active Employees", accesor: true},
+        { label: "Inactive Employees", accesor: false}
     ],
 }
 
@@ -29,8 +29,10 @@ export const orderBy = {
         { label: "Check Out", accesor: "check_out"}
     ],
     rooms: [
-        { label: "Price", accesor: "price"},
-        { label: "Offer", accesor: "offer"},
+        { label: "Price (Higher to Lower)", accesor: "price-high-low"},
+        { label: "Price (Lower to Higher)", accesor: "price-low-high"},
+        { label: "Offer (Higher to Lower)", accesor: "offer-high-low"},
+        { label: "Offer (Lower to Higher)", accesor: "offer-low-high"},
     ],
     messages: [
         { label: "Newest", accesor: "newest"},

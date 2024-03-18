@@ -1,9 +1,11 @@
-import { Navigate, Outlet, useLocation, useRouteLoaderData } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
-import { fakeAuthProvider } from "../helpers/AuthProvider";
+import { useContext } from "react";
+import UserContext from "../contexts/Auth/UserContext";
 
 function Layout() {
-    const { user } = useRouteLoaderData("root") as { user: string | null };
+    const auth = useContext(UserContext);
+    const { user } = auth.state;
     const { theme, handleToggleTheme } = useTheme();
     const location = useLocation();
     const isDashboard = /\/dashboard(?:\/|$)/.test(location.pathname);
@@ -11,7 +13,7 @@ function Layout() {
 
     return (
         <>
-            { (!user || !fakeAuthProvider.isAuthenticated) &&
+            { !user &&
                 <ThemeButtonLayout onClick={handleToggleTheme}>
                     {theme === 'light' ? '🌙' : '☀️'}
                 </ThemeButtonLayout>

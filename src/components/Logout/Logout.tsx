@@ -1,20 +1,41 @@
-import { useFetcher } from "react-router-dom";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { MdLogout } from "react-icons/md";
+import { useContext, useState } from "react";
+import UserContext from "../../contexts/Auth/UserContext";
+import { delay } from "../../helpers/delay";
+import CustomSwal from "../../helpers/Swal/CustomSwal";
 
 function Logout() {
-    const fetcher = useFetcher();
+    const auth = useContext(UserContext);
+    const theme = useContext(ThemeContext);
 
-    const isLoggingOut = fetcher.formData != null;
+    const [isLogingOut, setIsLogingOut] = useState(false);
+
+    const handleLogout = async() => {
+        setIsLogingOut(true);
+        
+        await delay();
+
+        const swalProps = {
+            text: 'Logged out successfully',
+            icon: 'success' as const,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        }
+
+        auth.dispatch({type: 'logout'})
+        localStorage.removeItem('__hotel__app__state__');
+
+        await CustomSwal({data: swalProps, theme: theme})
+    }
 
     return (
         <>
-            <fetcher.Form method="post" action="/logout">
-                <LogButton type="submit" disabled={isLoggingOut}>
-                    <MdLogout />
-                    {isLoggingOut ? "Loging out..." : "Log out"}
-                </LogButton>
-            </fetcher.Form>
+            <LogButton onClick={handleLogout} disabled={isLogingOut}>
+                <MdLogout />
+                {isLogingOut ? "Loging out..." : "Log out"}
+            </LogButton>
         </>
     );
 }

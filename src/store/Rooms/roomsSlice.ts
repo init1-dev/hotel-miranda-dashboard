@@ -15,32 +15,27 @@ const DEFAULT_STATE: RoomState = {
     error: null,
 };
 
-// const initialState: RoomState = (() => {
-//     const persistedState = localStorage.getItem("__hotel__app__state__");
-//     return (persistedState) ? JSON.parse(persistedState).rooms : DEFAULT_STATE;
-// })();
-
 const roomSlice = createSlice({
     name: 'rooms',
     initialState: DEFAULT_STATE,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getRoomsThunk.pending, (rooms) => {
-                rooms.loading = true;
-                rooms.status = 'pending';
-                rooms.error = null;
+            .addCase(getRoomsThunk.pending, (state) => {
+                state.loading = true;
+                state.status = 'pending';
+                state.error = null;
             })
-            .addCase(getRoomsThunk.fulfilled, (rooms, action) => {
-                rooms.loading = false;
-                rooms.status = 'fulfilled';
-                rooms.error = null;
-                rooms.data = action.payload;
+            .addCase(getRoomsThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.status = 'fulfilled';
+                state.error = null;
+                state.data = action.payload;
             })
-            .addCase(getRoomsThunk.rejected, (rooms, action) => {
-                rooms.loading = false;
-                rooms.status = 'rejected';
-                rooms.error = action.error?.message ?? "Unknown error occurred";
+            .addCase(getRoomsThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.status = 'rejected';
+                state.error = action.error?.message ?? "Unknown error occurred";
             })
 
             .addCase(getRoom.pending, (state) => {

@@ -1,8 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import Swal from 'sweetalert2'
-import withReactContent from "sweetalert2-react-content";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { bookings, orderBy } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
@@ -18,15 +16,16 @@ import { action } from "../helpers/action";
 import { selectBookings } from "../store/Bookings/bookingsSlice";
 import { deleteBooking, getBookings } from "../store/Bookings/bookingsThunk";
 import { BookingData } from "../store/interfaces";
-
-const MySwal = withReactContent(Swal)
+import CustomSwal from "../helpers/Swal/CustomSwal";
+import { ThemeContext } from "styled-components";
 
 function Bookings() {
     const location = useLocation().pathname;
     const navigate = useNavigate();
     const bookingsSelect = orderBy.bookings;
-    const [currentTab, setCurrentTab] = useState<string | undefined>("All Bookings");
+    const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Bookings");
     const [currentOrder, setCurrentOrder] = useState("order_date");
+    const theme = useContext(ThemeContext);
     
     const dispatch = useAppDispatch();
     const bookingsData = useAppSelector(selectBookings);
@@ -34,7 +33,7 @@ function Bookings() {
         const all = (currentTab === "All Bookings")
             ? bookingsData.data
             : bookingsData.data.filter((item) => item.status === currentTab)
-
+        
         return [...all].sort((a, b) => {
             switch (currentOrder) {
                 case 'check_in':
@@ -88,15 +87,14 @@ function Bookings() {
         {
             'label': 'Special Request',
             display: (row: Data) => row.special_request ?
-                <ButtonStyledViewNotes onClick={(event) => {
+                <ButtonStyledViewNotes onClick={async(event) => {
                     event.stopPropagation()
-                    return (
-                        MySwal.fire({
-                            title: <MessageTitle>{row.full_name} requests:</MessageTitle>,
-                            html: <MessageText>{row.special_request}</MessageText>,
-                            showConfirmButton: false
-                        })
-                    )
+                    const swalProps = {
+                        title: <MessageTitle>{row.full_name} requests:</MessageTitle>,
+                        html: <MessageText>{row.special_request}</MessageText>,
+                        showConfirmButton: false
+                    }
+                    await CustomSwal({data: swalProps, theme: theme})
                 }}>View</ButtonStyledViewNotes>
                 :
                 <ButtonStyledViewNotesDisabled disabled>None</ButtonStyledViewNotesDisabled>
@@ -120,7 +118,7 @@ function Bookings() {
         {
             'label': 'Actions',
             display : (row: Data) => {
-                const bookingRow = row as BookingData
+                const bookingRow = row as BookingData;
                 return (
                     <ButtonContainer>
                         <ActionButtonIcon onClick={(e) => {
@@ -130,27 +128,33 @@ function Bookings() {
                             <FaRegEdit />
                         </ActionButtonIcon>
 
-                        <ActionButtonIcon onClick={(e) => {
+                        <ActionButtonIcon onClick={async(e) => {
                             e.stopPropagation()
-                            MySwal.fire({
+
+                            const swalProps = {
                                 title: `<small>You're going to delete booking #${bookingRow.id}</small>`,
                                 text: `This action is irreversible`,
-                                icon: 'warning',
+                                icon: 'warning' as const,
+                                showConfirmButton: true,
                                 showCancelButton: true,
                                 confirmButtonText: 'Delete',
                                 confirmButtonColor: '#ff0000',
                                 cancelButtonText: 'Cancel',
                                 reverseButtons: true
-                            }).then((result) => {
+                            }
+
+                            await CustomSwal({data: swalProps, theme: theme})
+                            .then(async(result) => {
                                 if (result.isConfirmed) {
                                     dispatch(deleteBooking(bookingRow));
-                                    MySwal.fire({
-                                        text: `Booking #${bookingRow.id} deleted successfuly`,
-                                        icon: 'success',
+                                    const swalProps = {
+                                        text: `Booking #${bookingRow.id} deleted successfully`,
+                                        icon: 'success' as const,
                                         timer: 2000,
                                         timerProgressBar: true,
                                         showConfirmButton: false
-                                    });
+                                    }
+                                    await CustomSwal({data: swalProps, theme: theme})
                                 }
                             });
                         }}>

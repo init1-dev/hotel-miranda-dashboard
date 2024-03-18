@@ -1,21 +1,86 @@
-import { useRouteLoaderData } from "react-router-dom";
-import styled from "styled-components";
-import init from "../../assets/init.png";
+import styled, { ThemeContext } from "styled-components";
+import { useContext, useRef } from "react";
+import UserContext from "../../contexts/Auth/UserContext";
+import CustomSwal from "../Swal/CustomSwal";
 
 function AuthStatus() {
-    const { user, email } = useRouteLoaderData("root") as { user: string | null, email: string | null };
+    const auth = useContext(UserContext);
+    const theme = useContext(ThemeContext);
+    const { user, email, photo } = auth.state;
+    const formUser = useRef(String(user));
+    const formEmail = useRef(String(email));
 
     if (!user) {
         return <p>You are not logged in</p>;
     }
 
+    const handleSubmit = async(userInput: string, emailInput: string) => {
+        if(userInput !== user || emailInput !== email){
+            auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
+        }
+        const swalProps = {
+            title: 'Successfuly Updated!',
+            icon: 'success' as const,
+            timer: 2000,
+            timerProgressBar: true,
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
+    };
+
+    const handleEditUser = async() => {
+        const swalProps = {
+            text: 'Edit:',
+            html: (
+                <form onSubmit={() => handleSubmit(formUser.current, formEmail.current)}>
+                    <div>
+                        <label htmlFor="username">Nombre de usuario:</label>
+                        <br />
+                        <InputStyle
+                            type="text"
+                            name="username"
+                            placeholder="Insert new username"
+                            defaultValue={user ?? ''}
+                            onChange={(e) => formUser.current = e.target.value}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email">Correo electrónico:</label>
+                        <br />
+                        <InputStyle
+                            type="email"
+                            name="email"
+                            placeholder="Insert new email"
+                            defaultValue={email ?? ''}
+                            onChange={(e) => formEmail.current = e.target.value}
+                        />
+                    </div>
+                    <button type="submit" hidden></button>
+                </form>
+            ),
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            confirmButtonColor: 'green',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
+        .then((result) => {
+            if (result.isConfirmed) {
+                handleSubmit(formUser.current, formEmail.current)
+            }
+        });
+    }
+
     return (
         <Container>
             <UserContainer>
-                <ProfileImage src={init} alt="imagen de perfil" />
+                <ProfileImage src={photo ?? ""} alt="imagen de perfil" />
                 <ProfileName>{user}</ProfileName>
                 <ProfileEmail>{email}</ProfileEmail>
-                <Button type="submit">
+                <Button onClick={handleEditUser}>
                     Edit User
                 </Button>
             </UserContainer>
@@ -27,6 +92,20 @@ function AuthStatus() {
         </Container>
     );
 }
+
+
+const InputStyle = styled.input`
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 14px;
+    width: 75%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    outline: unset;
+    border: 1px solid grey;
+`
 
 const Container = styled.div`
     width: 100%;
@@ -87,9 +166,9 @@ const ProfileName = styled.p`
     margin-bottom: 0.2rem;
 `
 
-const ProfileEmail = styled.p`
+const ProfileEmail = styled.small`
     color: #888888;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
 `
 

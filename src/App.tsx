@@ -1,3 +1,4 @@
+import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import './App.css'
 import router from './routes/Routes'
@@ -5,6 +6,7 @@ import styled, { ThemeContext, ThemeProvider } from 'styled-components'
 import { GlobalStyles, darkTheme, lightTheme } from './helpers/theme/themeConfig'
 import { useState } from 'react'
 import { loadTheme, toggleTheme } from './helpers/theme/themeUtils'
+const AuthProvider = React.lazy(()=> import('./contexts/Auth/AuthContext'))
 
 function App() {
   const [theme, setTheme] = useState(loadTheme);
@@ -15,14 +17,16 @@ function App() {
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, handleToggleTheme }}>
-      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <Wrapper>
-          <GlobalStyles />
-          <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
-        </Wrapper>
-      </ThemeProvider>
-    </ThemeContext.Provider>
+    <AuthProvider>
+      <ThemeContext.Provider value={{ theme, handleToggleTheme }}>
+        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+          <Wrapper>
+            <GlobalStyles />
+            <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
+          </Wrapper>
+        </ThemeProvider>
+      </ThemeContext.Provider>
+    </AuthProvider>
   )
 }
 

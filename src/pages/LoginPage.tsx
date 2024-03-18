@@ -1,25 +1,77 @@
-import { Form, redirect, useActionData, useLocation, useNavigation, useRouteLoaderData } from "react-router-dom";
-import AuthStatus from "../helpers/login/authStatus";
-import styled from "styled-components";
-import { useState } from "react";
+import { Form, redirect, useActionData, useLocation, useNavigate } from "react-router-dom";
+import AuthStatus from "../helpers/login/AuthStatus";
+import styled, { ThemeContext } from "styled-components";
+import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
 import { FaUserCircle } from "react-icons/fa";
+import UserContext from "../contexts/Auth/UserContext";
+import CustomSwal from "../helpers/Swal/CustomSwal";
+import { SweetAlertIcon } from "sweetalert2";
+import { useAppDispatch } from "../hooks/store";
+import { getEmployeeAuth } from "../store/Employees/employeesThunk";
 
 function LoginPage() {
+    const auth = useContext(UserContext);
+    const navigate = useNavigate();
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const theme = useContext(ThemeContext);
+    const dispatch = useAppDispatch();
 
-    const navigation = useNavigation();
-    const isLoggingIn = navigation.formData?.get("username") != null;
+    const [isLogingIn, setIsLogingIn] = useState(false);
+    const message = useRef('');
+    const icon = useRef<SweetAlertIcon | undefined>(undefined);
 
     const actionData = useActionData() as { error: string } | undefined;
 
-    const { user } = useRouteLoaderData("root") as { user: string | null };
+    const { user } = auth.state;
 
     if(user === null) redirect("/");
+
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsLogingIn(true);
+
+        const formData = new FormData(e.currentTarget);
+        const employeeId = String(formData.get('employee-id')).trim();
+        const password = String(formData.get('password')).trim();
+
+        try {
+            await dispatch(getEmployeeAuth(employeeId)).unwrap()
+                .then((result) => {
+                    if(result?.employee_id === employeeId && result.password === password){
+                        setIsLogingIn(false);
+                        icon.current = 'success';
+                        message.current = 'Logged in successfully';
+                        auth.dispatch({type: 'login', payload: {
+                            user: result.fullname, 
+                            email: result.email, 
+                            employeeId: result.employee_id,
+                            photo: result.photo
+                        }})
+                        navigate("/dashboard")
+                    } else {
+                        setIsLogingIn(false);
+                        icon.current = 'warning';
+                        message.current = 'Error: Incorrect username/password';
+                    }
+                });
+        } catch (error) {
+            throw (error instanceof Error)
+                ? error
+                : new Error("Unknown error occurred")
+        }
+
+        const swalProps = {
+            text: message.current,
+            icon: icon.current ? icon.current : undefined,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        }
+        await CustomSwal({data: swalProps, theme: theme})
+    }
 
     return (
         <>
@@ -34,19 +86,15 @@ function LoginPage() {
                             <AuthStatus />
                         </LoginInfo>
 
-                        <Form method="post"  style={{marginTop: '2rem'}} replace>
+                        <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="username" value={username}
-                                placeholder="init.dev"
-                                onChange={(e) => setUsername(e.target.value)}/>
+                            <Input type="text" name="employee-id" defaultValue="3bc45dfe-8286"/>
 
-                            <Input type="password" name="password" value={password}
-                                placeholder="12345"
-                                onChange={(e) => setPassword(e.target.value)}/>
+                            <Input type="password" name="password" placeholder="12345"/>
 
-                            <Button type="submit" disabled={isLoggingIn}>
-                                {isLoggingIn ? "Logging in..." : "Login"}
+                            <Button type="submit" disabled={isLogingIn}>
+                                {isLogingIn ? "Logging in..." : "Login"}
                             </Button>
 
                             {actionData && actionData.error 

@@ -49,15 +49,9 @@ export const DashboardPage = () => {
                 </TopBarContainerMax>
             }
 
-            {sidebarVisible
-                ? <Content>
-                    <Outlet />
-                </Content>
-
-                : <ContentMax>
-                    <Outlet />
-                </ContentMax>
-            }
+            <Content $sidebarVisible = {sidebarVisible}>
+                <Outlet />
+            </Content>
 
         </div>
     )
@@ -95,7 +89,7 @@ const SideBarContainer = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    box-shadow: -3px 5px 15px black;
+    box-shadow: -5px 5px 10px black;
     z-index: 2;
     user-select: none;
 `
@@ -104,17 +98,18 @@ const SideBarContainerMax = styled(SideBarContainer)`
     display: none;
 `
 
-const Content = styled.div`
-    width: calc(100% - 260px);
+const Content = styled.div.attrs<{ $sidebarVisible?: boolean; }>(props => ({
+        $sidebarVisible: props.$sidebarVisible
+    }))`
+    width: ${props => props.$sidebarVisible 
+        ? `calc(100% - 260px)`
+        : `100%`};
     position: absolute;
     overflow-y: auto;
     top: 100px;
     padding: 1rem 1.5rem 1rem 1.5rem;
-    margin-left: 260px;
+    margin-left: ${props => props.$sidebarVisible 
+        ? `260px`
+        : `unset`};
     margin-right: auto;
-`
-
-const ContentMax = styled(Content)`
-    margin-left: unset;
-    width: 100%;
 `

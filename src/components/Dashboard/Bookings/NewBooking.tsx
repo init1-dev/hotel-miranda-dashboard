@@ -1,14 +1,13 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { newBooking, editBooking, getBooking } from "../../../store/Bookings/bookingsThunk";
 import { Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { selectBooking, availableRooms } from "../../../store/Bookings/bookingsSlice";
 import { format } from "date-fns";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-const MySwal = withReactContent(Swal)
+import { Loader, Loading } from "../../../styled/Loading";
+import { ThemeContext } from "styled-components";
+import CustomSwal from "../../../helpers/Swal/CustomSwal";
 
 function NewBooking () {
     const navigate = useNavigate();
@@ -20,6 +19,7 @@ function NewBooking () {
     const isEdit = location.includes("edit");
     const currentId = isEdit ? id : null;
     const [fetched, setFetched] = useState(false);
+    const theme = useContext(ThemeContext);
     
     const initialFetch = useCallback(async () => {
         if(currentId){
@@ -67,7 +67,7 @@ function NewBooking () {
         description: "booking"
     });
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         navigate("/dashboard/bookings");
 
@@ -93,15 +93,17 @@ function NewBooking () {
             }))
             : dispatch(newBooking(formDataToUpdate))
 
-        MySwal.fire({
+        const swalProps = {
             text: currentId
-                    ? `Booking #${id} successfuly edited`
-                    : `Booking #${formDataToUpdate.id} successfuly created`,
-            icon: 'success',
+                    ? `Booking #${id} successfully edited`
+                    : `Booking #${formDataToUpdate.id} successfully created`,
+            icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,
             showConfirmButton: false
-        });
+        }
+
+        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (
@@ -154,7 +156,9 @@ function NewBooking () {
                     </GridContainer>
                 </Form>
             </>
-        : "loading"        
+        : <Loading>
+            <Loader />
+        </Loading>
     );
 }
 

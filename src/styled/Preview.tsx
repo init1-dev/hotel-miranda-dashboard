@@ -12,7 +12,7 @@ export const Preview = styled.div`
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
-    margin: 1rem 15% 0 15%;
+    margin: 1rem 20% 0 20%;
     box-shadow: 2px 2px 6px -4px black;
 `
 
@@ -54,13 +54,18 @@ export const Amenities = styled.div`
         justify-content: center;
         align-items: center;
         padding: 0.5rem;
-        background-color: green;
-        color: white;
+        background-color: #13584626;
+        color: #1C7A61;
     }
 `
 
 export const ImageDiv = styled.div`
     
+    img {
+        max-height: 80px;
+        border-radius: 0.5rem;
+        margin-right: 0.7rem;
+    }
 `
 
 export const TextDiv = styled.div`
@@ -88,16 +93,20 @@ export const ImageContainer = styled(PreviewContainer)`
     div {
         width: 100%;
         position: absolute;
-        background-color: grey;
+        background-color: rgba(0, 0, 0, 50%);
+        text-shadow: 1px 1px 1px black;
+        border-radius: 0 0 0.5rem 0.5rem;
         bottom: 0;
         padding: 2rem 2rem;
 
         h4 {
             font-size: 16px;
+            color: white;
             margin-bottom: 1rem;
         }
 
         p {
+            color: white;
             font-size: 14px;
         }
     }
@@ -105,6 +114,7 @@ export const ImageContainer = styled(PreviewContainer)`
     img {
         width: 100%;
         height: 100%;
+        border-radius: 0.5rem;
         object-fit: cover;
         object-position: center;
     }

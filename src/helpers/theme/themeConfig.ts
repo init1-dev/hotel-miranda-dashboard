@@ -8,11 +8,11 @@ export interface Theme {
     menuActive: string;
     iconsColor: string;
     menuBox: string;
-    tabButtonColor: string; 
+    tabButtonColor: string;
 }
 
 export const lightTheme: Theme = {
-    bg: '#F8F8F8',
+    bg: '#f3f3f3',
     contentBg: 'white',
     text: 'black',
     menuText: '#799283',
