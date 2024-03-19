@@ -1,5 +1,5 @@
 import { Form, redirect, useActionData, useLocation, useNavigate } from "react-router-dom";
-import AuthStatus from "../helpers/login/AuthStatus";
+import AuthStatus from "../helpers/login/authStatus";
 import styled, { ThemeContext } from "styled-components";
 import { FormEvent, useContext, useRef, useState } from "react";
 import hotel from "../assets/hotel-dashboard-header2.jpeg";
