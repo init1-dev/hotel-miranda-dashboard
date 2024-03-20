@@ -2,36 +2,31 @@ import { render } from "@testing-library/react";
 import ThemeButton from "./ThemeButton";
 
 describe('ThemeButton component', () => {
+    const themeLightProps = { theme: "light", handleToggleTheme: () => {} };
+    const themeDarkProps = { theme: "dark", handleToggleTheme: () => {} };
+
+    const expectElement = (theme: string, bg: string, text: string) => {
+        const Element = ThemeButton({theme: theme, handleToggleTheme: () => {}});
+        const ElementClass = Element.type.styledComponentId;
+        const ThemeButtonRoots = document.getElementsByClassName(ElementClass);
+        const style = window.getComputedStyle(ThemeButtonRoots[0]);
+        expect(style.backgroundColor).toBe(`rgb(${bg})`);
+        expect(Element.props.children).toEqual(text);
+    }
 
     test("Renders the component", () => {
-        render(
-            <ThemeButton theme={"light"} handleToggleTheme={()=> {}}/>
-        )
+        render(<ThemeButton {...themeLightProps} />);
         expect(true).toBeTruthy();
     });
     
     test("Component content is correct (🌙)", () => {
-        render(
-            <ThemeButton theme={"light"} handleToggleTheme={()=> {}}/>
-        )
-        const Button = ThemeButton({theme: "light", handleToggleTheme: () => {}});
-        const ButtonClass = Button.type.styledComponentId;
-        const ThemeButtonRoots = document.getElementsByClassName(ButtonClass);
-        const style = window.getComputedStyle(ThemeButtonRoots[0]);
-        expect(style.backgroundColor).toBe("rgb(255, 255, 255)");
-        expect(Button.props.children).toEqual("🌙");
+        render(<ThemeButton {...themeLightProps} />);
+        expectElement("light", "255, 255, 255", "🌙");
     });
 
     test("Component content is correct (☀️)", () => {
-        render(
-            <ThemeButton theme={"dark"} handleToggleTheme={()=> {}}/>
-        )
-        const Button = ThemeButton({theme: "dark", handleToggleTheme: () => {}});
-        const ButtonClass = Button.type.styledComponentId;
-        const ThemeButtonRoots = document.getElementsByClassName(ButtonClass);
-        const style = window.getComputedStyle(ThemeButtonRoots[0]);
-        expect(style.backgroundColor).toBe("rgb(41, 40, 40)");
-        expect(Button.props.children).toEqual("☀️");
+        render(<ThemeButton {...themeDarkProps} />);
+        expectElement("dark", "41, 40, 40", "☀️");
     });
 
 });
