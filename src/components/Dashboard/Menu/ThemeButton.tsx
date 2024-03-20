@@ -2,14 +2,19 @@ import styled from "styled-components";
 
 const ThemeButton = ({ theme, handleToggleTheme }: { theme: string, handleToggleTheme: Function }) => {
     return (
-        <ThemeButtonLayout onClick={() => handleToggleTheme()}>
+        <ThemeButtonLayout $theme={theme === 'light' ? true : false} onClick={() => handleToggleTheme()}>
             {theme === 'light' ? '🌙' : '☀️'}
         </ThemeButtonLayout>
     );
 }
 
-const ButtonTopbar = styled.button`
-    background-color: ${({ theme }) => theme.menuBox};
+const ButtonTopbar = styled.button.attrs<{ $theme?: boolean; }>(props => ({
+    $theme: props.$theme
+}))`
+    background-color: ${props => props.$theme 
+        ? `#FFFFFF`
+        : `#292828`
+    };
     border: 1px;
     padding: 0.3rem;
     cursor: pointer;
