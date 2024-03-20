@@ -1,3 +1,5 @@
+/// <reference types="@types/jest" />
+
 import { CSSProperties } from "react";
 
 type AllCSSProperties = keyof CSSProperties;

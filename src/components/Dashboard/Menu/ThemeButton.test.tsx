@@ -1,3 +1,5 @@
+/// <reference types="@types/jest" />
+
 import { render } from "@testing-library/react";
 import ThemeButton from "./ThemeButton";
 import { expectElement } from "../../../helpers/Testing/expectElement";
