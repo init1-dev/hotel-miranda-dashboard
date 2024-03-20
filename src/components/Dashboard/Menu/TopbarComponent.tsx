@@ -6,6 +6,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Logout from "../../Logout/Logout";
 import TitleComponent from "./TitleComponent";
+import ThemeButton from "./ThemeButton";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
     const { theme, handleToggleTheme } = useTheme();
@@ -37,9 +38,7 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
 
                 <Logout />
 
-                <ThemeButtonLayout onClick={handleToggleTheme}>
-                    {theme === 'light' ? '🌙' : '☀️'}
-                </ThemeButtonLayout>
+                <ThemeButton theme={theme} handleToggleTheme={handleToggleTheme}/>
             </TopbarContainer>
 
         </>
@@ -98,25 +97,6 @@ const ArrowLeft = styled(RiMenuFoldLine)`
 
 const ArrowRight = styled(FaArrowRight)`
     font-size: 25px;
-`
-
-const ButtonTopbar = styled.button`
-    background-color: ${({ theme }) => theme.menuBox};
-    border: 1px;
-    padding: 0.3rem;
-    cursor: pointer;
-    border-radius: 5px;
-    box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px, rgb(0 0 0 / 30%) 0px 7px 13px -3px, rgb(0 0 0 / 20%) 0px -3px 0px inset;
-
-    &:focus, &:focus-visible {
-        outline: none;
-    }
-`;
-
-const ThemeButtonLayout = styled(ButtonTopbar)`
-    margin: 0;
-    z-index: 1;
-    height: 100%;
 `
 
 const RoutePath = styled.div`
