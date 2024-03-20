@@ -106,7 +106,6 @@ const SwiperItem = styled(Swiper)`
     background-color: ${({ theme }) => theme.contentBg};
     position: relative;
     width: 100%;
-    height: 250px;
     padding: 0.5rem 1.2rem 1.2rem 1.2rem;
     display: flex;
     gap: 0.8rem;

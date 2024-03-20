@@ -61,28 +61,20 @@ const Tab = styled.button`
     all: unset;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
+    border-bottom: 1px solid transparent;
 
     &:focus, &:focus-visible {
         outline: unset;
     }
 
     &:hover {
-        border-color: unset;
+        border-color: #7bcf92;
     }
 
     &[aria-selected="true"] {
         font-weight: bold;
+        border-bottom: 2px solid #7bcf92;
         color: #7bcf92;
         filter: brightness(0.7);
-
-        &:before {
-            content: '<';
-            margin-right: 0.2rem;
-        }
-
-        &:after {
-            content: '>';
-            margin-left: 0.2rem;
-        }
     }
 `
