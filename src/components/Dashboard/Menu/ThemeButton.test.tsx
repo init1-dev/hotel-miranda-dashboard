@@ -1,18 +1,11 @@
 import { render } from "@testing-library/react";
 import ThemeButton from "./ThemeButton";
+import { expectElement } from "../../../helpers/Testing/expectElement";
+import { colorToRgb } from "../../../helpers/Testing/colorToRgb";
 
 describe('ThemeButton component', () => {
     const themeLightProps = { theme: "light", handleToggleTheme: () => {} };
     const themeDarkProps = { theme: "dark", handleToggleTheme: () => {} };
-
-    const expectElement = (theme: string, bg: string, text: string) => {
-        const Element = ThemeButton({theme: theme, handleToggleTheme: () => {}});
-        const ElementClass = Element.type.styledComponentId;
-        const ThemeButtonRoots = document.getElementsByClassName(ElementClass);
-        const style = window.getComputedStyle(ThemeButtonRoots[0]);
-        expect(style.backgroundColor).toBe(`rgb(${bg})`);
-        expect(Element.props.children).toEqual(text);
-    }
 
     test("Renders the component", () => {
         render(<ThemeButton {...themeLightProps} />);
@@ -21,12 +14,20 @@ describe('ThemeButton component', () => {
     
     test("Component content is correct (🌙)", () => {
         render(<ThemeButton {...themeLightProps} />);
-        expectElement("light", "255, 255, 255", "🌙");
+        const Element = ThemeButton({...themeLightProps});
+        expectElement(Element, {backgroundColor: colorToRgb("#ffffff"), content: "🌙"});
     });
 
     test("Component content is correct (☀️)", () => {
         render(<ThemeButton {...themeDarkProps} />);
-        expectElement("dark", "41, 40, 40", "☀️");
+        const Element = ThemeButton({...themeDarkProps});
+        expectElement(Element, {backgroundColor: colorToRgb("#292828"), content: "☀️"});
+    });
+
+    test("Component margin is correct (0)", () => {
+        render(<ThemeButton {...themeLightProps} />);
+        const Element = ThemeButton({...themeLightProps});
+        expectElement(Element, {margin: "0px"});
     });
 
 });
