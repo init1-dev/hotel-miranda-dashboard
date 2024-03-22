@@ -28,3 +28,5 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 
 - Improve bookings user img and MessagesSlide status display
 - Include __current__theme__ key in __hotel__app__state__
+
+# TESTING:
