@@ -61,7 +61,7 @@ const Tab = styled.button`
     all: unset;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
 
     &:focus, &:focus-visible {
         outline: unset;

@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { newBooking, editBooking, getBooking } from "../../../store/Bookings/bookingsThunk";
-import { Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../../styled/Form";
+import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { selectBooking, availableRooms } from "../../../store/Bookings/bookingsSlice";
 import { format } from "date-fns";
@@ -154,10 +154,10 @@ function NewBooking () {
                         </Select>
 
                         <Label htmlFor="check_in">Check In:</Label>
-                        <Input type="date" name="check_in" id="check_in" defaultValue={formData.check_in} required/>
+                        <InputDate type="date" name="check_in" id="check_in" defaultValue={formData.check_in} required/>
 
                         <Label htmlFor="check_out">Check Out:</Label>
-                        <Input type="date" name="check_out" id="check_out" defaultValue={formData.check_out} required/>
+                        <InputDate type="date" name="check_out" id="check_out" defaultValue={formData.check_out} required/>
 
                         <Button type="submit" form="new-room">
                         {currentId

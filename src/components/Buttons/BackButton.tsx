@@ -14,13 +14,13 @@ const BackButton = () => {
 
 export const BackButtonStyles = styled.button`
     font-family: Poppins;
+    height: 100%;
     font-size: 14px;
     background-color: #135846;
     color: white;
     outline: unset;
     border: unset;
     display: flex;
-    align-items: center;
     gap: 0.5rem;
 
     svg {

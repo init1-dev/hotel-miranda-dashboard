@@ -1,4 +1,4 @@
-import { Button, Form, GridContainer, Input, Label, Select, Title } from "../../../styled/Form";
+import { Button, Form, GridContainer, Input, InputDate, Label, Select, Title } from "../../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
@@ -148,7 +148,7 @@ function NewEmployee () {
                         </Select>
 
                         <Label htmlFor="start_date">Start Date:</Label>
-                        <Input type="date" name="start_date" id="start_date" defaultValue={formData.start_date} required/>
+                        <InputDate type="date" name="start_date" id="start_date" defaultValue={formData.start_date} required/>
 
                         <Label htmlFor="status">Status:</Label>
                         <Select name="status" id="status" required>
