@@ -29,25 +29,13 @@ export const DashboardPage = () => {
     return (
         <div>
 
-            {sidebarVisible
-                ? <SideBarContainer>
-                    <SideBarComponent />
-                </SideBarContainer>
+            <SideBarContainer $sidebarVisible={sidebarVisible}>
+                <SideBarComponent />
+            </SideBarContainer>
 
-                : <SideBarContainerMax>
-                    <SideBarComponent />
-                </SideBarContainerMax>
-            }
-
-            {sidebarVisible
-                ? <TopBarContainer>
-                    <TopbarComponent visible={sidebarVisible} toggleSidebar={toggleSidebar}/>
-                </TopBarContainer>
-
-                : <TopBarContainerMax>
-                    <TopbarComponent visible={sidebarVisible} toggleSidebar={toggleSidebar}/>
-                </TopBarContainerMax>
-            }
+            <TopBarContainer $sidebarVisible={sidebarVisible}>
+                <TopbarComponent visible={sidebarVisible} toggleSidebar={toggleSidebar}/>
+            </TopBarContainer>
 
             <Content $sidebarVisible = {sidebarVisible}>
                 <Outlet />
@@ -58,7 +46,8 @@ export const DashboardPage = () => {
 
 }
 
-const TopBarContainer = styled.div`
+const TopBarContainer = styled.div<{ $sidebarVisible?: boolean }>`
+    width: 100%;
     background-color: ${({ theme }) => theme.contentBg};
     display: flex;
     justify-content: space-between;
@@ -66,20 +55,16 @@ const TopBarContainer = styled.div`
     position: fixed;
     top: 0;
     right: 0;
-    width: 100%;
     height: 90px;
     padding: 2rem;
-    padding-left: 18rem;
+    padding-left: ${props => props.$sidebarVisible ? `18rem` : `2rem`};
     box-shadow: 0px 3px 10px #00000005;
     user-select: none;
     z-index: 1;
+    transition: padding-left 0.2s ease-in-out;
 `
 
-const TopBarContainerMax = styled(TopBarContainer)`
-    padding-left: 2rem;
-`
-
-const SideBarContainer = styled.div`
+const SideBarContainer = styled.div<{$sidebarVisible?: boolean}>`
     background-color: ${({ theme }) => theme.contentBg};
     display: flex;
     flex-direction: column;
@@ -92,24 +77,19 @@ const SideBarContainer = styled.div`
     box-shadow: -5px 5px 10px black;
     z-index: 2;
     user-select: none;
+    transition: transform 0.2s ease-in-out;
+
+    transform: ${props => props.$sidebarVisible ? "none" : "translateX(-100%)"};
 `
 
-const SideBarContainerMax = styled(SideBarContainer)`
-    display: none;
-`
-
-const Content = styled.div.attrs<{ $sidebarVisible?: boolean; }>(props => ({
-        $sidebarVisible: props.$sidebarVisible
-    }))`
-    width: ${props => props.$sidebarVisible 
-        ? `calc(100% - 260px)`
-        : `100%`};
+const Content = styled.div<{ $sidebarVisible?: boolean }>`
+    width: ${props => props.$sidebarVisible ? `calc(100% - 260px)` : `100%`};
     position: absolute;
     overflow-y: auto;
+    overflow-x: hidden;
     top: 100px;
     padding: 1rem 1.5rem 1rem 1.5rem;
-    margin-left: ${props => props.$sidebarVisible 
-        ? `260px`
-        : `unset`};
-    margin-right: auto;
+    left: ${props => props.$sidebarVisible ? `260px` : `0`};
+    right: 0;
+    transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
 `

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const CalendarStyle = styled.div`
+    --fc-border-color: #8a8a8a42;
+
     background-color: ${({ theme }) => theme.contentBg};
     border-radius: 0.5rem;
     display: flex;
@@ -50,6 +52,16 @@ export const CalendarStyle = styled.div`
 
     table[role="presentation"] {
         border-right: 1px solid;
+    }
+
+    .fc .fc-day {
+        background-color: ${({ theme }) => theme.contentBg};
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: ${({ theme }) => theme.menuText};
+            background-color:  ${({ theme }) => theme.bg};
+        }
     }
 
     .fc-scroller {

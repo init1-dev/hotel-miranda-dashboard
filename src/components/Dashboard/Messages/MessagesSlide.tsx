@@ -118,7 +118,7 @@ const SwiperItem = styled(Swiper)`
 
     .swiper-button-prev, .swiper-button-next {
         position: absolute;
-        top: 30px;
+        top: 35px;
         width: 20px;
         height: 20px;
         background-size: 20px 20px;
@@ -147,6 +147,7 @@ const SwiperItem = styled(Swiper)`
     }
 
     h2 {
+        padding: 0.5rem 0 0.5rem 0;
         font-size: 18px;
         font-weight: 500;
     }

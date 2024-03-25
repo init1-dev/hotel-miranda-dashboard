@@ -139,7 +139,7 @@ const Button = styled.button`
     width: 75%;
     padding: 0.5rem;
     border: 0;
-    transition: all 0.4s ease;
+    transition: background-color 0.4s ease;
 
     &:hover {
         color: white;

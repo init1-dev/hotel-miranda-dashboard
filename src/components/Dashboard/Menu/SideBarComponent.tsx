@@ -21,7 +21,7 @@ export const SideBarComponent = () => {
     return (
             <>
                 <div>
-                    <ImageButton to={"/dashboard"}>
+                    <ImageButton>
                         <Imagen src={travl} alt="imagen del logotipo" />
                     </ImageButton>
 
@@ -46,7 +46,7 @@ export const SideBarComponent = () => {
 
 }
 
-const ImageButton = styled(NavLink)`
+const ImageButton = styled.div`
     display: flex;
 `
 

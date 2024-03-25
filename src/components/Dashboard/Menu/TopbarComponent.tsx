@@ -2,7 +2,6 @@ import styled, { useTheme } from "styled-components";
 import { MdOutlineMessage } from "react-icons/md";
 import { CiBellOn } from "react-icons/ci";
 import { RiMenuFoldLine } from "react-icons/ri";
-import { FaArrowRight } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Logout from "../../Logout/Logout";
 import TitleComponent from "./TitleComponent";
@@ -95,7 +94,8 @@ const ArrowLeft = styled(RiMenuFoldLine)`
     font-size: 25px;
 `
 
-const ArrowRight = styled(FaArrowRight)`
+const ArrowRight = styled(RiMenuFoldLine)`
+    transform: scaleX(-1);
     font-size: 25px;
 `
 
