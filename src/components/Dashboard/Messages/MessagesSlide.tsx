@@ -127,10 +127,14 @@ const SwiperItem = styled(Swiper)`
         border-radius: 0.5rem;
         color: ${({ theme }) => theme.text};
         cursor: pointer;
+
+        &:hover {
+            filter: invert(10%);
+        }
     }
 
     .swiper-button-prev::after, .swiper-button-next::after {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .swiper-button-next {

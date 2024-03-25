@@ -7,7 +7,7 @@ export const CalendarStyle = styled.div`
     min-height: 100%;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 12px;
-    max-width: 420px;
+    max-width: 450px;
     margin-bottom: 1.5rem;
     box-shadow: 2px 2px 6px -4px black;
 
@@ -30,12 +30,44 @@ export const CalendarStyle = styled.div`
     }
 
     .fc .fc-toolbar-title {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .fc { /* the calendar root */
         max-width: 1100px;
         margin: 0 auto;
+    }
+
+    .fc-popover-header {
+        background-color: ${({ theme }) => theme.bg};
+        color: ${({ theme }) => theme.text};
+    }
+
+    .fc-popover-body {
+        background-color: ${({ theme }) => theme.contentBg};
+        color: ${({ theme }) => theme.text};
+    }
+
+    table[role="presentation"] {
+        border-right: 1px solid;
+    }
+
+    .fc-scroller {
+        &::-webkit-scrollbar {
+            width: fit-content;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: none;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: grey;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     }
 
     .fc-button.fc-button-primary {

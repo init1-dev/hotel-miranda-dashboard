@@ -37,8 +37,8 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
                         headerToolbar={{
                             left: 'prev,next today',
                             center: 'title',
-                            right: 'dayGridMonth,timeGridWeek'
-                            // right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                            // right: 'dayGridMonth,timeGridWeek'
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
                         }}
                         initialView='dayGridMonth'
                         editable={true}
