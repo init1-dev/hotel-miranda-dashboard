@@ -8,6 +8,7 @@ import { getEmployee } from "../../../store/Employees/employeesThunk";
 import { Loader, Loading } from "../../../styled/Loading";
 import { SpanStyledCheckIn, SpanStyledCheckOut } from "../../../styled/Span";
 import { format } from "date-fns";
+import BackButton from "../../Buttons/BackButton";
 
 function Employee () {
     const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ function Employee () {
                         <>
                             <Title>
                                 EMPLOYEE INFO: #{employeeData.itemData && employeeData.itemData.id}
+                                <BackButton />
                             </Title>
 
                             <Preview>

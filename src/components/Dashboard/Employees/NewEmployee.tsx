@@ -8,6 +8,7 @@ import { Loader, Loading } from "../../../styled/Loading";
 import { format } from "date-fns";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
+import BackButton from "../../Buttons/BackButton";
 
 function NewEmployee () {
     const navigate = useNavigate();
@@ -99,8 +100,18 @@ function NewEmployee () {
         (!currentId || currentId && fetched)
             ? <>
                 {currentId
-                    ? <Title>EDITING <small>#{currentId}</small></Title>
-                    : <Title>NEW EMPLOYEE</Title>}
+                    ? <Title>
+                        <span>
+                            EDITING <small>#{currentId}</small>
+                        </span>
+                        <BackButton />
+                    </Title>
+                    : <Title>
+                        <span>
+                            NEW EMPLOYEE
+                        </span>
+                        <BackButton />
+                    </Title>}
 
                 <Form id="new-employee" name="new-employee" onSubmit={(e)=> handleSubmit(e)}>
                     <GridContainer>

@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { getRoom } from '../../../store/Rooms/roomsThunk';
 import { Loader, Loading } from '../../../styled/Loading';
 import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
+import BackButton from '../../Buttons/BackButton';
 
 SwiperCore.use([Navigation]);
 
@@ -29,6 +30,7 @@ function Room () {
                         <>
                             <Title>
                                 ROOM INFO: #{roomData.itemData && roomData.itemData.id}
+                                <BackButton />
                             </Title>
 
                             <Preview>

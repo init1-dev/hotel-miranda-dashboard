@@ -10,6 +10,7 @@ import { selectBooking } from "../../../store/Bookings/bookingsSlice";
 import { Loader, Loading } from "../../../styled/Loading";
 import { format } from "date-fns";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../../styled/Span";
+import BackButton from "../../Buttons/BackButton";
 
 SwiperCore.use([Navigation]);
 
@@ -30,6 +31,7 @@ function Booking () {
                         <>
                             <Title>
                                 BOOKING INFO: #{bookingData.itemData && bookingData.itemData.id}
+                                <BackButton />
                             </Title>
 
                             <Preview>

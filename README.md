@@ -26,6 +26,6 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 - fix row height on tables (tableComponent)
 - General refactor
 
-- Improve bookings user img and MessagesSlide status display
+- Improve bookings user img
 
 # TESTING:

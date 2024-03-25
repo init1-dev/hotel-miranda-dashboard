@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { Loader, Loading } from "../../../styled/Loading";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
+import BackButton from "../../Buttons/BackButton";
 
 function NewBooking () {
     const navigate = useNavigate();
@@ -110,8 +111,18 @@ function NewBooking () {
         (!currentId || currentId && fetched)
             ? <>
                 {currentId
-                    ? <Title>EDITING <small>#{currentId}</small></Title>
-                    : <Title>NEW BOOKING</Title>}
+                    ? <Title>
+                        <span>
+                            EDITING <small>#{currentId}</small>
+                        </span>
+                        <BackButton />
+                    </Title>
+                    : <Title>
+                        <span>
+                            NEW BOOKING
+                        </span>
+                        <BackButton />
+                    </Title>}
 
                 <Form id="new-room" name="new-room" onSubmit={(e)=> handleSubmit(e)}>
                     <GridContainer>

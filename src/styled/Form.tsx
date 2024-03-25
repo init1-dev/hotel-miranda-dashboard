@@ -1,6 +1,8 @@
 import styled from "styled-components"
 
 export const Title = styled.h1`
+    display: flex;
+    justify-content: space-between;
     margin: 1rem 20% 0 20%;
 `
 
