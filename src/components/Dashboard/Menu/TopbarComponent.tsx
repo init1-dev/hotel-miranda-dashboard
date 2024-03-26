@@ -1,5 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import { MdOutlineMessage } from "react-icons/md";
+import { CiMail } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
 import { RiMenuFoldLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -25,7 +25,7 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
                     <MenuIconAlert>
                         2
                     </MenuIconAlert>
-                    <MdOutlineMessage />
+                    <CiMail />
                 </MenuIcon>
 
                 <MenuIcon to={'/dashboard'}>
