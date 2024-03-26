@@ -9,6 +9,7 @@ export interface Theme {
     iconsColor: string;
     menuBox: string;
     tabButtonColor: string;
+    tableHover: string;
 }
 
 export const lightTheme: Theme = {
@@ -19,18 +20,20 @@ export const lightTheme: Theme = {
     menuActive: '#E23428',
     iconsColor: '#135846',
     menuBox: '#FFFFFF',
-    tabButtonColor: 'black'
+    tabButtonColor: 'black',
+    tableHover: '#a8c7b6',
 };
 
 export const darkTheme: Theme = {
     bg: '#171717',
     contentBg: '#202020',
-    text: 'white',
+    text: '#e9e9e9',
     menuText: '#799283',
     menuActive: '#E23428',
     iconsColor: '#808080',
     menuBox: '#292828',
-    tabButtonColor: '#7bcf92'
+    tabButtonColor: '#7bcf92',
+    tableHover: '#657a6e',
 };
 
 export const GlobalStyles = createGlobalStyle<{ theme?: Theme }>`

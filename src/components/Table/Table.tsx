@@ -80,6 +80,7 @@ const TableStyle = styled.table`
     background-color: ${({ theme }) => theme.menuBox};
     cursor: zoom-in;
     box-shadow: 2px 2px 6px -4px black;
+    border-spacing: 0;
 
     th {
         padding-bottom: 1rem;
@@ -98,12 +99,14 @@ const TableStyle = styled.table`
             filter: grayscale(0.5);
             transition: filter 0.2s ease;
             line-height: 20px;
-        }
+            cursor: zoom-in;
 
-        tr:hover {
-            filter: grayscale(0);
-            box-shadow: 0px 0px 3px ${({ theme }) => theme.iconsColor};
-            border-radius: 0.5rem;
+            &:hover {
+                filter: grayscale(0);
+                box-shadow: 1px 1px 5px ${({ theme }) => theme.bg};
+                background-color: ${({ theme }) => theme.tableHover};
+                border-radius: 0.5rem;
+            }
         }
     }
 `
