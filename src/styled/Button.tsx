@@ -16,7 +16,7 @@ export const ButtonStyled = styled.button`
     padding: 0.5rem 2rem 0.5rem 2rem;
     border: unset;
 
-    &:active {
+    &:active, &:focus, &:focus-visible {
         outline: unset;
     }
 `;

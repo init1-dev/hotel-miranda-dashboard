@@ -48,6 +48,7 @@ const TabsContainer = styled.div`
     justify-content: space-between;
     align-items: baseline;
     height: 70px;
+    user-select: none;
 `
 
 const TabsContent = styled.div`

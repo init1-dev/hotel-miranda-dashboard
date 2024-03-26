@@ -76,6 +76,7 @@ const TableContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    user-select: none;
 `
 
 const TableStyle = styled.table`
@@ -123,11 +124,11 @@ const TableStyle = styled.table`
         }
 
         tr:last-child td:first-child {
-            border-bottom-left-radius: 10px;
+            border-bottom-left-radius: 8px;
         }
 
         tr:last-child td:last-child {
-            border-bottom-right-radius: 10px;
+            border-bottom-right-radius: 8px;
         }
     }
 `

@@ -70,6 +70,7 @@ const PaginationStyles = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
+    user-select: none;
 `;
 
 const PageNumber = styled.span`
