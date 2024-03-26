@@ -30,12 +30,14 @@ const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return (
-        <div>
+        <TableContainer>
             <TableStyle>
                 <thead>
                     <tr>
                     {columns.map((column, index) => (
-                        <th key={index}>{column.label}</th>
+                        <th key={index}>
+                            <p>{column.label}</p>
+                        </th>
                     ))}
                     </tr>
                 </thead>
@@ -65,17 +67,22 @@ const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow 
                 currentPage={currentPage}
                 paginate={paginate}
             />
-        </div>
+        </TableContainer>
     );
 };
 
+const TableContainer = styled.div`
+    height: calc(100% - 75px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+
 const TableStyle = styled.table`
     width: 100%;
-    height: 72vh;
     font-size: 14px;
     overflow-y: auto;
     text-align: center;
-    padding: 0.5rem;
     border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.menuBox};
     cursor: zoom-in;
@@ -83,10 +90,18 @@ const TableStyle = styled.table`
     border-spacing: 0;
 
     th {
-        padding-bottom: 1rem;
+        border-bottom: 1px solid ${({ theme }) => theme.bg};
     }
 
     thead {
+
+        th:first-child {
+
+            p {
+                text-align: justify;
+                margin: 0.5rem 0 0.5rem 1rem;
+            }
+        }
 
         tr {
             line-height: 30px;
@@ -98,15 +113,21 @@ const TableStyle = styled.table`
         tr{
             filter: grayscale(0.5);
             transition: filter 0.2s ease;
-            line-height: 20px;
+            line-height: 30px;
             cursor: zoom-in;
 
             &:hover {
                 filter: grayscale(0);
-                box-shadow: 1px 1px 5px ${({ theme }) => theme.bg};
                 background-color: ${({ theme }) => theme.tableHover};
-                border-radius: 0.5rem;
             }
+        }
+
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
         }
     }
 `

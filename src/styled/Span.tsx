@@ -8,7 +8,7 @@ export const SpanStyled = styled.span`
     color: white;
     background-color: #5AD07A;
     border-radius: 4rem;
-    padding: 0.5rem;
+    padding: 0.2rem;
     margin: 0 0.5rem;
     border: 0rem;
     text-shadow: 1px 1px 1px black;

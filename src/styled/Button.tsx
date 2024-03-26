@@ -43,7 +43,7 @@ export const ActionButton = styled.button`
     border-radius: 1rem;
     background-color: lightgray;
 
-    &:active {
+    &:active, &:focus, &:focus-visible {
         outline: unset;
     }
 `
