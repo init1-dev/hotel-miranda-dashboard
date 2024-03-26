@@ -22,7 +22,6 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 - When click a table row and navigate to details, save last table page to get back instead of page 1
 - fix rooms and bookings offer type and display calculating discount value (% instead value)
 
-- improve input forms, tabs and order select styles
 - fix row height on tables (tableComponent)
 - General refactor
 

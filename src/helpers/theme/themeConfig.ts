@@ -14,7 +14,7 @@ export interface Theme {
 export const lightTheme: Theme = {
     bg: '#f3f3f3',
     contentBg: 'white',
-    text: 'black',
+    text: '#3b3b3b',
     menuText: '#799283',
     menuActive: '#E23428',
     iconsColor: '#135846',

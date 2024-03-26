@@ -25,23 +25,6 @@ body {
   min-height: 100vh;
 }
 
-body::-webkit-scrollbar {
-  width: 3px;
-}
-
-body::-webkit-scrollbar-track {
-  background: none;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: grey;
-  border-radius: 6px;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;

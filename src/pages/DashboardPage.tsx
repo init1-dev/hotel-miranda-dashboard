@@ -84,12 +84,30 @@ const SideBarContainer = styled.div<{$sidebarVisible?: boolean}>`
 
 const Content = styled.div<{ $sidebarVisible?: boolean }>`
     width: ${props => props.$sidebarVisible ? `calc(100% - 260px)` : `100%`};
+    height: calc(100% - 90px);
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
-    top: 100px;
-    padding: 1rem 1.5rem 1rem 1.5rem;
+    top: 90px;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
     left: ${props => props.$sidebarVisible ? `260px` : `0`};
     right: 0;
     transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: grey;
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 `

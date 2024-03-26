@@ -3,6 +3,7 @@ import { MdOutlineBed } from "react-icons/md";
 import { RiLoginBoxLine, RiLogoutBoxLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { query1350, query1500 } from "../../../helpers/responsive";
 
 function KpisComponent() {
     return (
@@ -117,12 +118,24 @@ const ButtonTextContainer = styled.div`
 
     h3 {
         font-size: 30px;
+
+        @media (max-width: ${query1500}) {
+            font-size: 25px;
+        }
+
+        @media (max-width: ${query1350}) {
+            font-size: 22px;
+        }
     }
 
     p {
         color: #787878;
         font-weight: 300;
         font-size: 14px;
+
+        @media (max-width: ${query1350}) {
+            font-size: 12px;
+        }
     }
 `
 

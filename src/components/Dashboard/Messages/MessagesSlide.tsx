@@ -74,7 +74,11 @@ function MessagesSlider() {
                     return (
                         <SwiperSlideItem key={messageIndex} onClick={(e) => action(e, message)}>
                             <h4>
-                                {message.message.slice(0, 200) + "..."}
+                                {
+                                    (message.message.length > 150)
+                                        ? message.message.slice(0, 150) + "..."
+                                        : message.message
+                                }
                             </h4>
                             <InfoContainer>
                                 <div>
@@ -85,11 +89,11 @@ function MessagesSlider() {
                                     </div>
                                 </div>
                                 <ButtonsContainer>
-                                    <StatusButtonArchive>
+                                    <StatusButtonArchive onClick={(e)=>{e.stopPropagation()}}>
                                         <FaRegCheckCircle />
                                     </StatusButtonArchive>
     
-                                    <StatusButtonUnarchive>
+                                    <StatusButtonUnarchive onClick={(e)=>{e.stopPropagation()}}>
                                         <FaRegTimesCircle />
                                     </StatusButtonUnarchive>
                                 </ButtonsContainer>
@@ -113,8 +117,11 @@ const SwiperItem = styled(Swiper)`
     border-radius: 0.5rem;
     user-select: none;
     z-index: 0;
-    margin-bottom: 1rem;
     box-shadow: 2px 2px 6px -4px black;
+
+    .swiper-slide {
+        height: auto;
+    }
 
     .swiper-button-prev, .swiper-button-next {
         position: absolute;

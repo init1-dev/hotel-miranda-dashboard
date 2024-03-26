@@ -6,7 +6,6 @@ export const CalendarStyle = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
     border-radius: 0.5rem;
     display: flex;
-    min-height: 100%;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 12px;
     max-width: 450px;
