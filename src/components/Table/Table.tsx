@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import Pagination from "./Pagination";
 
@@ -21,7 +21,35 @@ type TableProps = {
 };
 
 const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow = 5 }:TableProps) => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const storedPage = localStorage.getItem("currentPage");
+    const storedPageData = storedPage ? JSON.parse(storedPage) : {};
+    const section = location.pathname.split("/dashboard/")[1];
+    
+    const getCurrentPage = () => {
+        return storedPageData.page || 1;
+    };
+
+    const storageCurrentPage = () => {
+        const lastSection = storedPageData.lastSection;
+        if(lastSection !== section){
+            localStorage.setItem("currentPage", JSON.stringify({
+                ...storedPageData,
+                page: 1,
+                lastSection: section
+            }))
+        } else {
+            localStorage.setItem("currentPage", JSON.stringify({
+                ...storedPageData,
+                page: currentPage
+            }))
+        }
+    }
+
+    const [currentPage, setCurrentPage] = useState(getCurrentPage());
+
+    useEffect(() => {
+        storageCurrentPage();
+    }, [currentPage, section, storedPageData])
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
