@@ -1,5 +1,5 @@
 import Table, { Data } from "../components/Table/Table";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { employees, orderBy } from "../helpers/Tabs/tabs";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { ActionButtonIcon, ButtonContainer, NewButton } from "../styled/Button";
@@ -20,12 +20,16 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 
 function Employees() {
-    const location=useLocation().pathname;
     const navigate = useNavigate();
     const employeesSelect = orderBy.employees;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Employees");
     const [currentOrder, setCurrentOrder] = useState("default");
+    const [currentPage, setCurrentPage] = useState(1);
     const theme = useContext(ThemeContext);
+
+    const resetPage = () => {
+        setCurrentPage(1);
+    };
 
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);
@@ -176,11 +180,16 @@ function Employees() {
     return (
         <>
             {
-                location === "/dashboard/employees"
+                location.pathname === "/dashboard/employees"
                     ?   employeesData.loading === false
                             ?
                                 <>
-                                        <TabsComponent section={employees} setCurrentTab={setCurrentTab}>
+                                        <TabsComponent
+                                            section={employees}
+                                            currentTab={currentTab}
+                                            setCurrentTab={setCurrentTab} 
+                                            resetPage={resetPage}
+                                        >
                                             <ButtonContainer>
                                                 <SectionSelect 
                                                     onChange={(e) => setCurrentOrder(e.target.value)}
@@ -199,7 +208,13 @@ function Employees() {
                                                 </NewButton>
                                             </ButtonContainer>
                                         </TabsComponent>
-                                    <Table columns={usersHeaders} data={filteredEmployees} action={action(navigate)} />
+                                    <Table
+                                        columns={usersHeaders}
+                                        data={filteredEmployees}
+                                        action={action(navigate)}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                    />
                                 </>
                             : <Loading>
                                 <Loader />

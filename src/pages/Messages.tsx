@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { messages, orderBy } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
@@ -30,12 +30,16 @@ const messageStars = (row: number) => {
 }
 
 function Messages() {
-    const location=useLocation().pathname;
     const messagesSelect = orderBy.messages;
 
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Messages");
     const [currentOrder, setCurrentOrder] = useState("default");
+    const [currentPage, setCurrentPage] = useState(1);
     const theme = useContext(ThemeContext);
+
+    const resetPage = () => {
+        setCurrentPage(1);
+    };
 
     const dispatch = useAppDispatch();
     const messagesData = useAppSelector(selectMessages);
@@ -163,11 +167,16 @@ function Messages() {
     return (
         <>
             {
-                location === "/dashboard/messages"
+                location.pathname === "/dashboard/messages"
                     ?   messagesData.loading === false
                             ?
                                 <>
-                                    <TabsComponent section={messages} setCurrentTab={setCurrentTab}>
+                                    <TabsComponent 
+                                        section={messages}
+                                        currentTab={currentTab}
+                                        setCurrentTab={setCurrentTab} 
+                                        resetPage={resetPage}
+                                    >
                                         <ButtonContainer>
                                             <SectionSelect 
                                                 onChange={(e) => setCurrentOrder(e.target.value)}
@@ -182,7 +191,13 @@ function Messages() {
                                             </SectionSelect>
                                         </ButtonContainer>
                                     </TabsComponent>
-                                    <Table columns={messagesHeaders} data={filteredMessages} action={action}/>
+                                    <Table
+                                        columns={messagesHeaders}
+                                        data={filteredMessages}
+                                        action={action}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                    />
                                 </>
                             : <Loading>
                                 <Loader />

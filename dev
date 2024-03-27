@@ -1,0 +1,6 @@
+#!/bin/bash
+npm run dev
+
+# config:
+#   chmod +x dev
+#   export PATH=$PATH:./

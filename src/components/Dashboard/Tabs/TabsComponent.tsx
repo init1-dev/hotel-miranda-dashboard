@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
 import styled from "styled-components";
 
 export interface SectionData {
@@ -8,13 +8,25 @@ export interface SectionData {
 }
 
 export interface TabsProps  {
-    section: SectionData[],
-    children: ReactNode,
+    section: SectionData[];
+    children: ReactNode;
+    currentTab: string | boolean | undefined;
     setCurrentTab: Dispatch<SetStateAction<string | boolean | undefined>>;
+    resetPage: () => void;
 }
 
-export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) => {
-    const [activeTab, setActiveTab] = useState<string | boolean | undefined>(section[0]?.accesor);
+export const TabsComponent = ({
+    section,
+    children,
+    currentTab,
+    setCurrentTab,
+    resetPage
+}: TabsProps ) => {
+
+    useEffect(() => {
+        setCurrentTab(currentTab)
+        resetPage();
+    }, [currentTab]);
     
     return (
         <>
@@ -25,10 +37,9 @@ export const TabsComponent = ({section, children, setCurrentTab}: TabsProps ) =>
                             <Tab 
                                 key={index} 
                                 onClick={() => {
-                                    setActiveTab(item.accesor);
                                     setCurrentTab(item.accesor);
                                 }}
-                                aria-selected={item.accesor === activeTab ? "true" : "false"}
+                                aria-selected={item.accesor === currentTab ? "true" : "false"}
                             >
                                 {item.label}
                             </Tab>

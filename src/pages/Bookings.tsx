@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { bookings, orderBy } from "../helpers/Tabs/tabs";
@@ -20,12 +20,16 @@ import CustomSwal from "../helpers/Swal/CustomSwal";
 import { ThemeContext } from "styled-components";
 
 function Bookings() {
-    const location = useLocation().pathname;
     const navigate = useNavigate();
     const bookingsSelect = orderBy.bookings;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Bookings");
-    const [currentOrder, setCurrentOrder] = useState("order_date");
+    const [currentOrder, setCurrentOrder] = useState<string>("order_date");
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const theme = useContext(ThemeContext);
+
+    const resetPage = () => {
+        setCurrentPage(1);
+    };
     
     const dispatch = useAppDispatch();
     const bookingsData = useAppSelector(selectBookings);
@@ -169,20 +173,29 @@ function Bookings() {
     return (
         <>
             {
-                location === "/dashboard/bookings"
+                location.pathname === "/dashboard/bookings"
                     ?   bookingsData.loading === false
                             ?
                                 <>  
-                                    <TabsComponent section={bookings} setCurrentTab={setCurrentTab}>
+                                    <TabsComponent 
+                                        section={bookings}
+                                        currentTab={currentTab}
+                                        setCurrentTab={setCurrentTab}
+                                        resetPage={resetPage}
+                                    >
                                         <ButtonContainer>
                                             <SectionSelect 
+                                                value={currentOrder}
                                                 onChange={(e) => setCurrentOrder(e.target.value)}
                                                 name="booking-type" 
                                                 id="booking-type" 
                                                 required>
                                                 {
                                                     bookingsSelect.map((type, index) => {
-                                                        return <option key={index} value={type.accesor}>{type.label}</option>
+                                                        return <option 
+                                                            key={index}
+                                                            value={type.accesor}
+                                                        >{type.label}</option>
                                                     })
                                                 }
                                             </SectionSelect>
@@ -192,7 +205,13 @@ function Bookings() {
                                             </NewButton>
                                         </ButtonContainer>
                                     </TabsComponent>
-                                    <Table columns={bookingsHeaders} data={filteredBookings} action={action(navigate)}/>
+                                    <Table 
+                                        columns={bookingsHeaders} 
+                                        data={filteredBookings} 
+                                        action={action(navigate)}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                    />
                                 </>
                             : <Loading>
                                 <Loader />

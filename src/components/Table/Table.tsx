@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
 import styled from "styled-components";
 import Pagination from "./Pagination";
 
@@ -18,38 +18,25 @@ type TableProps = {
     action: (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => void;
     itemsPerPage?: number;
     maxPageNumbersToShow?: number;
+    currentPage: number;
+    setCurrentPage: Dispatch<SetStateAction<number>>,
 };
 
-const Table = ({ columns, data, action, itemsPerPage = 10, maxPageNumbersToShow = 5 }:TableProps) => {
-    const storedPage = localStorage.getItem("currentPage");
-    const storedPageData = storedPage ? JSON.parse(storedPage) : {};
+const Table = ({
+    columns,
+    data,
+    action,
+    itemsPerPage = 10,
+    maxPageNumbersToShow = 5,
+    currentPage,
+    setCurrentPage
+}:TableProps) => {
+        
     const section = location.pathname.split("/dashboard/")[1];
-    
-    const getCurrentPage = () => {
-        return storedPageData.page || 1;
-    };
-
-    const storageCurrentPage = () => {
-        const lastSection = storedPageData.lastSection;
-        if(lastSection !== section){
-            localStorage.setItem("currentPage", JSON.stringify({
-                ...storedPageData,
-                page: 1,
-                lastSection: section
-            }))
-        } else {
-            localStorage.setItem("currentPage", JSON.stringify({
-                ...storedPageData,
-                page: currentPage
-            }))
-        }
-    }
-
-    const [currentPage, setCurrentPage] = useState(getCurrentPage());
 
     useEffect(() => {
-        storageCurrentPage();
-    }, [currentPage, section, storedPageData])
+        setCurrentPage(currentPage);
+    }, [section])
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;

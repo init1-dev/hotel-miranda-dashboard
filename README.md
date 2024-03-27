@@ -18,12 +18,8 @@ Dashboard app made using React with styled-components (only desktop, no responsi
 - npm run dev
 
 # TODO:
-- currentTab and currentOrder must store their values instead of replace it with initial value when new booking is created or other action is dispatched
-
 - fix rooms and bookings offer type and display calculating discount value (% instead value)
-
 - General refactor
-
 - Improve bookings user img
 
 # TESTING:

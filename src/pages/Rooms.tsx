@@ -1,6 +1,6 @@
 import styled, { ThemeContext } from "styled-components";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { orderBy, rooms } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
@@ -19,12 +19,16 @@ import { RoomData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 
 function Rooms() {
-    const location=useLocation().pathname;
     const navigate = useNavigate();
     const roomSelect = orderBy.rooms;
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Rooms");
     const [currentOrder, setCurrentOrder] = useState("price-high-low");
+    const [currentPage, setCurrentPage] = useState(1);
     const theme = useContext(ThemeContext);
+
+    const resetPage = () => {
+        setCurrentPage(1);
+    };
 
     const dispatch = useAppDispatch();
     const roomsData = useAppSelector(selectRooms);
@@ -193,11 +197,16 @@ function Rooms() {
     return (
         <>
             {
-                location === "/dashboard/rooms"
+                location.pathname === "/dashboard/rooms"
                     ?   roomsData.loading === false
                             ?
                                 <>  
-                                    <TabsComponent section={rooms} setCurrentTab={setCurrentTab}>
+                                    <TabsComponent 
+                                        section={rooms} 
+                                        currentTab={currentTab}
+                                        setCurrentTab={setCurrentTab}
+                                        resetPage={resetPage}
+                                    >
                                         <ButtonContainer>
                                             <SectionSelect 
                                                 onChange={(e) => setCurrentOrder(e.target.value)}
@@ -216,7 +225,13 @@ function Rooms() {
                                             </NewButton>
                                         </ButtonContainer>
                                     </TabsComponent>
-                                    <Table columns={roomsHeaders} data={filteredRooms} action={action(navigate)}/>
+                                    <Table 
+                                        columns={roomsHeaders} 
+                                        data={filteredRooms} 
+                                        action={action(navigate)}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                    />
                                 </>
                             : <Loading>
                                 <Loader />
