@@ -14,7 +14,7 @@ export const DashboardPage = () => {
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
+            if (event.key === "Escape" && location.pathname !== "/dashboard") {
                 navigate(-1);
             }
         };
