@@ -87,7 +87,7 @@ const Table = ({
 };
 
 const TableContainer = styled.div`
-    height: calc(100% - 75px);
+    height: calc(100% - 80px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

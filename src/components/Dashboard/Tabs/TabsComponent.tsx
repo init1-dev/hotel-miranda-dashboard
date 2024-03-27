@@ -66,27 +66,27 @@ const TabsContent = styled.div`
     display: flex;
     align-items: center;
     padding: 0 1rem 0 1rem;
-    gap: 5rem;
 `
 
 const Tab = styled.button`
     all: unset;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
-    border-bottom: 2px solid transparent;
+    height: 2.5rem;
+    border-bottom: 2px solid grey;
+    padding: 0 2rem;
 
     &:focus, &:focus-visible {
         outline: unset;
     }
 
     &:hover {
-        border-color: #7bcf92;
+        color: #57996a;
+        border-color: #57996a;
     }
 
     &[aria-selected="true"] {
-        font-weight: bold;
-        border-bottom: 2px solid #7bcf92;
-        color: #7bcf92;
-        filter: brightness(0.7);
+        border-bottom: 2px solid #57996a;
+        color: #57996a;
     }
 `
