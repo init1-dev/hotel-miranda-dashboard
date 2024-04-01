@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { archiveMsg, getMessagesThunk } from './messagesThunk';
 import { MessagesState } from '../interfaces';
@@ -21,27 +21,12 @@ const messagesSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getMessagesThunk.pending, (state) => {
-                state.loading = true;
-                state.status = 'pending';
-                state.error = null;
-            })
             .addCase(getMessagesThunk.fulfilled, (state, action) => {
-                state.loading = false;
                 state.status = 'fulfilled';
                 state.error = null;
                 state.data = action.payload;
             })
-            .addCase(getMessagesThunk.rejected, (state, action) => {
-                state.loading = false;
-                state.status = 'rejected';
-                state.error = action.error?.message ?? "Unknown error occurred";
-            })
 
-            .addCase(archiveMsg.pending, (state) => {
-                state.status = 'pending';
-                state.error = null;
-            })
             .addCase(archiveMsg.fulfilled, (state, action) => {
                 const index = state.data.findIndex((item) => item.id === action.payload.id);
                 if (index !== -1) {
@@ -50,11 +35,21 @@ const messagesSlice = createSlice({
                     state.data[index] = action.payload;
                 }
             })
-            .addCase(archiveMsg.rejected, (state, action) => {
-                state.loading = false;
-                state.status = 'rejected';
-                state.error = action.error?.message ?? "Unknown error occurred";
-            });
+
+            .addMatcher(
+                isAnyOf( getMessagesThunk.pending, archiveMsg.pending ),
+                (state) => {
+                    state.status = 'pending';
+                    state.error = null;
+                }
+            )
+            .addMatcher(
+                isAnyOf( getMessagesThunk.rejected, archiveMsg.rejected ),
+                (state, action) => {
+                    state.status = 'rejected';
+                    state.error = action.error?.message ?? "Unknown error occurred";
+                }
+            )
     },
 });
 

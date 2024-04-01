@@ -22,7 +22,6 @@ const roomSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getRoomsThunk.fulfilled, (state, action) => {
-                state.loading = false;
                 state.status = 'fulfilled';
                 state.error = null;
                 state.data = action.payload;
