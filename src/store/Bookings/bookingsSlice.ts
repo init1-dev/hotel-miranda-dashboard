@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { deleteBooking, editBooking, getBooking, getBookings, newBooking } from './bookingsThunk';
 import { BookingsState } from '../interfaces';
@@ -21,41 +21,18 @@ const bookingsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getBookings.pending, (state) => {
-                state.loading = true;
-                state.status = 'pending';
-                state.error = null;
-            })
             .addCase(getBookings.fulfilled, (state, action) => {
-                state.loading = false;
                 state.status = 'fulfilled';
                 state.error = null;
                 state.data = action.payload;
             })
-            .addCase(getBookings.rejected, (state, action) => {
-                state.loading = false;
-                state.status = 'rejected';
-                state.error = action.error?.message ?? "Unknown error occurred";
-            })
 
-            .addCase(getBooking.pending, (state) => {
-                state.item.status = 'pending';
-                state.item.error = null;
-            })
             .addCase(getBooking.fulfilled, (state, action) => {
                 state.item.status = 'fulfilled';
                 state.item.error = null;
                 state.item.itemData = action.payload;
             })
-            .addCase(getBooking.rejected, (state, action) => {
-                state.item.status = 'rejected';
-                state.item.error = action.error?.message ?? "Unknown error occurred";
-            })
 
-            .addCase(newBooking.pending, (state) => {
-                state.item.status = 'pending';
-                state.item.error = null;
-            })
             .addCase(newBooking.fulfilled, (state, action) => {
                 state.item.status = 'fulfilled';
                 state.item.error = null;
@@ -64,15 +41,7 @@ const bookingsSlice = createSlice({
                     action.payload 
                 ];
             })
-            .addCase(newBooking.rejected, (state, action) => {
-                state.item.status = 'rejected';
-                state.item.error = action.error?.message ?? "Unknown error occurred";
-            })
 
-            .addCase(editBooking.pending, (state) => {
-                state.item.status = 'pending';
-                state.item.error = null;
-            })
             .addCase(editBooking.fulfilled, (state, action) => {
                 const index = state.data.findIndex((item) => item.id === action.payload.id);
                 if (index !== -1) {
@@ -81,24 +50,27 @@ const bookingsSlice = createSlice({
                     state.data[index] = action.payload;
                 }
             })
-            .addCase(editBooking.rejected, (state, action) => {
-                state.item.status = 'rejected';
-                state.item.error = action.error?.message ?? "Unknown error occurred";
-            })
 
-            .addCase(deleteBooking.pending, (state) => {
-                state.item.status = 'pending';
-                state.item.error = null;
-            })
             .addCase(deleteBooking.fulfilled, (state, action) => {
                 state.item.status = 'fulfilled';
                 state.item.error = null;
                 state.data = state.data.filter(item => item.id !== action.payload);
             })
-            .addCase(deleteBooking.rejected, (state, action) => {
-                state.item.status = 'rejected';
-                state.item.error = action.error?.message ?? "Unknown error occurred";
-            })
+            
+            .addMatcher(
+                isAnyOf( getBookings.pending, getBooking.pending, newBooking.pending, editBooking.pending, deleteBooking.pending ),
+                (state) => {
+                    state.status = 'pending';
+                    state.error = null;
+                }
+            )
+            .addMatcher(
+                isAnyOf( getBookings.rejected, getBooking.rejected, newBooking.rejected, editBooking.rejected, deleteBooking.rejected ),
+                (state, action) => {
+                    state.status = 'rejected';
+                    state.error = action.error?.message ?? "Unknown error occurred";
+                }
+            )
     },
 });
 

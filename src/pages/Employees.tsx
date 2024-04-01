@@ -13,7 +13,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectEmployees } from "../store/Employees/employeesSlice";
 import { deleteEmployee, getEmployeesThunk } from "../store/Employees/employeesThunk";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 import { EmployeeData } from "../store/interfaces";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -22,6 +22,7 @@ import CustomSwal from "../helpers/Swal/CustomSwal";
 function Employees() {
     const navigate = useNavigate();
     const employeesSelect = orderBy.employees;
+    const [isLoading, setIsLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Employees");
     const [currentOrder, setCurrentOrder] = useState("default");
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,9 +50,14 @@ function Employees() {
         
     }, [employeesData, currentTab, currentOrder])
 
+    const initialFetch = useCallback(async () => {
+        await dispatch(getEmployeesThunk()).unwrap();
+        setIsLoading(false);
+    }, [dispatch])
+
     useEffect(() => {
-        dispatch(getEmployeesThunk());
-    }, [dispatch]);
+        initialFetch()
+    }, [initialFetch]);
 
     const usersHeaders = [
         {
@@ -176,51 +182,53 @@ function Employees() {
             }
         }
     ];
+
+    if(isLoading) {
+        return (
+            <Loading>
+                <Loader />
+            </Loading>
+        )
+    }
     
     return (
         <>
             {
                 location.pathname === "/dashboard/employees"
-                    ?   employeesData.loading === false
-                            ?
-                                <>
-                                        <TabsComponent
-                                            section={employees}
-                                            currentTab={currentTab}
-                                            setCurrentTab={setCurrentTab} 
-                                            resetPage={resetPage}
-                                        >
-                                            <ButtonContainer>
-                                                <SectionSelect 
-                                                    onChange={(e) => setCurrentOrder(e.target.value)}
-                                                    name="room-type" 
-                                                    id="room-type" 
-                                                    required>
-                                                    {
-                                                        employeesSelect.map((type, index) => {
-                                                            return <option key={index} value={type.accesor}>{type.label}</option>
-                                                        })
-                                                    }
-                                                </SectionSelect>
-                                                <NewButton to={"/dashboard/employees/new"}>
-                                                    <FaPlus />
-                                                    NEW EMPLOYEE
-                                                </NewButton>
-                                            </ButtonContainer>
-                                        </TabsComponent>
-                                    <Table
-                                        columns={usersHeaders}
-                                        data={filteredEmployees}
-                                        action={action(navigate)}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                    />
-                                </>
-                            : <Loading>
-                                <Loader />
-                            </Loading>
+                    ?   <>
+                            <TabsComponent
+                                section={employees}
+                                currentTab={currentTab}
+                                setCurrentTab={setCurrentTab} 
+                                resetPage={resetPage}
+                            >
+                                <ButtonContainer>
+                                    <SectionSelect 
+                                        onChange={(e) => setCurrentOrder(e.target.value)}
+                                        name="room-type" 
+                                        id="room-type" 
+                                        required>
+                                        {
+                                            employeesSelect.map((type, index) => {
+                                                return <option key={index} value={type.accesor}>{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                    <NewButton to={"/dashboard/employees/new"}>
+                                        <FaPlus />
+                                        NEW EMPLOYEE
+                                    </NewButton>
+                                </ButtonContainer>
+                            </TabsComponent>
+                            <Table
+                                columns={usersHeaders}
+                                data={filteredEmployees}
+                                action={action(navigate)}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </>
                     : <Outlet />
-            
             }
         </>
     );

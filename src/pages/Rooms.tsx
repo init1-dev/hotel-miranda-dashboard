@@ -21,6 +21,7 @@ import CustomSwal from "../helpers/Swal/CustomSwal";
 function Rooms() {
     const navigate = useNavigate();
     const roomSelect = orderBy.rooms;
+    const [isLoading, setIsLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Rooms");
     const [currentOrder, setCurrentOrder] = useState("price-high-low");
     const [currentPage, setCurrentPage] = useState(1);
@@ -54,6 +55,7 @@ function Rooms() {
 
     const initialFetch = useCallback(async () => {
         await dispatch(getRoomsThunk()).unwrap();
+        setIsLoading(false);
     }, [dispatch])
 
     useEffect(() => {
@@ -194,48 +196,51 @@ function Rooms() {
         }
     ];
 
+    if(isLoading) {
+        return (
+            <Loading>
+                <Loader />
+            </Loading>
+        )
+    }
+
     return (
         <>
             {
                 location.pathname === "/dashboard/rooms"
-                    ?   roomsData.loading === false
-                            ?
-                                <>  
-                                    <TabsComponent 
-                                        section={rooms} 
-                                        currentTab={currentTab}
-                                        setCurrentTab={setCurrentTab}
-                                        resetPage={resetPage}
-                                    >
-                                        <ButtonContainer>
-                                            <SectionSelect 
-                                                onChange={(e) => setCurrentOrder(e.target.value)}
-                                                name="room-type" 
-                                                id="room-type" 
-                                                required>
-                                                {
-                                                    roomSelect.map((type, index) => {
-                                                        return <option key={index} value={type.accesor}>{type.label}</option>
-                                                    })
-                                                }
-                                            </SectionSelect>
-                                            <NewButton to={"/dashboard/rooms/new"}>
-                                                <FaPlus />
-                                                NEW ROOM
-                                            </NewButton>
-                                        </ButtonContainer>
-                                    </TabsComponent>
-                                    <Table 
-                                        columns={roomsHeaders} 
-                                        data={filteredRooms} 
-                                        action={action(navigate)}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                    />
-                                </>
-                            : <Loading>
-                                <Loader />
-                            </Loading>
+                    ?   <>  
+                            <TabsComponent 
+                                section={rooms} 
+                                currentTab={currentTab}
+                                setCurrentTab={setCurrentTab}
+                                resetPage={resetPage}
+                            >
+                                <ButtonContainer>
+                                    <SectionSelect 
+                                        onChange={(e) => setCurrentOrder(e.target.value)}
+                                        name="room-type" 
+                                        id="room-type" 
+                                        required>
+                                        {
+                                            roomSelect.map((type, index) => {
+                                                return <option key={index} value={type.accesor}>{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                    <NewButton to={"/dashboard/rooms/new"}>
+                                        <FaPlus />
+                                        NEW ROOM
+                                    </NewButton>
+                                </ButtonContainer>
+                            </TabsComponent>
+                            <Table 
+                                columns={roomsHeaders} 
+                                data={filteredRooms} 
+                                action={action(navigate)}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </>
                     : <Outlet />
             }
         </>

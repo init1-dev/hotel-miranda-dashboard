@@ -14,7 +14,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
 import { archiveMsg, getMessagesThunk } from "../store/Messages/messagesThunk";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 import { MessageData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
@@ -31,7 +31,7 @@ const messageStars = (row: number) => {
 
 function Messages() {
     const messagesSelect = orderBy.messages;
-
+    const [isLoading, setIsLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Messages");
     const [currentOrder, setCurrentOrder] = useState("default");
     const [currentPage, setCurrentPage] = useState(1);
@@ -59,9 +59,14 @@ function Messages() {
         
     }, [messagesData, currentTab, currentOrder])
 
+    const initialFetch = useCallback(async () => {
+        await dispatch(getMessagesThunk()).unwrap();
+        setIsLoading(false);
+    }, [dispatch])
+
     useEffect(() => {
-        dispatch(getMessagesThunk());
-    }, [dispatch]);
+        initialFetch()
+    }, [initialFetch]);
 
     const action = async(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
@@ -164,44 +169,47 @@ function Messages() {
         }
     ];
 
+    if(isLoading) {
+        return (
+            <Loading>
+                <Loader />
+            </Loading>
+        )
+    }
+
     return (
         <>
             {
                 location.pathname === "/dashboard/messages"
-                    ?   messagesData.loading === false
-                            ?
-                                <>
-                                    <TabsComponent 
-                                        section={messages}
-                                        currentTab={currentTab}
-                                        setCurrentTab={setCurrentTab} 
-                                        resetPage={resetPage}
-                                    >
-                                        <ButtonContainer>
-                                            <SectionSelect 
-                                                onChange={(e) => setCurrentOrder(e.target.value)}
-                                                name="room-type" 
-                                                id="room-type" 
-                                                required>
-                                                {
-                                                    messagesSelect.map((type, index) => {
-                                                        return <option key={index} value={type.accesor}>{type.label}</option>
-                                                    })
-                                                }
-                                            </SectionSelect>
-                                        </ButtonContainer>
-                                    </TabsComponent>
-                                    <Table
-                                        columns={messagesHeaders}
-                                        data={filteredMessages}
-                                        action={action}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                    />
-                                </>
-                            : <Loading>
-                                <Loader />
-                            </Loading>
+                    ?   <>
+                            <TabsComponent 
+                                section={messages}
+                                currentTab={currentTab}
+                                setCurrentTab={setCurrentTab} 
+                                resetPage={resetPage}
+                            >
+                                <ButtonContainer>
+                                    <SectionSelect 
+                                        onChange={(e) => setCurrentOrder(e.target.value)}
+                                        name="room-type" 
+                                        id="room-type" 
+                                        required>
+                                        {
+                                            messagesSelect.map((type, index) => {
+                                                return <option key={index} value={type.accesor}>{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                </ButtonContainer>
+                            </TabsComponent>
+                            <Table
+                                columns={messagesHeaders}
+                                data={filteredMessages}
+                                action={action}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </>
                     : <Outlet />
             }
         </>

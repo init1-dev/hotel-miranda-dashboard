@@ -22,6 +22,7 @@ import { ThemeContext } from "styled-components";
 function Bookings() {
     const navigate = useNavigate();
     const bookingsSelect = orderBy.bookings;
+    const [isLoading, setIsLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Bookings");
     const [currentOrder, setCurrentOrder] = useState<string>("order_date");
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -57,6 +58,7 @@ function Bookings() {
 
     const initialFetch = useCallback(async () => {
         await dispatch(getBookings()).unwrap();
+        setIsLoading(false);
     }, [dispatch])
 
     useEffect(() => {
@@ -169,53 +171,56 @@ function Bookings() {
             }
         }
     ];
+
+    if(isLoading) {
+        return (
+            <Loading>
+                <Loader />
+            </Loading>
+        )
+    }
     
     return (
         <>
             {
                 location.pathname === "/dashboard/bookings"
-                    ?   bookingsData.loading === false
-                            ?
-                                <>  
-                                    <TabsComponent 
-                                        section={bookings}
-                                        currentTab={currentTab}
-                                        setCurrentTab={setCurrentTab}
-                                        resetPage={resetPage}
-                                    >
-                                        <ButtonContainer>
-                                            <SectionSelect 
-                                                value={currentOrder}
-                                                onChange={(e) => setCurrentOrder(e.target.value)}
-                                                name="booking-type" 
-                                                id="booking-type" 
-                                                required>
-                                                {
-                                                    bookingsSelect.map((type, index) => {
-                                                        return <option 
-                                                            key={index}
-                                                            value={type.accesor}
-                                                        >{type.label}</option>
-                                                    })
-                                                }
-                                            </SectionSelect>
-                                            <NewButton to={"/dashboard/bookings/new"}>
-                                                <FaPlus />
-                                                NEW BOOKING
-                                            </NewButton>
-                                        </ButtonContainer>
-                                    </TabsComponent>
-                                    <Table 
-                                        columns={bookingsHeaders} 
-                                        data={filteredBookings} 
-                                        action={action(navigate)}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                    />
-                                </>
-                            : <Loading>
-                                <Loader />
-                            </Loading>
+                    ?   <>  
+                            <TabsComponent 
+                                section={bookings}
+                                currentTab={currentTab}
+                                setCurrentTab={setCurrentTab}
+                                resetPage={resetPage}
+                            >
+                                <ButtonContainer>
+                                    <SectionSelect 
+                                        value={currentOrder}
+                                        onChange={(e) => setCurrentOrder(e.target.value)}
+                                        name="booking-type" 
+                                        id="booking-type" 
+                                        required>
+                                        {
+                                            bookingsSelect.map((type, index) => {
+                                                return <option 
+                                                    key={index}
+                                                    value={type.accesor}
+                                                >{type.label}</option>
+                                            })
+                                        }
+                                    </SectionSelect>
+                                    <NewButton to={"/dashboard/bookings/new"}>
+                                        <FaPlus />
+                                        NEW BOOKING
+                                    </NewButton>
+                                </ButtonContainer>
+                            </TabsComponent>
+                            <Table 
+                                columns={bookingsHeaders} 
+                                data={filteredBookings} 
+                                action={action(navigate)}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </>
                     : <Outlet />
             }
         </>
