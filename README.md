@@ -1,7 +1,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
--   [Built With](#built-with)
+    - [Built With](#built-with)
 - [Features](#features)
 - [Next Updates](#Next-updates)
 - [Project Urls](#Project-urls)
@@ -55,9 +55,9 @@ $npm run dev
 
 ## Project Urls
 
-- MIRANDA WEB: [DEPLOY](http://hotel-miranda-web.s3-website.eu-west-3.amazonaws.com/) [REPO](https://github.com/init1-dev/hotel-miranda-web)
-- MIRANDA DASHBOARD: [DEPLOY](http://hotel-miranda-dashboard-init.s3-website.eu-west-3.amazonaws.com/dashboard) [REPO](https://github.com/init1-dev/hotel-miranda-dashboard)
-- MIRANDA BACKEND: [DEPLOY](https://4oi46otzmb.execute-api.eu-west-3.amazonaws.com/dev/) [REPO](https://github.com/init1-dev/typescript-node-express)
+- MIRANDA WEB: [DEPLOY](http://hotel-miranda-web.s3-website.eu-west-3.amazonaws.com/) | [REPO](https://github.com/init1-dev/hotel-miranda-web)
+- MIRANDA DASHBOARD: [DEPLOY](http://hotel-miranda-dashboard-init.s3-website.eu-west-3.amazonaws.com/dashboard) | [REPO](https://github.com/init1-dev/hotel-miranda-dashboard)
+- MIRANDA BACKEND: [DEPLOY](https://4oi46otzmb.execute-api.eu-west-3.amazonaws.com/dev/) | [REPO](https://github.com/init1-dev/typescript-node-express)
 
 ## Contact
 
