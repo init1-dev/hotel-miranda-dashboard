@@ -67,13 +67,14 @@ function Employees() {
                     <Imagen src={`${row.photo}`} alt="imagen del empleado" onClick={async(e) => {
                         e.stopPropagation();
                         const swalProps = {
-                            title: <MessageTitle>Employee #{row.employee_id}</MessageTitle>,
+                            title: <MessageTitle>Employee #{row._id}</MessageTitle>,
                             html: (
                                 <>
                                     <img src={String(row.photo)} style={{maxWidth:"50%", marginBottom:"1rem"}} alt="imagen del empleado" />
                                     <MessageText><strong>Name:</strong> {row.fullname}</MessageText>
                                     <MessageText><strong>Email:</strong> {row.email}</MessageText>
                                     <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
+                                    <MessageText><strong>Employee Type:</strong> {row.employee_type} </MessageText>
                                     <MessageText><strong>Description:</strong> {row.description} </MessageText>
                                     <br />
                                     <MessageText><strong>Start Date:</strong> {row.start_date}</MessageText>
@@ -86,7 +87,7 @@ function Employees() {
                     }}/>
                     <SpanContainer>
                         <h4>{row.fullname}</h4>
-                        <small>#{row.employee_id}</small>
+                        <small>#{row._id}</small>
                     </SpanContainer>
                 </Container>
             }
@@ -116,10 +117,10 @@ function Employees() {
             display: (row: Data) => format( new Date(`${row.start_date}`), 'MMM do, yyyy')
         },
         {
-            'label': 'Description',
+            'label': 'Employee Type',
             display: (row: Data) => (
                 <>
-                    <h4>{row.description}</h4>
+                    <h4>{row.employee_type}</h4>
                 </>
             )
         },
@@ -141,7 +142,7 @@ function Employees() {
                     <ButtonContainer>
                         <ActionButtonIcon onClick={(e) => {
                             e.stopPropagation()
-                            navigate(`edit/${employeeRow.id}`)
+                            navigate(`edit/${employeeRow._id}`)
                         }}>
                             <FaRegEdit />
                         </ActionButtonIcon>
@@ -149,7 +150,7 @@ function Employees() {
                         <ActionButtonIcon onClick={async(e) => {
                             e.stopPropagation()
                             const swalProps = {
-                                title: `<small>You're going to delete employee #${employeeRow.id}</small>`,
+                                title: `<small>You're going to delete employee #${employeeRow._id}</small>`,
                                 text: `This action is irreversible`,
                                 icon: 'warning' as const,
                                 showConfirmButton: true,
@@ -165,7 +166,7 @@ function Employees() {
                                 if (result.isConfirmed) {
                                     dispatch(deleteEmployee(employeeRow));
                                     const swalProps = {
-                                        text: `Employee #${employeeRow.id} deleted successfully`,
+                                        text: `Employee #${employeeRow._id} deleted successfully`,
                                         icon: 'success' as const,
                                         timer: 2000,
                                         timerProgressBar: true,

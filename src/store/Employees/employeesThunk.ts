@@ -2,12 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import employeesData from '../../Data/employees.json';
 import { delay } from '../../helpers/delay';
 import { EmployeeData } from '../interfaces';
+import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 
 export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', async () => {
     try {
-        await delay();
-
-        return employeesData;
+        const token: string = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImluaXQxLmRldiIsImlhdCI6MTcxMjMzNzAxNiwiZXhwIjozMTcyODgzMzcwMTZ9.ixi3vyOZck7xenveXI27P-MEtgQlbdaRSJv4Gqsbmzw";
+        const data = await fetchFromApi("GET", "employees", token);
+        
+        return data?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }

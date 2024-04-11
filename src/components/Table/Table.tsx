@@ -9,7 +9,7 @@ type Column = {
 };
 
 export type Data = {
-    [key: string]: string | number | boolean | Array<string>;
+    [key: string]: string | number | boolean | Array<string> | undefined;
 };
 
 type TableProps = {

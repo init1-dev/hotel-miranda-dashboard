@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "jest",
     "cy": "cypress open",
-    "dev-test": "vite --host"
+    "dev-test": "vite --host",
+    "deploy": "npm run build && aws s3 sync ./dist s3://hotel-miranda-dashboard-init --delete --acl public-read"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.11",

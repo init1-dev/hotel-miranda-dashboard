@@ -16,8 +16,8 @@ const tabs = {
     ],
     employees: [
         { label: "All Employees", accesor: "All Employees"},
-        { label: "Active Employees", accesor: true},
-        { label: "Inactive Employees", accesor: false}
+        { label: "Active Employees", accesor: "Active"},
+        { label: "Inactive Employees", accesor: "Inactive"}
     ],
 }
 
