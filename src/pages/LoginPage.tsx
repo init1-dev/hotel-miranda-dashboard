@@ -108,7 +108,7 @@ function LoginPage() {
                         <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="employee_email" placeholder="init1.dev@gmail.com" defaultValue="init1.dev@gmail.com"/>
+                            <Input type="text" name="employee_email" placeholder="init1.dev@gmail.com" />
 
                             <Input type="password" name="password" placeholder="12345"/>
 
