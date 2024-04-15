@@ -4,10 +4,9 @@ import { BookingData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
 
-const token = getTokenFromLocalStorage();
-
 export const getBookings = createAsyncThunk('bookings/fetchBookings', async () => {
     try {
+        const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", bookingsCollection, token);
         return data?.data;
     } catch (error) {
@@ -17,6 +16,7 @@ export const getBookings = createAsyncThunk('bookings/fetchBookings', async () =
 
 export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: number) => {    
     try {
+        const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", `${bookingsCollection}/${id}`, token);
         return data?.data;
     } catch (error) {
@@ -26,6 +26,7 @@ export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: n
 
 export const newBooking = createAsyncThunk('bookings/newBooking', async (newData: BookingData) => {
     try {
+        const token = getTokenFromLocalStorage();
         const { _id, ...itemToFetch } = newData;
         const newEmployee = await fetchFromApi("POST", `${bookingsCollection}`, token, itemToFetch);
         
@@ -37,6 +38,7 @@ export const newBooking = createAsyncThunk('bookings/newBooking', async (newData
 
 export const editBooking = createAsyncThunk('bookings/editBooking', async ({_id, newData}: {_id: number, newData: BookingData} ) => {
     try {
+        const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
         await fetchFromApi("PUT", `${bookingsCollection}/${_id}`, token, itemToFetch);
         
@@ -49,6 +51,7 @@ export const editBooking = createAsyncThunk('bookings/editBooking', async ({_id,
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({_id}: BookingData) => {
     try {
+        const token = getTokenFromLocalStorage();
         await fetchFromApi("DELETE", `${bookingsCollection}/${_id}`, token);
 
         return _id;

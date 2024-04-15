@@ -4,10 +4,9 @@ import { EmployeeData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
 
-const token = getTokenFromLocalStorage();
-
 export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', async () => {
     try {
+        const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", employeesCollection, token);
         return data?.data;
     } catch (error) {
@@ -17,6 +16,7 @@ export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', as
 
 export const getEmployee = createAsyncThunk('employees/fetchEmployee', async (id: string) => {    
     try {
+        const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", `${employeesCollection}/${id}`, token);
         return data?.data;
     } catch (error) {
@@ -26,6 +26,7 @@ export const getEmployee = createAsyncThunk('employees/fetchEmployee', async (id
 
 export const newEmployee = createAsyncThunk('employees/newEmployee', async (newData: EmployeeData) => {
     try {
+        const token = getTokenFromLocalStorage();
         const { _id, ...itemToFetch } = newData;
         const newEmployee = await fetchFromApi("POST", `${employeesCollection}`, token, itemToFetch);
         
@@ -37,6 +38,7 @@ export const newEmployee = createAsyncThunk('employees/newEmployee', async (newD
 
 export const editEmployee = createAsyncThunk('employees/editEmployee', async ({id, newData}: {id: string, newData: EmployeeData} ) => {
     try {
+        const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
         await fetchFromApi("PUT", `${employeesCollection}/${id}`, token, itemToFetch);
         
@@ -49,6 +51,7 @@ export const editEmployee = createAsyncThunk('employees/editEmployee', async ({i
 
 export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async ({_id}: EmployeeData) => {
     try {
+        const token = getTokenFromLocalStorage();
         await fetchFromApi("DELETE", `${employeesCollection}/${_id}`, token);
 
         return _id;

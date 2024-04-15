@@ -5,10 +5,9 @@ import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
 import roomsData from '../../Data/rooms.json';
 
-const token = getTokenFromLocalStorage();
-
 export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
     try {
+        const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", roomsCollection, token);
         return data?.data;
     } catch (error) {

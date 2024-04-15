@@ -4,10 +4,9 @@ import { MessageData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
 
-const token = getTokenFromLocalStorage();
-
 export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async () => {
     try {
+        const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", messagesCollection, token);
         return data?.data;
     } catch (error) {
