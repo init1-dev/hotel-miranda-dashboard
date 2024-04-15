@@ -5,6 +5,16 @@ export const Title = styled.h1`
     align-items: center;
     justify-content: space-between;
     margin: 0rem 20% 0 20%;
+    user-select: none;
+
+    p{
+        font-size: 24px;
+    }
+
+    small {
+        user-select: text;
+        filter: sepia()
+    }
 `
 
 export const Form = styled.form`

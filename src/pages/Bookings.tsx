@@ -50,7 +50,7 @@ function Bookings() {
                     if(a.full_name > b.full_name) return 1;
                     return 0;
                 default:
-                    return new Date(b.order_date).getTime() - new Date(a.order_date).getTime();
+                    return new Date(String(b.order_date)).getTime() - new Date(String(a.order_date)).getTime();
             }
         })
         
@@ -73,7 +73,7 @@ function Bookings() {
                 return (
                     <SpanContainer>
                         <h4>{row.full_name}</h4>
-                        <small>#{row.id}</small>
+                        <small>#{row._id}</small>
                     </SpanContainer>
                 )
             }
@@ -105,10 +105,10 @@ function Bookings() {
                 :
                 <ButtonStyledViewNotesDisabled disabled>None</ButtonStyledViewNotesDisabled>
         },
-        {
-            'label': 'Room Type',
-            display: (row: Data) => `${row.type} #${row.number}`
-        },
+        // {
+        //     'label': 'Room Type',
+        //     display: (row: Data) => `${row.roomInfo?.room_type} #${row.roomInfo?.room_number}`
+        // },
         {
             'label': 'Status',
             display : (row: Data) => {
@@ -138,7 +138,7 @@ function Bookings() {
                             e.stopPropagation()
 
                             const swalProps = {
-                                title: `<small>You're going to delete booking #${bookingRow.id}</small>`,
+                                title: `<small>You're going to delete booking #${bookingRow._id}</small>`,
                                 text: `This action is irreversible`,
                                 icon: 'warning' as const,
                                 showConfirmButton: true,
@@ -154,7 +154,7 @@ function Bookings() {
                                 if (result.isConfirmed) {
                                     dispatch(deleteBooking(bookingRow));
                                     const swalProps = {
-                                        text: `Booking #${bookingRow.id} deleted successfully`,
+                                        text: `Booking #${bookingRow._id} deleted successfully`,
                                         icon: 'success' as const,
                                         timer: 2000,
                                         timerProgressBar: true,

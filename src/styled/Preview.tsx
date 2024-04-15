@@ -41,6 +41,10 @@ export const InfoContainerRow = styled.div`
     }
 `
 
+export const TopContainerRowXl = styled(InfoContainerRow)`
+    grid-template-columns: repeat(1, 1fr);
+`
+
 export const Amenities = styled.div`
     display: grid;
     gap: 1rem;

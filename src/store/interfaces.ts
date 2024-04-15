@@ -21,23 +21,17 @@ export interface AppState {
 }
 
 export interface BookingData extends Data{
-    id: number;
+    _id?: string;
     full_name: string;
     email: string;
     phone: string;
     image: string;
-    order_date: string;
     check_in: string;
     check_out: string;
     special_request: string;
-    number: number;
-    price: number;
-    type: string;
+    discount: number;
     status: string;
-    amenities: string[];
-    room_status: string;
-    foto: string;
-    description: string;
+    roomInfo: any;
 }
 export interface Booking {
     itemData: BookingData | undefined;
@@ -53,17 +47,15 @@ export interface BookingsState {
 }
 
 export interface EmployeeData extends Data{
-    id: number;
+    _id?: string;
     photo: string;
-    name: string;
-    lastname: string;
     fullname: string;
-    employee_id: string;
+    employee_type: string;
     email: string;
     start_date: string;
     description: string;
     phone: string;
-    status: boolean;
+    status: string;
     password: string;
 }
 export interface Employee {
@@ -80,19 +72,17 @@ export interface EmployeesState {
 }
 
 export interface MessageData extends Data{
-    id: number;
-    message_id: string;
+    _id?: string;
     full_name: string;
     email: string;
     phone: string;
     subject: string;
     message: string;
     stars: number;
-    date: string;
     read: boolean;
     archived: boolean;
     foto: string;
-    time_passed: string;
+    createdAt: string;
 }
 export interface Message {
     itemData: MessageData | undefined;

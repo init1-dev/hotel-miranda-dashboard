@@ -46,6 +46,7 @@ export const TabsComponent = ({
                         )) 
                     }
                 </TabsContent>
+                <SearchInput type="search" />
                 {children}
             </TabsContainer>
 
@@ -59,6 +60,7 @@ const TabsContainer = styled.div`
     justify-content: space-between;
     align-items: baseline;
     height: 70px;
+    gap: 1rem;
     user-select: none;
 `
 
@@ -89,4 +91,12 @@ const Tab = styled.button`
         border-bottom: 2px solid #57996a;
         color: #57996a;
     }
+`
+
+const SearchInput = styled.input`
+    border-radius: 0.5rem;
+    border: 1px solid black;
+    height: 25px;
+    width: 25%;
+    padding: 0 0.5rem;
 `

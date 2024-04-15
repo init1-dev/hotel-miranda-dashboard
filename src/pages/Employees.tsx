@@ -95,9 +95,7 @@ function Employees() {
         {
             'label': 'Joined',
             display: (row: Data) => (
-                <>
-                    {format( new Date(`${row.start_date}`), 'MMM do, yyyy')}
-                </>
+                format( new Date(`${row.start_date}`), 'MMM do, yyyy')
             )
         },
         {
@@ -113,10 +111,6 @@ function Employees() {
             'value': 'phone'
         },
         {
-            'label': 'Start Date',
-            display: (row: Data) => format( new Date(`${row.start_date}`), 'MMM do, yyyy')
-        },
-        {
             'label': 'Employee Type',
             display: (row: Data) => (
                 <>
@@ -127,7 +121,7 @@ function Employees() {
         {
             'label': 'Status',
             display : (row: Data) => {
-                if (row.status) {
+                if (row.status === 'Active') {
                     return <SpanStyledCheckIn>Active</SpanStyledCheckIn>
                 } else {
                     return <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>

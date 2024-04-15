@@ -28,7 +28,7 @@ const messagesSlice = createSlice({
             })
 
             .addCase(archiveMsg.fulfilled, (state, action) => {
-                const index = state.data.findIndex((item) => item.id === action.payload.id);
+                const index = state.data.findIndex((item) => item._id === action.payload._id);
                 if (index !== -1) {
                     state.status = 'fulfilled';
                     state.error = null;

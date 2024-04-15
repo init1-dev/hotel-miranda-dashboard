@@ -17,6 +17,7 @@ import { selectRooms } from "../store/Rooms/roomsSlice";
 import { deleteRoom, getRoomsThunk } from "../store/Rooms/roomsThunk";
 import { RoomData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
+import { calculateCentsToCurrency } from "../helpers/calculateCentsToCurrency";
 
 function Rooms() {
     const navigate = useNavigate();
@@ -78,7 +79,7 @@ function Rooms() {
                     }}/>
                     <SpanContainer>
                         <h4>{row.name} Nº{row.room_number}</h4>
-                        <small>#{row.id}</small>
+                        <small>#{row._id}</small>
                     </SpanContainer>
                 </Container>
             }
@@ -86,6 +87,23 @@ function Rooms() {
         {
             'label': 'Room Type',
             display: (row: Data) => `${row.room_type}`
+        },
+        {
+            'label': 'Cancelation',
+            display: (row: Data) => {
+                return (<ButtonStyledViewNotes onClick={async(event) => {
+                    event.stopPropagation()
+                    const htmlCode = (
+                        <small>{row.cancellation}</small>
+                    )
+                    const swalProps = {
+                        title: <MessageTitle>Cancellation Policy #{row.room_number}:</MessageTitle>,
+                        html: htmlCode,
+                        showConfirmButton: false
+                    }
+                    await CustomSwal({data: swalProps, theme: theme})
+                }}>View</ButtonStyledViewNotes>)
+            }
         },
         {
             'label': 'Amenities',
@@ -118,7 +136,7 @@ function Rooms() {
             'label': 'Price',
             display: (row: Data) => (
                 <>
-                    <p>{row.price}€</p>
+                    <p>{calculateCentsToCurrency(Number(row.price))}€</p>
                     <Night>/Night</Night>
                 </>
             )
@@ -126,13 +144,13 @@ function Rooms() {
         {
             'label': 'Offer',
             display: (row: Data) => {
-                return (row.offer !== 0) ? (
+                return (row.offer) ? (
                     <>
-                        <p>{row.offer}€</p>
+                        <p>{calculateCentsToCurrency(Number(row.price), Number(row.discount))}€</p>
                         <Night>/Night</Night>
                     </>
                 ) : <>
-                        <p>{row.price}€</p>
+                        <p>{"-"}</p>
                         <Night>/Night</Night>
                     </>
             }

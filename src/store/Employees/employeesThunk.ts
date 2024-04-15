@@ -3,23 +3,21 @@ import employeesData from '../../Data/employees.json';
 import { delay } from '../../helpers/delay';
 import { EmployeeData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
+import { employeesCollection, token } from '../../helpers/API/apiVariables';
 
 export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', async () => {
     try {
-        const token: string = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImluaXQxLmRldiIsImlhdCI6MTcxMjMzNzAxNiwiZXhwIjozMTcyODgzMzcwMTZ9.ixi3vyOZck7xenveXI27P-MEtgQlbdaRSJv4Gqsbmzw";
-        const data = await fetchFromApi("GET", "employees", token);
-        
+        const data = await fetchFromApi("GET", employeesCollection, token);
         return data?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
 })
 
-export const getEmployee = createAsyncThunk('employees/fetchEmployee', async (id: number) => {    
+export const getEmployee = createAsyncThunk('employees/fetchEmployee', async (id: string) => {    
     try {
-        await delay();
-
-        return employeesData.find((item) => item.id === id );
+        const data = await fetchFromApi("GET", `${employeesCollection}/${id}`, token);
+        return data?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
@@ -37,32 +35,32 @@ export const getEmployeeAuth = createAsyncThunk('employees/fetchEmployee', async
 
 export const newEmployee = createAsyncThunk('employees/newEmployee', async (newData: EmployeeData) => {
     try {
-        await delay();
+        const { _id, ...itemToFetch } = newData;
+        const newEmployee = await fetchFromApi("POST", `${employeesCollection}`, token, itemToFetch);
         
-        return newData;
+        return newEmployee?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
 })
 
-export const editEmployee = createAsyncThunk('employees/editEmployee', async ({id, newData}: {id: number, newData: EmployeeData} ) => {
+export const editEmployee = createAsyncThunk('employees/editEmployee', async ({id, newData}: {id: string, newData: EmployeeData} ) => {
     try {
-        await delay();
-
-        console.log(id);
+        const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
+        await fetchFromApi("PUT", `${employeesCollection}/${id}`, token, itemToFetch);
         
-        return newData;
+        return itemToFetch;
 
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
 })
 
-export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async ({id}: EmployeeData) => {
+export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async ({_id}: EmployeeData) => {
     try {
-        await delay();
+        await fetchFromApi("DELETE", `${employeesCollection}/${_id}`, token);
 
-        return id;
+        return _id;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }

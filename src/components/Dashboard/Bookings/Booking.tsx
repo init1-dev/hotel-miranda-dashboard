@@ -76,7 +76,7 @@ function Booking () {
 
                                     <small>Amenities:</small>
                                     <Amenities>
-                                        {bookingData.itemData && bookingData.itemData.amenities.map((item, i) => {
+                                        {bookingData.itemData && bookingData.itemData.roomInfo.amenities.map((item: string, i: number) => {
                                             return <span key={i}>{item}</span>
                                         })}
                                     </Amenities>
@@ -105,7 +105,7 @@ function Booking () {
                                         </p>
                                     </div>
 
-                                    <img src={bookingData.itemData && bookingData.itemData.foto} alt="" />
+                                    <img src={bookingData.itemData && bookingData.itemData.image} alt="" />
                                 </ImageContainer>
 
                             </Preview>

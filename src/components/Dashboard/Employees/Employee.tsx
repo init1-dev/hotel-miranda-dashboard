@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { selecEmployee } from "../../../store/Employees/employeesSlice";
 import { Title } from "../../../styled/Form";
-import { ImageContainer, ImageDiv, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from "../../../styled/Preview";
-import { useEffect } from "react";
+import { ImageContainer, ImageDiv, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow, TopContainerRowXl } from "../../../styled/Preview";
+import { useCallback, useEffect, useState } from "react";
 import { getEmployee } from "../../../store/Employees/employeesThunk";
 import { Loader, Loading } from "../../../styled/Loading";
 import { SpanStyledCheckIn, SpanStyledCheckOut } from "../../../styled/Span";
@@ -14,19 +14,29 @@ function Employee () {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const employeeData = useAppSelector(selecEmployee);
+    const [fetched, setFetched] = useState(false);
+
+    const initialFetch = useCallback(async () => {
+        await dispatch(getEmployee(String(id)));
+        setFetched(true);
+    }, [id, dispatch])
 
     useEffect(() => {
-        dispatch(getEmployee(Number(id)));
-    }, [dispatch, id]);
+        initialFetch()
+    }, [initialFetch]);
 
     return (
         <>  
             {
-                employeeData.status === "fulfilled"
+                (employeeData.status === "fulfilled" && fetched)
                     ? 
                         <>
                             <Title>
-                                EMPLOYEE INFO: #{employeeData.itemData && employeeData.itemData.id}
+                                <p>
+                                    EMPLOYEE INFO: <small>
+                                        #{employeeData.itemData && employeeData.itemData._id}
+                                    </small>
+                                </p>
                                 <BackButton />
                             </Title>
 
@@ -39,7 +49,12 @@ function Employee () {
                                         </ImageDiv>
                                         <TextDiv>
                                             <h3>{employeeData.itemData && employeeData.itemData.fullname}</h3>
-                                            <small>#{employeeData.itemData && employeeData.itemData.id}</small>
+                                            <small>#{employeeData.itemData && employeeData.itemData._id}</small>
+                                            <p>
+                                                <small>
+                                                    ({employeeData.itemData && employeeData.itemData.employee_type})
+                                                </small>
+                                            </p>
                                         </TextDiv>
                                     </TopContainerRow>
 
@@ -57,7 +72,7 @@ function Employee () {
                                     <InfoContainerRow>
                                         <span>
                                             <small>Employee ID:</small>
-                                            <h5>{employeeData.itemData && employeeData.itemData.employee_id}</h5>
+                                            <h5>{employeeData.itemData && employeeData.itemData._id}</h5>
                                         </span>
                                         <span>
                                             <small>Start Date:</small>
@@ -65,12 +80,12 @@ function Employee () {
                                         </span>
                                     </InfoContainerRow>
 
-                                    <InfoContainerRow>
+                                    <TopContainerRowXl>
                                         <span>
                                             <small>Description:</small>
                                             <h5>{employeeData.itemData && employeeData.itemData.description}</h5>
                                         </span>
-                                    </InfoContainerRow>
+                                    </TopContainerRowXl>
                                     
                                 </InfoContainer>
 

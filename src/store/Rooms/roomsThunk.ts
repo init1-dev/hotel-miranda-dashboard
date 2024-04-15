@@ -2,12 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import roomsData from '../../Data/rooms.json';
 import { RoomData } from '../interfaces';
 import { delay } from '../../helpers/delay';
+import { roomsCollection, token } from '../../helpers/API/apiVariables';
+import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 
 export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
     try {
-        await delay();
-
-        return roomsData;
+        const data = await fetchFromApi("GET", roomsCollection, token);
+        return data?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }

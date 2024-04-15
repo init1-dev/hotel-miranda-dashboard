@@ -1,14 +1,15 @@
-import { Button, Form, GridContainer, Input, InputDate, Label, Select, Title } from "../../../styled/Form";
+import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { selecEmployee } from "../../../store/Employees/employeesSlice";
 import { editEmployee, getEmployee, newEmployee } from "../../../store/Employees/employeesThunk";
 import { Loader, Loading } from "../../../styled/Loading";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
+import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 
 function NewEmployee () {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ function NewEmployee () {
     
     const initialFetch = useCallback(async () => {
         if(currentId){
-            await dispatch(getEmployee(Number(id))).unwrap();
+            await dispatch(getEmployee(String(id))).unwrap();
             setFetched(true);
         }
     }, [id, currentId, dispatch])
@@ -33,30 +34,43 @@ function NewEmployee () {
     }, [initialFetch]);
 
     useEffect(() => {
-        if(currentId) {
-            (employeeData.itemData) && setFormData(
-                {...employeeData.itemData,
-                    start_date: format(employeeData.itemData.start_date, 'yyyy-MM-dd')
-                });
+        if(currentId && employeeData.itemData) {
+            const dateFormat = dateFromDBFormat(employeeData.itemData.start_date);
+            setFormData({
+                ...employeeData.itemData,
+                _id: employeeData.itemData._id ?? "",
+                start_date: String(dateFormat)
+            });
         }
     }, [employeeData.itemData, currentId]);
 
-    const [formData, setFormData] = useState({
-        id: 50,
+    const init = {
+        _id: "",
         photo: "https://robohash.org/seddelenitivoluptatem.png?size=50x50&set=set1",
-        name: "Martin",
-        lastname: "McFly",
         fullname: "Martin McFly",
-        employee_id: "3bc45dfe-8234",
         email: "marty@email.com",
-        start_date: format("7/12/2024", 'yyyy-MM-dd'),
-        description: "Marketing",
+        start_date: String(new Date("7/12/2024 02:55").toISOString().slice(0, 16)),
+        employee_type: "CEO",
+        description: "lorem ipsum bla bla bla bla bla bla bla",
         phone: "678234512",
-        status: false,
+        status: "Active",
         password: "martin_mc12345"
-    });
+    };
+    
+    // const initialForm = {
+    //     _id: "",
+    //     photo: "https://robohash.org/seddelenitivoluptatem.png?size=50x50&set=set1",
+    //     fullname: "",
+    //     email: "",
+    //     employee_type: "Select one",
+    //     start_date: "",
+    //     description: "",
+    //     phone: "",
+    //     status: "Select one",
+    //     password: ""
+    // }
 
-    const defaultStatus = formData.status ? "Active" : "Inactive";
+    const [formData, setFormData] = useState(init);
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -67,18 +81,19 @@ function NewEmployee () {
             fullname: e.currentTarget.fullname.value,
             email: e.currentTarget.email.value,
             phone: e.currentTarget.phone.value,
+            employee_type: e.currentTarget.employee_type.value,
             password: e.currentTarget.password.value,
             description: e.currentTarget.description.value,
             start_date: e.currentTarget.start_date.value,
-            status: e.currentTarget.status.value === "Active" ? true : false
+            status: e.currentTarget.status.value
         };
         
         (currentId)
             ? dispatch(editEmployee({
-                id: Number(currentId),
+                id: String(currentId),
                 newData: {
                     ...formDataToUpdate,
-                    start_date: format(formDataToUpdate.start_date, 'yyyy-MM-dd')
+                    start_date: String(new Date(formDataToUpdate.start_date))
                 }
             }))
             : dispatch(newEmployee(formDataToUpdate))
@@ -86,7 +101,7 @@ function NewEmployee () {
         const swalProps = {
             text: currentId
                     ? `Employee #${id} successfully edited`
-                    : `Employee #${formDataToUpdate.id} successfully created`,
+                    : `Employee #${formDataToUpdate._id} successfully created`,
             icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,
@@ -125,9 +140,8 @@ function NewEmployee () {
                         <Label htmlFor="phone">Phone:</Label>
                         <Input type="tel" name="phone" id="phone" placeholder="Insert employee phone" defaultValue={formData.phone} required/>
 
-                        {/* <Label htmlFor="description">Description:</Label>
-                        <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert employee description" required>
-                        </TextArea> */}
+                        <Label htmlFor="start_date">Start Date:</Label>
+                        <InputDate type="datetime-local" name="start_date" id="start_date" defaultValue={formData.start_date} required/>
 
                         <Label htmlFor="password">Password:</Label>
                         <Input type="password" name="password" id="password" placeholder="Insert employee password" defaultValue={formData.password} required/>
@@ -137,9 +151,9 @@ function NewEmployee () {
                         <Label htmlFor="photo">Load Photo:</Label>
                         <Input type="file" name="photo" id="photo"/>
 
-                        <Label htmlFor="description">Employee Type:</Label>
-                        <Select name="description" id="description" required>
-                            <option defaultValue={formData.description} hidden>{formData.description}</option>
+                        <Label htmlFor="employee_type">Employee Type:</Label>
+                        <Select name="employee_type" id="employee_type" required>
+                            <option defaultValue={formData.employee_type} hidden>{formData.employee_type}</option>
                             {
                                 EmployeeTypes.map((type, index) => {
                                     return <option key={index} defaultValue={type.value}>{type.label}</option>
@@ -147,12 +161,13 @@ function NewEmployee () {
                             }
                         </Select>
 
-                        <Label htmlFor="start_date">Start Date:</Label>
-                        <InputDate type="date" name="start_date" id="start_date" defaultValue={formData.start_date} required/>
+                        <Label htmlFor="description">Description:</Label>
+                        <TextArea name="description" id="description" cols={30} rows={10} placeholder="Insert employee description" defaultValue={formData.description} required>
+                        </TextArea>
 
                         <Label htmlFor="status">Status:</Label>
                         <Select name="status" id="status" required>
-                            <option defaultValue={defaultStatus} hidden>{defaultStatus}</option>
+                            <option defaultValue={formData.status} hidden>{formData.status}</option>
                             {
                                 EmployeeStatus.map((type, index) => {
                                     return <option key={index} defaultValue={type}>{type}</option>
@@ -160,8 +175,6 @@ function NewEmployee () {
                             }
                         </Select>
 
-                        
-                        
                         <Button type="submit" form="new-employee">
                             Submit
                         </Button>
@@ -175,6 +188,10 @@ function NewEmployee () {
 }
 
 const EmployeeTypes = [
+    {
+        label: "CEO",
+        value: "CEO"
+    },
     {
         label: "Maintenance",
         value: "maintenance"

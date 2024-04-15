@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import bookingsData from '../../Data/bookings.json';
 import { BookingData } from '../interfaces';
-import { delay } from '../../helpers/delay';
+import { fetchFromApi } from '../../helpers/API/fetchFromApi';
+import { bookingsCollection, token } from '../../helpers/API/apiVariables';
 
 export const getBookings = createAsyncThunk('bookings/fetchBookings', async () => {
     try {
-        await delay();
-
-        return bookingsData;
+        const data = await fetchFromApi("GET", bookingsCollection, token);
+        return data?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
@@ -15,9 +14,8 @@ export const getBookings = createAsyncThunk('bookings/fetchBookings', async () =
 
 export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: number) => {    
     try {
-        await delay();
-
-        return bookingsData.find((item) => item.id === id );
+        const data = await fetchFromApi("GET", `${bookingsCollection}/${id}`, token);
+        return data?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
@@ -25,42 +23,32 @@ export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: n
 
 export const newBooking = createAsyncThunk('bookings/newBooking', async (newData: BookingData) => {
     try {
-        await delay();
+        const { _id, ...itemToFetch } = newData;
+        const newEmployee = await fetchFromApi("POST", `${bookingsCollection}`, token, itemToFetch);
         
-        return newData;
+        return newEmployee?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
 })
 
-export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, newData}: {id: number, newData: BookingData} ) => {
+export const editBooking = createAsyncThunk('bookings/editBooking', async ({_id, newData}: {_id: number, newData: BookingData} ) => {
     try {
-        await delay();
-
-        console.log(id);
+        const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
+        await fetchFromApi("PUT", `${bookingsCollection}/${_id}`, token, itemToFetch);
         
-        // const index = bookingsData.findIndex((item) => item.id === id);
-
-        // if (index !== -1) {
-        //     const edited = { ...bookingsData[index], ...newData };
-
-        //     return edited;
-        // } else {
-        //     throw new Error(`Booking with ID ${id} not found`);
-        // }
-
-        return newData;
+        return itemToFetch;
 
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }
 })
 
-export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({id}: BookingData) => {
+export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({_id}: BookingData) => {
     try {
-        await delay();
+        await fetchFromApi("DELETE", `${bookingsCollection}/${_id}`, token);
 
-        return id;
+        return _id;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }

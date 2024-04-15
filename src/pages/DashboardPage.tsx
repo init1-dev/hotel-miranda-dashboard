@@ -1,30 +1,30 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { SideBarComponent } from "../components/Dashboard/Menu/SideBarComponent";
 import { TopbarComponent } from "../components/Dashboard/Menu/TopbarComponent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const DashboardPage = () => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape" && location.pathname !== "/dashboard") {
-                navigate(-1);
-            }
-        };
+    // useEffect(() => {
+    //     const handleKeyDown = (event: KeyboardEvent) => {
+    //         if (event.key === "Escape" && location.pathname !== "/dashboard") {
+    //             navigate(-1);
+    //         }
+    //     };
 
-        window.onkeyup = handleKeyDown;
+    //     window.onkeyup = handleKeyDown;
 
-        return () => {
-            window.onkeyup = null;
-        };
-    }, [navigate]);
+    //     return () => {
+    //         window.onkeyup = null;
+    //     };
+    // }, [navigate]);
 
     return (
         <div>

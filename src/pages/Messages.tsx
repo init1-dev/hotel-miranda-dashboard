@@ -51,9 +51,9 @@ function Messages() {
         return [...all].sort((a, b) => {
             switch (currentOrder) {
                 case 'older':
-                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
                 default:
-                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
             }
         })
         
@@ -71,12 +71,12 @@ function Messages() {
     const action = async(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
         const swalProps = {
-            title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+            title: <MessageTitle>{row.full_name} <small>#{row._id}</small></MessageTitle>,
                 html: (
                     <>
                         <MessageText><strong>Email:</strong> {row.email}</MessageText>
                         <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
-                        <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
+                        <MessageText><strong>Date:</strong> {format( new Date(`${row.createdAt}`), 'MMM do, yyyy')}</MessageText>
                         <MessageText><strong>Rating:</strong> { messageStars(Number(row.stars)) }</MessageText>
                         <br />
                         <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
@@ -96,14 +96,14 @@ function Messages() {
                 <SpanContainer>
                     <h4>{row.full_name}</h4>
                     <small>
-                        #{row.message_id}
+                        #{row._id}
                     </small>
                 </SpanContainer>
             )
         },
         {
             'label': 'Date',
-            display: (row: Data) => format( new Date(`${row.date}`), 'MMM do, yyyy')
+            display: (row: Data) => format( new Date(`${row.createdAt}`), 'MMM do, yyyy')
         },
         {
             'label': 'Contact',
