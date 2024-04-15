@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import employeesData from '../../Data/employees.json';
-import { delay } from '../../helpers/delay';
+import { employeesCollection } from '../../helpers/API/apiVariables';
 import { EmployeeData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
-import { employeesCollection, token } from '../../helpers/API/apiVariables';
+import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
+
+const token = getTokenFromLocalStorage();
 
 export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', async () => {
     try {
@@ -18,16 +19,6 @@ export const getEmployee = createAsyncThunk('employees/fetchEmployee', async (id
     try {
         const data = await fetchFromApi("GET", `${employeesCollection}/${id}`, token);
         return data?.data;
-    } catch (error) {
-        throw new Error(`Error: ${error}`);
-    }
-})
-
-export const getEmployeeAuth = createAsyncThunk('employees/fetchEmployee', async (employee_id: string | null) => {
-    try {
-        await delay();
-
-        return employeesData.find((item) => item.employee_id === employee_id );
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }

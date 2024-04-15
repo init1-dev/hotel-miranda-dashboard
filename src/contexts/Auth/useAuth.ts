@@ -5,6 +5,7 @@ export interface State {
     user: string | null;
     email: string | null;
     employeeId: string | null;
+    token: string | null;
     photo: string | null;
 }
 
@@ -14,6 +15,7 @@ export interface Action {
         user?: string;
         email?: string;
         employeeId?: string;
+        token?: string;
         photo?: string;
     };
 }
@@ -23,6 +25,7 @@ const initialState = {
     user: null,
     email: null,
     employeeId: null,
+    token: null,
     photo: null
 }
 
@@ -35,6 +38,7 @@ const reducer = (state: State, action: Action): State => {
                 user: action.payload?.user ?? state.user,
                 email: action.payload?.email ?? state.email,
                 employeeId: action.payload?.employeeId ?? state.employeeId,
+                token: action.payload?.token ?? state.token,
                 photo: action.payload?.photo ?? state.photo
             }
         case 'edit':
@@ -50,8 +54,8 @@ const reducer = (state: State, action: Action): State => {
     }
 }
 
-export const UserAuth = ({auth, user, email, employeeId, photo}: State) => {
-    const [state, dispatch] = useReducer(reducer, {auth, user, email, employeeId, photo});
+export const UserAuth = ({auth, user, email, employeeId, token, photo}: State) => {
+    const [state, dispatch] = useReducer(reducer, {auth, user, email, employeeId, token, photo});
 
     return {state, dispatch: dispatch as React.Dispatch<Action>};
 }

@@ -11,6 +11,7 @@ export interface AuthState {
     email: string;
     employeeId: string;
     photo: string;
+    token?: string | null | undefined;
 }
 
 export interface AppState {

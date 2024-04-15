@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import roomsData from '../../Data/rooms.json';
+import { roomsCollection } from '../../helpers/API/apiVariables';
 import { RoomData } from '../interfaces';
-import { delay } from '../../helpers/delay';
-import { roomsCollection, token } from '../../helpers/API/apiVariables';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
+import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
+import roomsData from '../../Data/rooms.json';
+
+const token = getTokenFromLocalStorage();
 
 export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
     try {
@@ -16,7 +18,6 @@ export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
 
 export const getRoom = createAsyncThunk('rooms/fetchRoom', async (id: number) => {    
     try {
-        await delay();
 
         return roomsData.find((item) => item.id === id );
     } catch (error) {
@@ -26,7 +27,6 @@ export const getRoom = createAsyncThunk('rooms/fetchRoom', async (id: number) =>
 
 export const newRoom = createAsyncThunk('rooms/newRoom', async (newData: RoomData) => {
     try {
-        await delay();
         
         return newData;
     } catch (error) {
@@ -36,7 +36,6 @@ export const newRoom = createAsyncThunk('rooms/newRoom', async (newData: RoomDat
 
 export const editRoom = createAsyncThunk('rooms/editRoom', async ({id, newData}: {id: number, newData: RoomData} ) => {    
     try {
-        await delay();
 
         console.log(id);
 
@@ -49,7 +48,6 @@ export const editRoom = createAsyncThunk('rooms/editRoom', async ({id, newData}:
 
 export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async ({id}: RoomData) => {
     try {
-        await delay();
 
         return id;
     } catch (error) {

@@ -1,7 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { bookingsCollection } from '../../helpers/API/apiVariables';
 import { BookingData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
-import { bookingsCollection, token } from '../../helpers/API/apiVariables';
+import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
+
+const token = getTokenFromLocalStorage();
 
 export const getBookings = createAsyncThunk('bookings/fetchBookings', async () => {
     try {

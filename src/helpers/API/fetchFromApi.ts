@@ -1,3 +1,5 @@
+import { customToast } from "../toastify/customToast";
+
 const databaseUrl = 'https://4oi46otzmb.execute-api.eu-west-3.amazonaws.com/dev';
 // const databaseUrl = 'http://localhost:3000';
 
@@ -6,7 +8,7 @@ interface FetchResponse extends Response{
     data: any;
 }
 
-export const fetchFromApi = async(requestMethod: string, query: string, token: string, body?: any, requestOptions?: RequestInit): Promise<FetchResponse | null> => {
+export const fetchFromApi = async(requestMethod: string, query: string, token?: string | null, body?: any, requestOptions?: object): Promise<FetchResponse | null> => {
 
     if(!['GET', 'POST', 'PUT', 'DELETE'].includes(requestMethod.toUpperCase())){
         throw new Error('Invalid request method. Allowed methods: GET, POST, PUT, DELETE.');
@@ -17,25 +19,29 @@ export const fetchFromApi = async(requestMethod: string, query: string, token: s
     }
 
     const url: string = `${databaseUrl}/${query}/`;
-    const requestHeaders: HeadersInit = {
-        'Authorization': token
-    };
 
     let fetchOptions: RequestInit = {
         method: requestMethod,
-        headers: requestHeaders,
-        ...requestOptions
-    };
+        headers: {
+            'Authorization': `Bearer ${token}` || ""
+        },
+        body: undefined
+    }
+
+    if(requestOptions){
+        fetchOptions.headers = {
+            ...fetchOptions.headers,
+            ...requestOptions
+        }
+    }
 
     if(body) {
-        fetchOptions = {
-            ...fetchOptions,
-            headers: {
-                ...requestHeaders,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        }
+        fetchOptions.headers = {
+            ...fetchOptions.headers,
+            'Content-Type': 'application/json'
+        };
+
+        fetchOptions.body = JSON.stringify(body);
     }
 
     console.log(fetchOptions);
@@ -45,11 +51,11 @@ export const fetchFromApi = async(requestMethod: string, query: string, token: s
 
         if(!response.ok){
             if(response.status === 401) {
-                throw new Error('Unauthorized: Please login again.');
+                customToast('error', 'Incorrect username/password');
             } else if (response.status >= 500){
-                throw new Error('Server error. Please try again later');
+                customToast('error', 'Server error. Please try again later');
             } else {
-                throw new Error('Request could not be completed successfully');
+                customToast('error', 'Request could not be completed successfully');
             }
         }
 
@@ -63,7 +69,7 @@ export const fetchFromApi = async(requestMethod: string, query: string, token: s
         return null;
         
     } catch (error) {
-        console.error("Error while making request:", error);
+        console.error('Error while making request:', error);
         throw error;
     }
 }

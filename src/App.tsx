@@ -6,6 +6,8 @@ import styled, { ThemeContext, ThemeProvider } from 'styled-components'
 import { GlobalStyles, darkTheme, lightTheme } from './helpers/theme/themeConfig'
 import { useState } from 'react'
 import { loadTheme, toggleTheme } from './helpers/theme/themeUtils'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const AuthProvider = React.lazy(()=> import('./contexts/Auth/AuthContext'))
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
             <GlobalStyles />
             <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
           </Wrapper>
+          <ToastContainer />
         </ThemeProvider>
       </ThemeContext.Provider>
     </AuthProvider>

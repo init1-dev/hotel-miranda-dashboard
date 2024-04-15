@@ -46,15 +46,15 @@ function NewEmployee () {
 
     const init = {
         _id: "",
-        photo: "https://robohash.org/seddelenitivoluptatem.png?size=50x50&set=set1",
-        fullname: "Martin McFly",
-        email: "marty@email.com",
+        photo: "https://avatars.githubusercontent.com/u/79700122?v=4",
+        fullname: "init.dev",
+        email: "init1.dev@gmail.com",
         start_date: String(new Date("7/12/2024 02:55").toISOString().slice(0, 16)),
         employee_type: "CEO",
         description: "lorem ipsum bla bla bla bla bla bla bla",
-        phone: "678234512",
+        phone: "659528522",
         status: "Active",
-        password: "martin_mc12345"
+        password: "12345"
     };
     
     // const initialForm = {

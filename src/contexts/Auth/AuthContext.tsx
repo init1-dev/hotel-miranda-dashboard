@@ -17,6 +17,7 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
         user: initUser ? initUser.user : null,
         email: initUser ? initUser.email : null,
         employeeId: initUser ? initUser.employeeId : null,
+        token: initUser ? initUser.token : null,
         photo: initUser ? initUser.photo : null
     });
 
@@ -27,6 +28,7 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
             user: state?.user,
             email: state?.email,
             employeeId: state?.employeeId,
+            token: state?.token,
             photo: state?.photo
         }
     }))

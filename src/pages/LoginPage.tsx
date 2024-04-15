@@ -7,8 +7,9 @@ import { FaUserCircle } from "react-icons/fa";
 import UserContext from "../contexts/Auth/UserContext";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { SweetAlertIcon } from "sweetalert2";
-import { useAppDispatch } from "../hooks/store";
-import { getEmployeeAuth } from "../store/Employees/employeesThunk";
+import { customToast } from "../helpers/toastify/customToast";
+import { fetchFromApi } from "../helpers/API/fetchFromApi";
+import { apiLoginPath } from "../helpers/API/apiVariables";
 
 function LoginPage() {
     const auth = useContext(UserContext);
@@ -17,7 +18,6 @@ function LoginPage() {
     const params = new URLSearchParams(location.search);
     const from = params.get("from") || "/";
     const theme = useContext(ThemeContext);
-    const dispatch = useAppDispatch();
 
     const [isLogingIn, setIsLogingIn] = useState(false);
     const message = useRef('');
@@ -29,48 +29,67 @@ function LoginPage() {
 
     if(user === null) redirect("/");
 
+    const userLogin  = async (employee_id: string, password: string) => {
+        try {
+            const data = await fetchFromApi("POST", `${apiLoginPath}`, null, {
+                username: employee_id || "",
+                password: password || ""
+            });
+            
+            return data?.data;
+        } catch (error) {
+            throw new Error(`Error: ${error}`);
+        }
+    }
+
+    const getInput = (e: FormEvent<HTMLFormElement>, inputName: string) => {
+        const formData = new FormData(e.currentTarget);
+        return String(formData.get(inputName)).trim();
+    }
+
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLogingIn(true);
 
-        const formData = new FormData(e.currentTarget);
-        const employeeId = String(formData.get('employee-id')).trim();
-        const password = String(formData.get('password')).trim();
+        const employeeId = getInput(e, 'employee_email') || customToast("warn", "Insert your email");
+        const password = getInput(e, 'password') || customToast("warn", "Insert your password");
 
+        console.log(employeeId, password);
+        
+        if(!employeeId || !password){
+            return setIsLogingIn(false);
+        }
+        
         try {
-            await dispatch(getEmployeeAuth(employeeId)).unwrap()
-                .then((result) => {
-                    if(result?.employee_id === employeeId && result.password === password){
-                        setIsLogingIn(false);
-                        icon.current = 'success';
-                        message.current = 'Logged in successfully';
-                        auth.dispatch({type: 'login', payload: {
-                            user: result.fullname, 
-                            email: result.email, 
-                            employeeId: result.employee_id,
-                            photo: result.photo
-                        }})
-                        navigate("/dashboard")
-                    } else {
-                        setIsLogingIn(false);
-                        icon.current = 'warning';
-                        message.current = 'Error: Incorrect username/password';
-                    }
-                });
+            const user = await userLogin(employeeId, password);
+            if(user){
+                icon.current = 'success';
+                message.current = 'Logged in successfully';
+                auth.dispatch({type: 'login', payload: {
+                    user: user.user, 
+                    email: user.email, 
+                    employeeId: user._id,
+                    token: user.token,
+                    photo: user.photo
+                }})
+                navigate("/dashboard");
+                
+                const swalProps = {
+                    text: message.current,
+                    icon: icon.current || undefined,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                }
+                await CustomSwal({data: swalProps, theme: theme})
+            }
         } catch (error) {
             throw (error instanceof Error)
                 ? error
                 : new Error("Unknown error occurred")
         }
 
-        const swalProps = {
-            text: message.current,
-            icon: icon.current ? icon.current : undefined,
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false
-        }
-        await CustomSwal({data: swalProps, theme: theme})
+        setIsLogingIn(false);
     }
 
     return (
@@ -89,7 +108,7 @@ function LoginPage() {
                         <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="employee-id" defaultValue="3bc45dfe-8286"/>
+                            <Input type="text" name="employee_email" placeholder="init1.dev@gmail.com" defaultValue="init1.dev@gmail.com"/>
 
                             <Input type="password" name="password" placeholder="12345"/>
 

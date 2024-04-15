@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// import messagesData from '../../Data/messages.json';
-import { delay } from '../../helpers/delay';
+import { messagesCollection } from '../../helpers/API/apiVariables';
 import { MessageData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
-import { messagesCollection, token } from '../../helpers/API/apiVariables';
+import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
+
+const token = getTokenFromLocalStorage();
 
 export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async () => {
     try {
@@ -16,8 +17,6 @@ export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async
 
 export const archiveMsg = createAsyncThunk('messages/archive', async (row: MessageData) => {
     try {
-        await delay();
-
         const updatedRow: MessageData = {
             ...row,
             archived: !row.archived
