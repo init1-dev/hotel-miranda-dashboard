@@ -10,7 +10,7 @@ export const Imagen = styled.img`
     aspect-ratio: 16/9;
     border-radius: 0.5rem;
     margin-left: 0.5rem;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
 `
 

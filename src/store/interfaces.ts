@@ -105,7 +105,7 @@ export interface RoomData extends Data{
     room_type: string;
     room_number: number;
     description: string;
-    offer: number;
+    offer: boolean;
     price: number;
     cancellation: string;
     amenities: string[];

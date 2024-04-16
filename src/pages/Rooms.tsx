@@ -45,10 +45,8 @@ function Rooms() {
 
         return [...all].sort((a, b) => {
             switch (currentOrder) {
-                case "offer-high-low":
-                    return b.offer - a.offer;
-                case "offer-low-high":
-                    return a.offer - b.offer;
+                case "room-low-high":
+                    return a.room_number - b.room_number;
                 case "price-low-high":
                     return a.price - b.price;
                 default:

@@ -40,7 +40,6 @@ export const editRoom = createAsyncThunk('rooms/editRoom', async ({id, newData}:
         const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
         await fetchFromApi("PUT", `${roomsCollection}/${id}`, token, itemToFetch);
-        
         return itemToFetch;
 
     } catch (error) {

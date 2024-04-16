@@ -29,7 +29,6 @@ export const newEmployee = createAsyncThunk('employees/newEmployee', async (newD
         const token = getTokenFromLocalStorage();
         const { _id, ...itemToFetch } = newData;
         const newEmployee = await fetchFromApi("POST", `${employeesCollection}`, token, itemToFetch);
-        
         return newEmployee?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
@@ -41,7 +40,6 @@ export const editEmployee = createAsyncThunk('employees/editEmployee', async ({i
         const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
         await fetchFromApi("PUT", `${employeesCollection}/${id}`, token, itemToFetch);
-        
         return itemToFetch;
 
     } catch (error) {

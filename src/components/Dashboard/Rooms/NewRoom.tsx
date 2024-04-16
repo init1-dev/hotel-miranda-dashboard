@@ -45,13 +45,13 @@ function NewRoom () {
         name: "Suite Premium Delux",
         photo: "/room.jpg",
         room_type: "Suite",
-        room_number: 250,
+        room_number: 50,
         description: "A room description typically includes details such as the room's size, amenities, furnishings, and any unique features or characteristics it may have.",
-        offer: 0,
-        price: 550,
+        offer: false,
+        discount: 10,
+        price: 55000,
         cancellation: "A cancellation policy outlines the terms and conditions under which reservations can be canceled, including any applicable fees, deadlines, and procedures.",
         amenities: [ "24/7 Online Support", "Grocery", "Cleaning" ],
-        discount: 0,
         status: "Available"
     };
 
@@ -76,8 +76,9 @@ function NewRoom () {
             room_number: e.currentTarget.room_number.value,
             description: e.currentTarget.description.value,
             cancellation: e.currentTarget.cancellation.value,
-            offer: e.currentTarget.offer.value,
-            price: e.currentTarget.price.value,
+            offer: e.currentTarget.discount.value > 0 ? true : false,
+            price: Number((e.currentTarget.price.value * 100).toFixed(2)),
+            discount: e.currentTarget.discount.value,
             amenities: handleAmenities(e)
         };
         
@@ -146,11 +147,11 @@ function NewRoom () {
                         <Label htmlFor="photo">Load Images:</Label>
                         <Input type="file" name="photo" id="photo"/>
 
-                        <Label htmlFor="offer">Offer:</Label>
-                        <Input type="number" name="offer" id="offer" defaultValue={formData.offer} placeholder="Insert offer price"/>
+                        <Label htmlFor="discount">Offer:</Label>
+                        <Input type="number" name="discount" id="discount" defaultValue={formData.discount} placeholder="Insert discount"/>
 
                         <Label htmlFor="price">Price:</Label>
-                        <Input type="number" name="price" id="price" defaultValue={formData.price} placeholder="Insert price" required/>
+                        <Input type="number" name="price" id="price" defaultValue={(formData.price / 100).toFixed(2)} placeholder="Insert price" required/>
 
                         <Label htmlFor="amenities">Amenities:</Label>
                         <AmenitiesSelect multiple name="amenities" id="amenities" defaultValue={formData.amenities} required>

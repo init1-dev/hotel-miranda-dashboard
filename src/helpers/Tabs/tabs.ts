@@ -31,8 +31,7 @@ export const orderBy = {
     rooms: [
         { label: "Price (Higher to Lower)", accesor: "price-high-low"},
         { label: "Price (Lower to Higher)", accesor: "price-low-high"},
-        { label: "Offer (Higher to Lower)", accesor: "offer-high-low"},
-        { label: "Offer (Lower to Higher)", accesor: "offer-low-high"},
+        { label: "Room Number (Higher to Lower)", accesor: "room-low-high"}
     ],
     messages: [
         { label: "Newest", accesor: "newest"},
