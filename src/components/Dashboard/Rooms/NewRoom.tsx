@@ -22,7 +22,7 @@ function NewRoom () {
     
     const initialFetch = useCallback(async () => {
         if(currentId){
-            await dispatch(getRoom(Number(id))).unwrap();
+            await dispatch(getRoom(String(id))).unwrap();
             setFetched(true);
         }
     }, [id, currentId, dispatch])
@@ -32,13 +32,16 @@ function NewRoom () {
     }, [initialFetch]);
 
     useEffect(() => {
-        if(currentId) {
-            (roomData.itemData) && setFormData(roomData.itemData);
+        if(currentId && roomData.itemData) {
+            setFormData({
+                ...roomData.itemData,
+                _id: roomData.itemData._id ?? ""
+            });
         }
     }, [roomData.itemData, currentId]);
 
-    const [formData, setFormData] = useState({
-        id: 50,
+    const room = {
+        _id: "",
         name: "Suite Premium Delux",
         photo: "/room.jpg",
         room_type: "Suite",
@@ -50,7 +53,9 @@ function NewRoom () {
         amenities: [ "24/7 Online Support", "Grocery", "Cleaning" ],
         discount: 0,
         status: "Available"
-    });
+    };
+
+    const [formData, setFormData] = useState(room);
 
     const handleAmenities = (e: FormEvent<HTMLFormElement>) => {
         const selectedOptions = e.currentTarget.amenities.selectedOptions;
@@ -78,7 +83,7 @@ function NewRoom () {
         
         (currentId)
             ? dispatch(editRoom({
-                id: Number(currentId),
+                id: String(currentId),
                 newData: formDataToUpdate
             }))
             : dispatch(newRoom(formDataToUpdate))
@@ -86,7 +91,7 @@ function NewRoom () {
         const swalProps = {
             text: currentId
                     ? `Room #${id} successfully edited`
-                    : `Room #${formDataToUpdate.id} successfully created`,
+                    : `Room #${formDataToUpdate._id} successfully created`,
             icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,

@@ -99,7 +99,7 @@ export interface MessagesState {
 }
 
 export interface RoomData extends Data{
-    id: number;
+    _id?: string;
     name: string;
     photo: string;
     room_type: string;

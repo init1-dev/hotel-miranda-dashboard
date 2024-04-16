@@ -4,7 +4,7 @@ import { employees, orderBy } from "../helpers/Tabs/tabs";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { ActionButtonIcon, ButtonContainer, NewButton } from "../styled/Button";
 import { MessageText, MessageTitle } from "../styled/Message";
-import styled, { ThemeContext } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { format } from "date-fns";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
@@ -18,6 +18,7 @@ import { Loader, Loading } from "../styled/Loading";
 import { EmployeeData } from "../store/interfaces";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import CustomSwal from "../helpers/Swal/CustomSwal";
+import { Container, EmployeeDataModal } from "../styled/ImagePreviewInTable";
 
 function Employees() {
     const navigate = useNavigate();
@@ -67,7 +68,7 @@ function Employees() {
             'label': 'Employee',
             display: (row: Data) => {
                 return <Container>
-                    <Imagen src={`${row.photo}`} alt="imagen del empleado" onClick={async(e) => {
+                    <EmployeeDataModal src={`${row.photo}`} alt="imagen del empleado" onClick={async(e) => {
                         e.stopPropagation();
                         const swalProps = {
                             title: <MessageTitle>Employee #{row._id}</MessageTitle>,
@@ -231,19 +232,5 @@ function Employees() {
         </>
     );
 }
-
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-const Imagen = styled.img`
-    max-height: 50px;
-    aspect-ratio: 1/1;
-    border-radius: 0.5rem;
-    margin-left: 0.5rem;
-    object-fit: contain;
-    object-position: center;
-`
 
 export default Employees;

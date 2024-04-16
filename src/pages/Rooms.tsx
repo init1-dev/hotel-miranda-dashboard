@@ -18,6 +18,7 @@ import { deleteRoom, getRoomsThunk } from "../store/Rooms/roomsThunk";
 import { RoomData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { calculateCentsToCurrency } from "../helpers/calculateCentsToCurrency";
+import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
 
 function Rooms() {
     const navigate = useNavigate();
@@ -176,7 +177,7 @@ function Rooms() {
                     <ButtonContainer>
                         <ActionButtonIcon onClick={(e) => {
                             e.stopPropagation()
-                            navigate(`edit/${roomRow.id}`)
+                            navigate(`edit/${roomRow._id}`)
                         }}>
                             <FaRegEdit />
                         </ActionButtonIcon>
@@ -184,7 +185,7 @@ function Rooms() {
                         <ActionButtonIcon onClick={async(e) => {
                             e.stopPropagation();
                             const swalProps = {
-                                title: `<small>You're going to delete room #${roomRow.id}</small>`,
+                                title: `<small>You're going to delete room #${roomRow._id}</small>`,
                                 text: `This action is irreversible`,
                                 icon: 'warning' as const,
                                 showConfirmButton: true,
@@ -199,7 +200,7 @@ function Rooms() {
                                 if (result.isConfirmed) {
                                     dispatch(deleteRoom(roomRow));
                                     const swalProps = {
-                                        text: `Room #${roomRow.id} deleted successfully`,
+                                        text: `Room #${roomRow._id} deleted successfully`,
                                         icon: 'success' as const,
                                         timer: 2000,
                                         timerProgressBar: true,
@@ -267,26 +268,6 @@ function Rooms() {
         </>
     );
 }
-
-
-
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-const Imagen = styled.img`
-    max-height: 50px;
-    aspect-ratio: 16/9;
-    border-radius: 0.5rem;
-    margin-left: 0.5rem;
-    object-fit: contain;
-    object-position: center;
-`
-
-const ImagePreview = styled.img`
-    width: 100%;
-`
 
 const Night = styled.p`
     font-size: 10px;

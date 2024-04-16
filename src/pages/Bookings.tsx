@@ -18,6 +18,7 @@ import { deleteBooking, getBookings } from "../store/Bookings/bookingsThunk";
 import { BookingData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { ThemeContext } from "styled-components";
+import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
 
 function Bookings() {
     const navigate = useNavigate();
@@ -72,13 +73,22 @@ function Bookings() {
     const bookingsHeaders = [
         {
             'label': 'Guest Name',
-            display: (row: Data) => {
-                return (
-                    <SpanContainer>
-                        <h4>{row.full_name}</h4>
-                        <small>#{row._id}</small>
-                    </SpanContainer>
-                )
+            display: (row: Data | BookingData) => {
+                return <Container>
+                <Imagen src={`${row.roomInfo?.photo || ""}`} alt="imagen de la habitacion" onClick={async(e) => {
+                    e.stopPropagation();
+                    const swalProps = {
+                        title: <MessageTitle>Room #{row.roomInfo?.room_number}: {row.roomInfo?.room_type}</MessageTitle>,
+                        html: <ImagePreview src={String(row.roomInfo?.photo)} alt="imagen de la habitacion" />,
+                        width: 1000
+                    }
+                    await CustomSwal({data: swalProps, theme: theme})
+                }}/>
+                <SpanContainer>
+                    <h4>{row.full_name}</h4>
+                    <small>#{row._id}</small>
+                </SpanContainer>
+            </Container>
             }
         },
         {
@@ -132,7 +142,7 @@ function Bookings() {
                     <ButtonContainer>
                         <ActionButtonIcon onClick={(e) => {
                             e.stopPropagation()
-                            navigate(`edit/${bookingRow.id}`)
+                            navigate(`edit/${bookingRow._id}`)
                         }}>
                             <FaRegEdit />
                         </ActionButtonIcon>

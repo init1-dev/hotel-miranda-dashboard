@@ -9,6 +9,7 @@ import { Loader, Loading } from "../../../styled/Loading";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
+import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 
 function NewBooking () {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ function NewBooking () {
     
     const initialFetch = useCallback(async () => {
         if(currentId){
-            await dispatch(getBooking(Number(id))).unwrap();
+            await dispatch(getBooking(String(id))).unwrap();
             setFetched(true);
         }
     }, [id, currentId, dispatch])
@@ -34,39 +35,36 @@ function NewBooking () {
     }, [initialFetch]);
 
     useEffect(() => {
-        if(currentId) {
-            (bookingData.itemData) && setFormData(
-                {...bookingData.itemData,
-                    check_in: format(bookingData.itemData.check_in, 'yyyy-MM-dd'),
-                    check_out: format(bookingData.itemData.check_out, 'yyyy-MM-dd')
-                });
+        if(currentId && bookingData.itemData) {
+            const check_in_date = dateFromDBFormat(bookingData.itemData.check_in);
+            const check_out_date = dateFromDBFormat(bookingData.itemData.check_out);
+            setFormData({
+                ...bookingData.itemData,
+                _id: bookingData.itemData._id ?? "",
+                check_in: String(check_in_date),
+                check_out: String(check_out_date),
+                order_date: String(bookingData.itemData.order_date)
+            });
         }
     }, [bookingData.itemData, currentId]);
 
-    const [formData, setFormData] = useState({
+    const booking = {
+        _id: "",
         full_name: "Martin McFly",
         email: "marty@email.com",
         phone: "678234512",
         image: "",
-        special_request: "Necesito mucha pizza",
-        number: 93,
-        check_in: format("6/12/2024", 'yyyy-MM-dd'),
-        check_out: format("6/18/2024", 'yyyy-MM-dd'),
+        check_in: String(new Date("7/12/2024").toISOString().slice(0, 16)),
+        check_out: String(new Date("7/15/2024").toISOString().slice(0, 16)),
         // extra fields
-        id: 50,
-        order_date: new Date(Date.now()).toISOString(),
-        price: 477.7,
-        type: "Single Bed",
+        order_date: String(new Date(Date.now()).toISOString()),
+        special_request: "Necesito mucha pizza",
+        discount: 50,
         status: "Check In",
-        amenities: [
-            "24/7 Online Support",
-            "Single bed",
-            "Breakfast"
-        ],
-        room_status: "Booked",
-        foto: "image.jpg",
-        description: "booking"
-    });
+        roomInfo: "661e6c37687a58494d48cb2a"
+    };
+
+    const [formData, setFormData] = useState(booking);
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -85,7 +83,7 @@ function NewBooking () {
         
         (currentId)
             ? dispatch(editBooking({
-                id: Number(currentId),
+                id: String(currentId),
                 newData: {
                     ...formDataToUpdate,
                     check_in: format(formDataToUpdate.check_in, 'yyyy-MM-dd'),
@@ -97,7 +95,7 @@ function NewBooking () {
         const swalProps = {
             text: currentId
                     ? `Booking #${id} successfully edited`
-                    : `Booking #${formDataToUpdate.id} successfully created`,
+                    : `Booking #${formDataToUpdate._id} successfully created`,
             icon: 'success' as const,
             timer: 2000,
             timerProgressBar: true,
@@ -154,10 +152,10 @@ function NewBooking () {
                         </Select>
 
                         <Label htmlFor="check_in">Check In:</Label>
-                        <InputDate type="date" name="check_in" id="check_in" defaultValue={formData.check_in} required/>
+                        <InputDate type="datetime-local" name="check_in" id="check_in" defaultValue={formData.check_in} required/>
 
                         <Label htmlFor="check_out">Check Out:</Label>
-                        <InputDate type="date" name="check_out" id="check_out" defaultValue={formData.check_out} required/>
+                        <InputDate type="datetime-local" name="check_out" id="check_out" defaultValue={formData.check_out} required/>
 
                         <Button type="submit" form="new-room">
                         {currentId

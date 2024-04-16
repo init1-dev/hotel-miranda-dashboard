@@ -57,6 +57,7 @@ $npm run dev
 - Rooms ADD and EDIT
 - Messages actions to ARCHIVE
 - Search input
+- in booking details, make room number navigate to room details
 
 ### TESTING:
 

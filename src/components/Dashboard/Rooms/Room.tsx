@@ -5,11 +5,12 @@ import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, Te
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { useParams } from 'react-router-dom';
 import { selectRoom } from '../../../store/Rooms/roomsSlice';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getRoom } from '../../../store/Rooms/roomsThunk';
 import { Loader, Loading } from '../../../styled/Loading';
 import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
 import BackButton from '../../Buttons/BackButton';
+import { calculateCentsToCurrency } from '../../../helpers/calculateCentsToCurrency';
 
 SwiperCore.use([Navigation]);
 
@@ -17,19 +18,35 @@ function Room () {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const roomData = useAppSelector(selectRoom);
+    const [fetched, setFetched] = useState(false);
+
+    const roomPrice = Number(roomData.itemData?.price);
+    const calculatedRoomPrice = calculateCentsToCurrency(roomPrice);
+    const roomDiscount = Number(roomData.itemData?.discount);
+    const roomOffer = roomData.itemData?.offer;
+    const calculatedRoomDiscount = roomOffer ? calculateCentsToCurrency(roomPrice, roomDiscount) : 0;
+
+    const initialFetch = useCallback(async () => {
+        await dispatch(getRoom(String(id)));
+        setFetched(true);
+    }, [id, dispatch])
 
     useEffect(() => {
-        dispatch(getRoom(Number(id)));
-    }, [dispatch, id]);
+        initialFetch()
+    }, [initialFetch]);
 
     return (
         <>
             {
-                roomData.status === "fulfilled"
+                (roomData.status === "fulfilled" && fetched)
                     ? 
                         <>
                             <Title>
-                                ROOM INFO: #{roomData.itemData && roomData.itemData.id}
+                                <p>
+                                    ROOM INFO: <small>
+                                        #{roomData.itemData && roomData.itemData._id}
+                                    </small>
+                                </p>
                                 <BackButton />
                             </Title>
 
@@ -47,11 +64,16 @@ function Room () {
                                     <InfoContainerRow>
                                         <span>
                                             <small>Price:</small>
-                                            <h5>{roomData.itemData && roomData.itemData.price}€</h5>
+                                            <h5>{calculatedRoomPrice}€</h5>
                                         </span>
                                         <span>
                                             <small>Offer Price:</small>
-                                            <h5>{roomData.itemData && roomData.itemData.offer}€</h5>
+                                            <h5>
+                                                { roomOffer  
+                                                    ? calculatedRoomDiscount + "€"
+                                                    : "-"
+                                                }
+                                            </h5>
                                         </span>
                                     </InfoContainerRow>
                                     <hr />

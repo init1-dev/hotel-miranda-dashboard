@@ -14,7 +14,7 @@ export const getBookings = createAsyncThunk('bookings/fetchBookings', async () =
     }
 })
 
-export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: number) => {    
+export const getBooking = createAsyncThunk('bookings/fetchBooking', async (id: string) => {    
     try {
         const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", `${bookingsCollection}/${id}`, token);
@@ -36,11 +36,11 @@ export const newBooking = createAsyncThunk('bookings/newBooking', async (newData
     }
 })
 
-export const editBooking = createAsyncThunk('bookings/editBooking', async ({_id, newData}: {_id: number, newData: BookingData} ) => {
+export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, newData}: {id: string, newData: BookingData} ) => {
     try {
         const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
-        await fetchFromApi("PUT", `${bookingsCollection}/${_id}`, token, itemToFetch);
+        await fetchFromApi("PUT", `${bookingsCollection}/${id}`, token, itemToFetch);
         
         return itemToFetch;
 
