@@ -44,6 +44,9 @@ function Messages() {
     const dispatch = useAppDispatch();
     const messagesData = useAppSelector(selectMessages);
     const filteredMessages = useMemo(() => {
+        if(!messagesData.data){
+            return [];
+        }
         const all = (currentTab === "All Messages")
             ? messagesData.data
             : messagesData.data.filter((item) => item.archived === currentTab)

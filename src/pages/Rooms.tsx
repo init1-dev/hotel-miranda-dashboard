@@ -35,6 +35,9 @@ function Rooms() {
     const dispatch = useAppDispatch();
     const roomsData = useAppSelector(selectRooms);
     const filteredRooms = useMemo(() => {
+        if(!roomsData.data){
+            return [];
+        }
         const all = (currentTab === "All Rooms")
             ? roomsData.data
             : roomsData.data.filter((item) => item.status === currentTab)

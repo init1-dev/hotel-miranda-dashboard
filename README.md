@@ -47,7 +47,6 @@ $npm run dev
 ### TODO:
 - fix rooms and bookings offer type and display calculating discount value (% instead value)
 - General refactor
-- Improve bookings user img
 - change password from dashboard user info
 - swal to manage errors in get, post, put or delete
 - premongo branch

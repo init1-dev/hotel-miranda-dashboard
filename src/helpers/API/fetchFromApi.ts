@@ -1,7 +1,6 @@
 import { customToast } from "../toastify/customToast";
 
-const databaseUrl = 'https://4oi46otzmb.execute-api.eu-west-3.amazonaws.com/dev';
-// const databaseUrl = 'http://localhost:3000';
+const databaseUrl = import.meta.env.VITE_API_URL;
 
 interface FetchResponse extends Response{
     status: number;
@@ -44,7 +43,7 @@ export const fetchFromApi = async(requestMethod: string, query: string, token?: 
         fetchOptions.body = JSON.stringify(body);
     }
 
-    console.log(fetchOptions);
+    // console.log(fetchOptions);
 
     try {
         const response = await fetch(url, fetchOptions);
@@ -62,7 +61,7 @@ export const fetchFromApi = async(requestMethod: string, query: string, token?: 
         const contentType = response.headers.get('content-type');
         if(contentType && contentType.includes('application/json')){
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             
             return data;
         }
