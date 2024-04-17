@@ -42,6 +42,7 @@ function NewEmployee () {
             setFormData({
                 ...employeeData.itemData,
                 _id: employeeData.itemData._id ?? "",
+                password: "",
                 start_date: String(dateFormat)
             });
         }
