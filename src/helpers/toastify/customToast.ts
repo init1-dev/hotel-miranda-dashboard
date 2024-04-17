@@ -4,7 +4,7 @@ export const customToast = (type: string, message: string, props?: ToastOptions 
     const toastOptions = {
         ...props,
         position: props ? props.position : 'top-right',
-        autoClose: props ? props.autoClose : 3000,
+        autoClose: props?.autoClose ? props.autoClose : 2500,
         hideProgressBar: props ? props.hideProgressBar : false,
         closeOnClick: props ? props.closeOnClick : true,
         pauseOnHover: props ? props.pauseOnHover : true,
