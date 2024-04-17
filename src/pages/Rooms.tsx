@@ -201,6 +201,7 @@ function Rooms() {
                                         timerProgressBar: true,
                                         showConfirmButton: false
                                     }
+                                    setCurrentPage(1);
                                     await CustomSwal({data: swalProps, theme: theme})
                                 }
                             });

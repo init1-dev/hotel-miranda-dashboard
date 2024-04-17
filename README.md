@@ -53,8 +53,6 @@ $npm run dev
 - Dashboard KPIs to work with db
 - Bookings ADD and EDIT
 - Search input
-- in booking details, make room number navigate to room details
-- when delete one item in table go to page 1
 
 ### TESTING:
 
