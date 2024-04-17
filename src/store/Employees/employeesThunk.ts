@@ -10,11 +10,11 @@ export const getEmployeesThunk = createAsyncThunk('employees/fetchEmployees', as
         const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", employeesCollection, token);
         if(data?.status === 200 && data?.data.length === 0){
-            customToast('warn', 'Empty data');
+            customToast('warn', 'Empty data', {position: "bottom-right"});
         }
         return data?.data;
     } catch (error) {
-        customToast('error', 'Error fetching data');
+        customToast('error', 'Error fetching data', {position: "bottom-right"});
         throw new Error(`Error: ${error}`);
     }
 })
