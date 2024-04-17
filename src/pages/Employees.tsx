@@ -36,9 +36,6 @@ function Employees() {
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);
     const filteredEmployees = useMemo(() => {
-        if(!employeesData.data){
-            return [];
-        }
         const all = (currentTab === "All Employees")
             ? employeesData.data
             : employeesData.data.filter((item) => item.status === currentTab)

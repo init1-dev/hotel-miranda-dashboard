@@ -36,9 +36,6 @@ function Bookings() {
     const dispatch = useAppDispatch();
     const bookingsData = useAppSelector(selectBookings);
     const filteredBookings = useMemo(() => {
-        if(!bookingsData.data){
-            return [];
-        }
         const all = (currentTab === "All Bookings")
             ? bookingsData.data
             : bookingsData.data.filter((item) => item.status === currentTab)
