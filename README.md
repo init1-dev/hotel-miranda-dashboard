@@ -46,13 +46,13 @@ $npm run dev
 
 ### TODO:
 - General refactor
-- change password from dashboard user info
+- change password from dashboard user info (work in progress)
 - swal to manage errors in get, post, put or delete
 - premongo branch
 - implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
 - Bookings ADD and EDIT
-- Search input
+- Search input (work in progress)
 
 ### TESTING:
 
