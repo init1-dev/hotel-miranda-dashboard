@@ -4,7 +4,7 @@ import { Title } from "../../../styled/Form";
 import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from "../../../styled/Preview";
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getBooking } from "../../../store/Bookings/bookingsThunk";
 import { selectBooking } from "../../../store/Bookings/bookingsSlice";
 import { Loader, Loading } from "../../../styled/Loading";
@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../../styled/Span";
 import BackButton from "../../Buttons/BackButton";
 import { calculateBookingDiscount, calculateCentsToCurrency } from "../../../helpers/calculateCentsToCurrency";
+import styled from "styled-components";
 
 SwiperCore.use([Navigation]);
 
@@ -75,7 +76,17 @@ function Booking () {
                                     <InfoContainerRow>
                                         <TextDiv>
                                             <small>Room Info:</small>
-                                            <h5>{bookingData.itemData && bookingData.itemData.roomInfo.room_type + " #" + bookingData.itemData.roomInfo.room_number}</h5>
+                                            <h5>
+                                                {bookingData.itemData && 
+                                                    <>
+                                                        {bookingData.itemData.roomInfo.room_type + " ["}
+                                                        <RoomLink to={`/dashboard/rooms/${bookingData.itemData.roomInfo._id}`}>
+                                                            {"Room #" + bookingData.itemData.roomInfo.room_number}
+                                                        </RoomLink>
+                                                        {"]"}
+                                                    </>
+                                                }
+                                            </h5>
                                         </TextDiv>
                                         <TextDiv>
                                             <small>Price:</small>
@@ -137,5 +148,11 @@ function Booking () {
         </>
     );
 }
+
+const RoomLink = styled(Link)`
+    text-decoration: none;
+    color: ${({ theme }) => theme.iconsColor};
+    font-size: 15px;
+`
 
 export default Booking ;
