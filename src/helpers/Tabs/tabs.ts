@@ -12,7 +12,8 @@ const tabs = {
     ],
     messages: [
         { label: "All Messages", accesor: "All Messages"},
-        { label: "Archived", accesor: true}
+        { label: "Archived", accesor: "Archived"},
+        { label: "Unread", accesor: "Unread"}
     ],
     employees: [
         { label: "All Employees", accesor: "All Employees"},

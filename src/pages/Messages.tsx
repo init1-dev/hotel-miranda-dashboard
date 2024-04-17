@@ -51,7 +51,9 @@ function Messages() {
         }
         const all = (currentTab === "All Messages")
             ? messagesData.data
-            : messagesData.data.filter((item) => item.archived === currentTab)
+            : currentTab === "Archived"
+                ? messagesData.data.filter((item) => item.archived === true)
+                : messagesData.data.filter((item) => item.read === false)
 
         return [...all].sort((a, b) => {
             switch (currentOrder) {
