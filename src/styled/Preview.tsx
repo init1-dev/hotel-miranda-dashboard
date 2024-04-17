@@ -4,6 +4,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import styled from "styled-components"
+import { query1350, query1500 } from '../helpers/responsive';
 
 export const Preview = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
@@ -12,8 +13,16 @@ export const Preview = styled.div`
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
-    margin: 1rem 20% 0 20%;
+    margin: 1rem 12% 0 12%;
     box-shadow: 2px 2px 6px -4px black;
+
+    @media (max-width: ${query1500}) {
+        margin: 1rem 5% 0 5%;
+    }
+
+    @media (max-width: ${query1350}) {
+        margin: 1rem 2% 0 2%;
+    }
 `
 
 export const PreviewContainer = styled.div`

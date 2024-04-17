@@ -1,11 +1,20 @@
 import styled from "styled-components"
+import { query1350, query1500 } from "../helpers/responsive"
 
 export const Title = styled.h1`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0rem 20% 0 20%;
+    margin: 0rem 12% 0 12%;
     user-select: none;
+
+    @media (max-width: ${query1500}) {
+        margin: 1rem 5% 0 5%;
+    }
+
+    @media (max-width: ${query1350}) {
+        margin: 1rem 2% 0 2%;
+    }
 
     p{
         font-size: 24px;

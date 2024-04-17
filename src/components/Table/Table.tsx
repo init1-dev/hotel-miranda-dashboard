@@ -1,6 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
 import styled from "styled-components";
 import Pagination from "./Pagination";
+import { query1350, query1500 } from "../../helpers/responsive";
 
 type Column = {
     label: string;
@@ -121,6 +122,11 @@ const TableStyle = styled.table`
 
         tr {
             line-height: 30px;
+            font-size: 14px;
+
+            @media (max-width: ${query1500}) {
+                font-size: 13px;
+            }
         }
     }
 
@@ -131,10 +137,19 @@ const TableStyle = styled.table`
             transition: filter 0.2s ease;
             line-height: 30px;
             cursor: zoom-in;
+            font-size: 14px;
 
             &:hover {
                 filter: grayscale(0);
                 background-color: ${({ theme }) => theme.tableHover};
+            }
+
+            @media (max-width: ${query1500}) {
+                font-size: 13px;
+            }
+
+            @media (max-width: ${query1350}) {
+                
             }
         }
 

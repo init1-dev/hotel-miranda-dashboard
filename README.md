@@ -47,6 +47,7 @@ $npm run dev
 ### TODO:
 - General refactor
 - change password from dashboard user info (work in progress)
+- add password to handleSubmit in user info
 - swal to manage errors in get, post, put or delete
 - premongo branch
 - implement TopBarContainer icon alert to work with db
