@@ -148,8 +148,29 @@ function NewEmployee () {
                         <Label htmlFor="start_date">Start Date:</Label>
                         <InputDate type="datetime-local" name="start_date" id="start_date" defaultValue={formData.start_date} required/>
 
-                        <Label htmlFor="password">Password:</Label>
-                        <Input type="password" name="password" id="password" placeholder="Insert employee password" defaultValue={formData.password} required/>
+                        <Label htmlFor="password">
+                            {
+                                formData.password === "" 
+                                    ? "New password:"
+                                    : "Password:"
+                            }
+                        </Label>
+                        <Input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            placeholder={
+                                formData.password === ""
+                                    ? "Insert your new password"
+                                    : "Insert employee password"
+                            } 
+                            defaultValue={formData.password} 
+                            required={
+                                formData.password === ""
+                                    ? false
+                                    : true
+                            }
+                        />
                     </GridContainer>
 
                     <GridContainer>
