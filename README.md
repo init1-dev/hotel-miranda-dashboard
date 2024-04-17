@@ -58,7 +58,6 @@ $npm run dev
 - Search input
 - in booking details, make room number navigate to room details
 - when delete one item in table go to page 1
-- in edit employee, let password input empty for password change
 
 ### TESTING:
 
