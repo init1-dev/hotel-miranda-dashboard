@@ -14,4 +14,7 @@ export const customToast = (type: string, message: string, props?: ToastOptions 
         transition: Bounce
     };
     (toast as any)[type](message, toastOptions);
+    if(type === "error"){
+        throw new Error(message);
+    }
 }

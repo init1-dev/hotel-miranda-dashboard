@@ -54,11 +54,11 @@ $npm run dev
 - Dashboard KPIs to work with db
 - Dashboard last reviews to work with db
 - Bookings ADD and EDIT
-- Rooms ADD and EDIT
 - Messages actions to ARCHIVE
 - Search input
 - in booking details, make room number navigate to room details
 - when delete one item in table go to page 1
+- in edit employee, let password input empty for password change
 
 ### TESTING:
 

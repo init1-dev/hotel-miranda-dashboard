@@ -8,6 +8,8 @@ import { Loader, Loading } from "../../../styled/Loading";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
+import { isRoomExist } from "../../../helpers/API/isExist";
+import { RoomForm } from "../../../helpers/API/interfaces";
 
 function NewRoom () {
     const navigate = useNavigate();
@@ -40,7 +42,7 @@ function NewRoom () {
         }
     }, [roomData.itemData, currentId]);
 
-    const room = {
+    const initialRoom = {
         _id: "",
         name: "Suite Premium Delux",
         photo: "/room.jpg",
@@ -55,10 +57,10 @@ function NewRoom () {
         status: "Available"
     };
 
-    const [formData, setFormData] = useState(room);
+    const [formData, setFormData] = useState(initialRoom);
 
-    const handleAmenities = (e: FormEvent<HTMLFormElement>) => {
-        const selectedOptions = e.currentTarget.amenities.selectedOptions;
+    const handleAmenities = (formValue: HTMLFormElement) => {
+        const selectedOptions = formValue.selectedOptions;
         const values = [];
         for (let index = 0; index < selectedOptions.length; index++) {
             values.push(selectedOptions[index].value);
@@ -68,38 +70,47 @@ function NewRoom () {
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate("/dashboard/rooms");
-
-        const formDataToUpdate = {
-            ...formData,
-            room_type: e.currentTarget.room_type.value,
-            room_number: e.currentTarget.room_number.value,
-            description: e.currentTarget.description.value,
-            cancellation: e.currentTarget.cancellation.value,
-            offer: e.currentTarget.discount.value > 0 ? true : false,
-            price: Number((e.currentTarget.price.value * 100).toFixed(2)),
-            discount: e.currentTarget.discount.value,
-            amenities: handleAmenities(e)
-        };
+        const form = e.target as RoomForm;
         
-        (currentId)
-            ? dispatch(editRoom({
-                id: String(currentId),
-                newData: formDataToUpdate
-            }))
-            : dispatch(newRoom(formDataToUpdate))
+        try {
+            await isRoomExist(form.room_number.value, currentId);
+            
+            const formDataToUpdate = {
+                ...formData,
+                room_type: form.room_type.value,
+                room_number: form.room_number.value,
+                description: form.description.value,
+                cancellation: form.cancellation.value,
+                offer: form.discount.value > 0 ? true : false,
+                price: Number((form.price.value * 100).toFixed(2)),
+                discount: form.discount.value,
+                amenities: handleAmenities(form.amenities)
+            };
+            
+            (currentId)
+                ? dispatch(editRoom({
+                    id: String(currentId),
+                    newData: formDataToUpdate
+                }))
+                : dispatch(newRoom(formDataToUpdate))
+    
+            const swalProps = {
+                text: currentId
+                        ? `Room #${id} successfully edited`
+                        : `Room #${formDataToUpdate._id} successfully created`,
+                icon: 'success' as const,
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            }
+    
+            navigate("/dashboard/rooms");
+    
+            await CustomSwal({data: swalProps, theme: theme})
 
-        const swalProps = {
-            text: currentId
-                    ? `Room #${id} successfully edited`
-                    : `Room #${formDataToUpdate._id} successfully created`,
-            icon: 'success' as const,
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false
+        } catch (error) {
+            throw new Error(`${error}`);
         }
-
-        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (

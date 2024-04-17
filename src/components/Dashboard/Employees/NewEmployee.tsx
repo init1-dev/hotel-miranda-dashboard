@@ -10,6 +10,8 @@ import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
 import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
+import { isUserExist } from "../../../helpers/API/isExist";
+import { EmployeeForm } from "../../../helpers/API/interfaces";
 
 function NewEmployee () {
     const navigate = useNavigate();
@@ -44,7 +46,7 @@ function NewEmployee () {
         }
     }, [employeeData.itemData, currentId]);
 
-    const init = {
+    const initialUser = {
         _id: "",
         photo: "https://avatars.githubusercontent.com/u/79700122?v=4",
         fullname: "init.dev",
@@ -56,59 +58,55 @@ function NewEmployee () {
         status: "Active",
         password: "12345"
     };
-    
-    // const initialForm = {
-    //     _id: "",
-    //     photo: "https://robohash.org/seddelenitivoluptatem.png?size=50x50&set=set1",
-    //     fullname: "",
-    //     email: "",
-    //     employee_type: "Select one",
-    //     start_date: "",
-    //     description: "",
-    //     phone: "",
-    //     status: "Select one",
-    //     password: ""
-    // }
 
-    const [formData, setFormData] = useState(init);
+    const [formData, setFormData] = useState(initialUser);
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate("/dashboard/employees");
+        const form = e.target as EmployeeForm;
+        
+        try {
+            await isUserExist(form.email.value, currentId);
 
-        const formDataToUpdate = {
-            ...formData,
-            fullname: e.currentTarget.fullname.value,
-            email: e.currentTarget.email.value,
-            phone: e.currentTarget.phone.value,
-            employee_type: e.currentTarget.employee_type.value,
-            password: e.currentTarget.password.value,
-            description: e.currentTarget.description.value,
-            start_date: e.currentTarget.start_date.value,
-            status: e.currentTarget.status.value
-        };
-        
-        (currentId)
-            ? dispatch(editEmployee({
-                id: String(currentId),
-                newData: {
-                    ...formDataToUpdate,
-                    start_date: String(new Date(formDataToUpdate.start_date))
-                }
-            }))
-            : dispatch(newEmployee(formDataToUpdate))
-        
-        const swalProps = {
-            text: currentId
-                    ? `Employee #${id} successfully edited`
-                    : `Employee #${formDataToUpdate._id} successfully created`,
-            icon: 'success' as const,
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false
+            const formDataToUpdate = {
+                ...formData,
+                fullname:form.fullname.value,
+                email:form.email.value,
+                phone:form.phone.value,
+                employee_type:form.employee_type.value,
+                password:form.password.value,
+                description:form.description.value,
+                start_date:form.start_date.value,
+                status:form.status.value
+            };
+            
+            (currentId)
+                ? dispatch(editEmployee({
+                    id: String(currentId),
+                    newData: {
+                        ...formDataToUpdate,
+                        start_date: String(new Date(formDataToUpdate.start_date))
+                    }
+                }))
+                : dispatch(newEmployee(formDataToUpdate))
+            
+            const swalProps = {
+                text: currentId
+                        ? `Employee #${id} successfully edited`
+                        : `Employee #${formDataToUpdate._id} successfully created`,
+                icon: 'success' as const,
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            }
+
+            navigate("/dashboard/employees");
+
+            await CustomSwal({data: swalProps, theme: theme})
+            
+        } catch (error) {
+            throw new Error(`${error}`);
         }
-
-        await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (
