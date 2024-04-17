@@ -13,11 +13,13 @@ import { SpanContainer } from "../styled/Span";
 import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
-import { archiveMsg, getMessagesThunk } from "../store/Messages/messagesThunk";
+import { editMessage, getMessagesThunk } from "../store/Messages/messagesThunk";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Loader, Loading } from "../styled/Loading";
 import { MessageData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
+import { StatusButtonArchive, StatusButtonUnarchive } from "../components/Dashboard/Messages/MessagesSlide";
+import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 const messageStars = (row: number) => {
     const messageStars = [];
@@ -72,7 +74,11 @@ function Messages() {
     }, [initialFetch]);
 
     const action = async(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
-        e.stopPropagation()
+        e.stopPropagation();
+        const isRead = row.read === true;
+        if(!isRead) {
+            dispatch(editMessage({row: row as MessageData, fieldToEdit: "read"}));
+        }
         const swalProps = {
             title: <MessageTitle>{row.full_name} <small>#{row._id}</small></MessageTitle>,
                 html: (
@@ -146,6 +152,24 @@ function Messages() {
             }
         },
         {
+            'label': 'Read',
+            display: (row: Data) => {
+                return (
+                    <>  
+                        <p>{
+                            row.read
+                                ?  <StatusButtonArchive>
+                                        <FaRegCheckCircle />
+                                </StatusButtonArchive>
+                                : <StatusButtonUnarchive>
+                                <FaRegTimesCircle />
+                            </StatusButtonUnarchive>
+                        }</p>
+                    </>
+                )
+            }
+        },
+        {
             'label': 'Actions',
             display : (row: Data) => {
                 const employeeRow = row as MessageData;
@@ -154,7 +178,7 @@ function Messages() {
                         <ButtonContainer>
                             <Publish onClick={(e) => {
                                 e.stopPropagation();
-                                dispatch(archiveMsg(employeeRow));
+                                dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
                             }}>Archive</Publish>
                         </ButtonContainer>
                     )
@@ -163,7 +187,7 @@ function Messages() {
                         <ButtonContainer>
                             <Archive onClick={(e) => {
                                 e.stopPropagation();
-                                dispatch(archiveMsg(employeeRow));
+                                dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
                             }}>Publish</Archive>
                         </ButtonContainer>
                     )

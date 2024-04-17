@@ -14,14 +14,25 @@ export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async
     }
 })
 
-export const archiveMsg = createAsyncThunk('messages/archive', async (row: MessageData) => {
-    try {
-        const updatedRow: MessageData = {
-            ...row,
-            archived: !row.archived
-        }
+interface EditMsgInterface {
+    row: MessageData;
+    fieldToEdit: string;
+}
 
-        return updatedRow;
+export const editMessage = createAsyncThunk('messages/edit', async ({
+    row,
+    fieldToEdit
+}: EditMsgInterface) => {
+    try {
+        const token = getTokenFromLocalStorage();
+        const { updatedAt, __v, ...itemToFetch } = row;
+        const itemToUpdate = {
+            ...itemToFetch,
+            [fieldToEdit]: !row[fieldToEdit]
+        }
+        await fetchFromApi("PUT", `${messagesCollection}/${row._id}`, token, itemToUpdate);
+
+        return itemToUpdate;
     } catch (error) {
         throw new Error(`Error: ${error}`);
     }

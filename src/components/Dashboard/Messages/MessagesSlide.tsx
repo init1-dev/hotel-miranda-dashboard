@@ -230,14 +230,14 @@ const ButtonsContainer = styled.div`
     margin-right: 1rem;
 `
 
-const StatusButtonArchive = styled.a`
+export const StatusButtonArchive = styled.a`
     cursor: pointer;
     background-color: unset;
     font-size: 20px;
     color: #5AD07A;
 `
 
-const StatusButtonUnarchive = styled(StatusButtonArchive)`
+export const StatusButtonUnarchive = styled(StatusButtonArchive)`
     color: #E23428;
 `
 

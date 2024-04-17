@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { deleteRoom, editRoom, getRoom, getRoomsThunk, newRoom } from './roomsThunk';
-import { RoomState } from '../interfaces';
+import { RoomData, RoomState } from '../interfaces';
 
 const DEFAULT_STATE: RoomState = {
     data: [],
@@ -10,6 +10,7 @@ const DEFAULT_STATE: RoomState = {
         status: 'idle',
         error: null
     },
+    availableRooms: [],
     loading: false,
     status: "idle",
     error: null,
@@ -25,6 +26,7 @@ const roomSlice = createSlice({
                 state.status = 'fulfilled';
                 state.error = null;
                 state.data = action.payload;
+                state.availableRooms = action.payload.filter((room: RoomData) => room.status === 'Available');
             })
 
             .addCase(getRoom.fulfilled, (state, action) => {

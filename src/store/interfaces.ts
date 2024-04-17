@@ -120,6 +120,7 @@ export interface Room {
 export interface RoomState {
     data: RoomData[];
     item: Room;
+    availableRooms: RoomData[];
     loading: boolean;
     status: string;
     error: string | null;

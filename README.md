@@ -45,16 +45,13 @@ $npm run dev
 - Implement connection with API (Work in progress)
 
 ### TODO:
-- fix rooms and bookings offer type and display calculating discount value (% instead value)
 - General refactor
 - change password from dashboard user info
 - swal to manage errors in get, post, put or delete
 - premongo branch
-- implement TopBarContainer icons message and alert to work with db
+- implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
-- Dashboard last reviews to work with db
 - Bookings ADD and EDIT
-- Messages actions to ARCHIVE
 - Search input
 - in booking details, make room number navigate to room details
 - when delete one item in table go to page 1

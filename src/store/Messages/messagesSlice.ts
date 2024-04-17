@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { archiveMsg, getMessagesThunk } from './messagesThunk';
+import { editMessage, getMessagesThunk } from './messagesThunk';
 import { MessagesState } from '../interfaces';
 
 const DEFAULT_STATE: MessagesState = {
@@ -27,8 +27,8 @@ const messagesSlice = createSlice({
                 state.data = action.payload;
             })
 
-            .addCase(archiveMsg.fulfilled, (state, action) => {
-                const index = state.data.findIndex((item) => item._id === action.payload._id);
+            .addCase(editMessage.fulfilled, (state, action) => {
+                const index = state.data.findIndex((item) => item._id === action.payload._id);                
                 if (index !== -1) {
                     state.status = 'fulfilled';
                     state.error = null;
@@ -37,14 +37,14 @@ const messagesSlice = createSlice({
             })
 
             .addMatcher(
-                isAnyOf( getMessagesThunk.pending, archiveMsg.pending ),
+                isAnyOf( getMessagesThunk.pending, editMessage.pending ),
                 (state) => {
                     state.status = 'pending';
                     state.error = null;
                 }
             )
             .addMatcher(
-                isAnyOf( getMessagesThunk.rejected, archiveMsg.rejected ),
+                isAnyOf( getMessagesThunk.rejected, editMessage.rejected ),
                 (state, action) => {
                     state.status = 'rejected';
                     state.error = action.error?.message ?? "Unknown error occurred";

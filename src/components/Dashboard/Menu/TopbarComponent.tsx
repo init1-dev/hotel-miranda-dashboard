@@ -6,9 +6,25 @@ import { NavLink } from "react-router-dom";
 import Logout from "../../Logout/Logout";
 import TitleComponent from "./TitleComponent";
 import ThemeButton from "./ThemeButton";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store";
+import { selectMessages } from "../../../store/Messages/messagesSlice";
+import { useCallback, useEffect } from "react";
+import { getMessagesThunk } from "../../../store/Messages/messagesThunk";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
     const { theme, handleToggleTheme } = useTheme();
+    const dispatch = useAppDispatch();
+    
+    const messagesData = useAppSelector(selectMessages);
+    const unreadMessages = messagesData.data.filter(message => message.read === false)
+
+    const initialFetch = useCallback(async () => {
+        await dispatch(getMessagesThunk()).unwrap();
+    }, [dispatch])
+
+    useEffect(() => {
+        initialFetch()
+    }, [initialFetch]);
 
     return (
         <>
@@ -22,9 +38,12 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
 
             <TopbarContainer>
                 <MenuIcon to={'/dashboard/messages'}>
-                    <MenuIconAlert>
-                        2
-                    </MenuIconAlert>
+                    {
+                        (unreadMessages.length > 0)
+                            && <MenuIconAlert>
+                                {unreadMessages.length}
+                            </MenuIconAlert>
+                    }
                     <CiMail />
                 </MenuIcon>
 

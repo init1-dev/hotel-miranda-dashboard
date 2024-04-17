@@ -81,7 +81,9 @@ function Employees() {
                                     <MessageText><strong>Employee Type:</strong> {row.employee_type} </MessageText>
                                     <MessageText><strong>Description:</strong> {row.description} </MessageText>
                                     <br />
-                                    <MessageText><strong>Start Date:</strong> {row.start_date}</MessageText>
+                                    <MessageText><strong>Start Date:</strong> {
+                                        format( new Date(`${row.start_date}`), 'MMM do, yyyy')
+                                    }</MessageText>
                                     <MessageText><strong>Status:</strong> {row.status ? "Active" : "Inactive"}</MessageText>
                                 </>
                             ),
