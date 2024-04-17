@@ -3,13 +3,18 @@ import { messagesCollection } from '../../helpers/API/apiVariables';
 import { MessageData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
 import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
+import { customToast } from '../../helpers/toastify/customToast';
 
 export const getMessagesThunk = createAsyncThunk('messages/fetchMessages', async () => {
     try {
         const token = getTokenFromLocalStorage();
         const data = await fetchFromApi("GET", messagesCollection, token);
+        if(data?.status === 200 && data?.data.length === 0){
+            customToast('warn', 'Empty data');
+        }
         return data?.data;
     } catch (error) {
+        customToast('error', 'Error fetching data');
         throw new Error(`Error: ${error}`);
     }
 })
