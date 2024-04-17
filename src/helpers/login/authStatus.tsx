@@ -2,10 +2,11 @@ import styled, { ThemeContext } from "styled-components";
 import { useContext, useRef } from "react";
 import UserContext from "../../contexts/Auth/UserContext";
 import CustomSwal from "../Swal/CustomSwal";
+import CustomSwalHtml from "../Swal/CustomSwalHtml";
 
 function AuthStatus() {
     const auth = useContext(UserContext);
-    const theme = useContext(ThemeContext);
+    const currentTheme = useContext(ThemeContext);
     const { user, email, photo } = auth.state;
     const formUser = useRef(String(user));
     const formEmail = useRef(String(email));
@@ -25,38 +26,17 @@ function AuthStatus() {
             timerProgressBar: true,
         }
 
-        await CustomSwal({data: swalProps, theme: theme})
+        await CustomSwal({data: swalProps, theme: currentTheme})
     };
 
     const handleEditUser = async() => {
         const swalProps = {
             text: 'Edit:',
             html: (
-                <form onSubmit={() => handleSubmit(formUser.current, formEmail.current)}>
-                    <div>
-                        <label htmlFor="username">Nombre de usuario:</label>
-                        <br />
-                        <InputStyle
-                            type="text"
-                            name="username"
-                            placeholder="Insert new username"
-                            defaultValue={user ?? ''}
-                            onChange={(e) => formUser.current = e.target.value}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Correo electrónico:</label>
-                        <br />
-                        <InputStyle
-                            type="email"
-                            name="email"
-                            placeholder="Insert new email"
-                            defaultValue={email ?? ''}
-                            onChange={(e) => formEmail.current = e.target.value}
-                        />
-                    </div>
-                    <button type="submit" hidden></button>
-                </form>
+                <CustomSwalHtml data={{
+                    user: formUser,
+                    email: formEmail
+                }} handleSubmit={handleSubmit}/>
             ),
             showConfirmButton: true,
             showCancelButton: true,
@@ -66,7 +46,7 @@ function AuthStatus() {
             reverseButtons: true
         }
 
-        await CustomSwal({data: swalProps, theme: theme})
+        await CustomSwal({data: swalProps, theme: currentTheme})
         .then((result) => {
             if (result.isConfirmed) {
                 handleSubmit(formUser.current, formEmail.current)
@@ -92,20 +72,6 @@ function AuthStatus() {
         </Container>
     );
 }
-
-
-const InputStyle = styled.input`
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 14px;
-    width: 75%;
-    padding: 0.5rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    outline: unset;
-    border: 1px solid grey;
-`
 
 const Container = styled.div`
     width: 100%;
