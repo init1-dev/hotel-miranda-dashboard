@@ -53,8 +53,6 @@ function LoginPage() {
 
         const employeeId = getInput(e, 'employee_email') || customToast("warn", "Insert your email");
         const password = getInput(e, 'password') || customToast("warn", "Insert your password");
-
-        console.log(employeeId, password);
         
         if(!employeeId || !password){
             return setIsLogingIn(false);
@@ -84,6 +82,7 @@ function LoginPage() {
                 await CustomSwal({data: swalProps, theme: theme})
             }
         } catch (error) {
+            setIsLogingIn(false);
             throw (error instanceof Error)
                 ? error
                 : new Error("Unknown error occurred")

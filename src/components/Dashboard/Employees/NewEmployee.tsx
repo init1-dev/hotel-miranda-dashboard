@@ -12,6 +12,7 @@ import BackButton from "../../Buttons/BackButton";
 import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 import { isUserExist } from "../../../helpers/API/isExist";
 import { EmployeeForm } from "../../../helpers/API/interfaces";
+import { customToast } from "../../../helpers/toastify/customToast";
 
 function NewEmployee () {
     const navigate = useNavigate();
@@ -66,7 +67,12 @@ function NewEmployee () {
         const form = e.target as EmployeeForm;
         
         try {
-            await isUserExist(form.email.value, currentId);
+            const isExist = await isUserExist(form.email.value, currentId);
+            
+            if(isExist){
+                customToast('error', 'User already exist');
+                throw new Error("User already exist");
+            }
 
             const formDataToUpdate = {
                 ...formData,

@@ -1,5 +1,4 @@
 import { getTokenFromLocalStorage } from "../localStorage/getTokenFromLocalStorage";
-import { customToast } from "../toastify/customToast";
 import { employeesCollection, roomsCollection } from "./apiVariables";
 import { fetchFromApi } from "./fetchFromApi";
 
@@ -8,7 +7,6 @@ export const isUserExist = async(email: string, currentId: string | null | undef
     const isUserExist = await fetchFromApi("GET", `${employeesCollection}/getUser/${email}`, token);
 
     if(isUserExist?.data !== null && currentId === null){
-        customToast('error', 'User already exist');
         return true;
     }
 
@@ -20,7 +18,6 @@ export const isRoomExist = async(number: string, currentId: string | null | unde
     const isRoomExist = await fetchFromApi("GET", `${roomsCollection}/getRoom/${number}`, token);
 
     if(isRoomExist?.data !== null && currentId === null){
-        customToast('error', 'Room already exist');
         return true;
     }
 

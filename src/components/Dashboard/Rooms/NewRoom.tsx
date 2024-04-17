@@ -10,6 +10,7 @@ import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
 import { isRoomExist } from "../../../helpers/API/isExist";
 import { RoomForm } from "../../../helpers/API/interfaces";
+import { customToast } from "../../../helpers/toastify/customToast";
 
 function NewRoom () {
     const navigate = useNavigate();
@@ -73,7 +74,12 @@ function NewRoom () {
         const form = e.target as RoomForm;
         
         try {
-            await isRoomExist(form.room_number.value, currentId);
+            const isExist = await isRoomExist(form.room_number.value, currentId);
+
+            if(isExist){
+                customToast('error', 'Room already exist');
+                throw new Error("Room already exist");
+            }
             
             const formDataToUpdate = {
                 ...formData,
