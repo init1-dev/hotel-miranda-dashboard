@@ -54,6 +54,7 @@ $npm run dev
 - Dashboard KPIs to work with db
 - Search input (work in progress)
 - MessagesSlide use db instead json
+- booking photo use client dni/passport instead room photo
 
 ### TESTING:
 

@@ -6,7 +6,8 @@ export interface RoomForm extends EventTarget {
     offer: HTMLFormElement,
     price: HTMLFormElement,
     discount: HTMLFormElement,
-    amenities: HTMLFormElement
+    amenities: HTMLFormElement,
+    photo: HTMLFormElement
 }
 
 export interface EmployeeForm extends EventTarget {
@@ -17,7 +18,8 @@ export interface EmployeeForm extends EventTarget {
     password: HTMLFormElement,
     description: HTMLFormElement,
     start_date: HTMLFormElement,
-    status: HTMLFormElement
+    status: HTMLFormElement,
+    photo: HTMLFormElement
 }
 
 export interface BookingForm extends EventTarget {

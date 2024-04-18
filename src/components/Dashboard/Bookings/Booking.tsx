@@ -80,7 +80,7 @@ function Booking () {
                             <Preview>
 
                                 <InfoContainer>
-                                    <TopContainerRow style={{cursor:'pointer'}}>
+                                    <TopContainerRow style={{cursor:'zoom-in'}}>
                                         <TextDiv onClick={(e) => showDetails(e, bookingData.itemData)}>
                                             <h3>{bookingData.itemData && bookingData.itemData.full_name}</h3>
                                             <small>#{bookingData.itemData && bookingData.itemData._id}</small>

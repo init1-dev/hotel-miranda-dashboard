@@ -84,7 +84,8 @@ function NewEmployee () {
                 password:form.password.value,
                 description:form.description.value,
                 start_date:form.start_date.value,
-                status:form.status.value
+                status:form.status.value,
+                photo:form.photo.value
             };
             
             (currentId)
@@ -175,7 +176,7 @@ function NewEmployee () {
 
                     <GridContainer>
                         <Label htmlFor="photo">Load Photo:</Label>
-                        <Input type="file" name="photo" id="photo"/>
+                        <Input type="text" name="photo" id="photo" defaultValue={formData.photo} placeholder="Insert employee photo"/>
 
                         <Label htmlFor="employee_type">Employee Type:</Label>
                         <Select name="employee_type" id="employee_type" required>

@@ -90,7 +90,8 @@ function NewRoom () {
                 offer: form.discount.value > 0 ? true : false,
                 price: Number((form.price.value * 100).toFixed(2)),
                 discount: form.discount.value,
-                amenities: handleAmenities(form.amenities)
+                amenities: handleAmenities(form.amenities),
+                photo: form.photo.value
             };
             
             (currentId)
@@ -162,7 +163,7 @@ function NewRoom () {
 
                     <GridContainer>
                         <Label htmlFor="photo">Load Images:</Label>
-                        <Input type="file" name="photo" id="photo"/>
+                        <Input type="text" name="photo" id="photo" defaultValue={formData.photo} placeholder="Insert photo url"/>
 
                         <Label htmlFor="discount">Offer:</Label>
                         <Input type="number" name="discount" id="discount" defaultValue={formData.discount} placeholder="Insert discount"/>

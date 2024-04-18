@@ -102,7 +102,6 @@ const TableStyle = styled.table`
     text-align: center;
     border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.menuBox};
-    cursor: zoom-in;
     box-shadow: 2px 2px 6px -4px black;
     border-spacing: 0;
 
@@ -136,7 +135,7 @@ const TableStyle = styled.table`
             filter: grayscale(0.5);
             transition: filter 0.2s ease;
             line-height: 30px;
-            cursor: zoom-in;
+            cursor: pointer;
             font-size: 14px;
 
             &:hover {
