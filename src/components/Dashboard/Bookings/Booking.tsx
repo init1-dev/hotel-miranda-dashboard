@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { Title } from '../../../styled/Form';
 import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from '../../../styled/Preview';
@@ -33,14 +33,14 @@ function Booking () {
     const bookingDiscount = bookingData.itemData?.discount || 0;
     const bookingPrice = calculateBookingDiscount(roomPriceToCurrency, bookingDiscount);
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getBooking(String(id)));
         setFetched(true);
-    }, [id, dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     const showDetails = async(e: React.MouseEvent<HTMLElement, MouseEvent>, info: BookingData | undefined) => {
         e.stopPropagation();

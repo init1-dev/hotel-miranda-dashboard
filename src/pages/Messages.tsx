@@ -14,7 +14,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
 import { editMessage, getMessagesThunk } from "../store/Messages/messagesThunk";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { MessageData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { StatusButtonArchive, StatusButtonUnarchive } from "../components/Dashboard/Messages/MessagesSlide";
@@ -63,14 +63,14 @@ function Messages() {
         
     }, [messagesData, currentTab, currentOrder])
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getMessagesThunk()).unwrap();
         setIsLoading(false);
-    }, [dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     const action = async(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: Data) => {
         e.stopPropagation();

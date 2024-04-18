@@ -1,7 +1,7 @@
 import { AmenitiesSelect, Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { editRoom, getRoom, newRoom } from "../../../store/Rooms/roomsThunk";
 import { selectRoom } from "../../../store/Rooms/roomsSlice";
 import { ThemeContext } from "styled-components";
@@ -23,16 +23,16 @@ function NewRoom () {
     const [fetched, setFetched] = useState(false);
     const theme = useContext(ThemeContext);
     
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         if(currentId){
             await dispatch(getRoom(String(id))).unwrap();
             setFetched(true);
         }
-    }, [id, currentId, dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     useEffect(() => {
         if(currentId && roomData.itemData) {

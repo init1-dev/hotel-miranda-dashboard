@@ -5,7 +5,7 @@ import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, Te
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { useParams } from 'react-router-dom';
 import { selectRoom } from '../../../store/Rooms/roomsSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getRoom } from '../../../store/Rooms/roomsThunk';
 import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
 import BackButton from '../../Buttons/BackButton';
@@ -26,14 +26,14 @@ function Room () {
     const roomOffer = roomData.itemData?.offer;
     const calculatedRoomDiscount = roomOffer ? calculateCentsToCurrency(roomPrice, roomDiscount) : 0;
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getRoom(String(id)));
         setFetched(true);
-    }, [id, dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     return (
         <>

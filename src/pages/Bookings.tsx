@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
@@ -57,14 +57,14 @@ function Bookings() {
         
     }, [bookingsData, currentTab, currentOrder])
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getBookings()).unwrap();
         setIsLoading(false);
-    }, [dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     // display: (row: Data) => format( new Date(`${row.order_date}`), 'MMM do, yyyy HH:mm')
     const bookingsHeaders = [

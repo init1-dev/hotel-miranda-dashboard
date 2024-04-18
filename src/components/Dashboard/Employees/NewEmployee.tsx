@@ -1,7 +1,7 @@
 import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { selecEmployee } from "../../../store/Employees/employeesSlice";
 import { editEmployee, getEmployee, newEmployee } from "../../../store/Employees/employeesThunk";
 // import { format } from "date-fns";
@@ -25,16 +25,16 @@ function NewEmployee () {
     const [fetched, setFetched] = useState(false);
     const theme = useContext(ThemeContext);
     
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         if(currentId){
             await dispatch(getEmployee(String(id))).unwrap();
             setFetched(true);
         }
-    }, [id, currentId, dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     useEffect(() => {
         if(currentId && employeeData.itemData) {

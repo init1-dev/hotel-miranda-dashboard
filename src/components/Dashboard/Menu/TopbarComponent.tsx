@@ -8,7 +8,7 @@ import TitleComponent from "./TitleComponent";
 import ThemeButton from "./ThemeButton";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { selectMessages } from "../../../store/Messages/messagesSlice";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { getMessagesThunk } from "../../../store/Messages/messagesThunk";
 
 export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, toggleSidebar: () => void }) => {
@@ -18,13 +18,13 @@ export const TopbarComponent = ({ visible, toggleSidebar }: { visible: boolean, 
     const messagesData = useAppSelector(selectMessages);
     const unreadMessages = messagesData.data.filter(message => message.read === false)
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getMessagesThunk()).unwrap();
-    }, [dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     return (
         <>

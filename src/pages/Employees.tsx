@@ -13,7 +13,7 @@ import { SectionSelect } from "../styled/Form";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectEmployees } from "../store/Employees/employeesSlice";
 import { deleteEmployee, getEmployeesThunk } from "../store/Employees/employeesThunk";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { EmployeeData } from "../store/interfaces";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import CustomSwal from "../helpers/Swal/CustomSwal";
@@ -51,14 +51,14 @@ function Employees() {
         
     }, [employeesData, currentTab, currentOrder])
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getEmployeesThunk()).unwrap();
         setIsLoading(false);
-    }, [dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     const usersHeaders = [
         {

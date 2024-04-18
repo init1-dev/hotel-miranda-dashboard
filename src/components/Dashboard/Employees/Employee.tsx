@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { selecEmployee } from "../../../store/Employees/employeesSlice";
 import { Title } from "../../../styled/Form";
 import { ImageContainer, ImageDiv, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow, TopContainerRowXl } from "../../../styled/Preview";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getEmployee } from "../../../store/Employees/employeesThunk";
 import { SpanStyledCheckIn, SpanStyledCheckOut } from "../../../styled/Span";
 import { format } from "date-fns";
@@ -16,14 +16,14 @@ function Employee () {
     const employeeData = useAppSelector(selecEmployee);
     const [fetched, setFetched] = useState(false);
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getEmployee(String(id)));
         setFetched(true);
-    }, [id, dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
 
     return (
         <>  

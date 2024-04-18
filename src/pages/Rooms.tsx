@@ -1,5 +1,5 @@
 import styled, { ThemeContext } from "styled-components";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { orderBy, rooms } from "../helpers/Tabs/tabs";
@@ -53,14 +53,14 @@ function Rooms() {
         
     }, [roomsData, currentTab, currentOrder])
 
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getRoomsThunk()).unwrap();
         setIsLoading(false);
-    }, [dispatch])
+    }
 
     useEffect(() => {
         initialFetch()
-    }, [initialFetch]);
+    }, []);
     
     const roomsHeaders = [
         {
