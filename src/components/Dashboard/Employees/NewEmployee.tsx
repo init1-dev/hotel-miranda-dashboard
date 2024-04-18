@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { selecEmployee } from "../../../store/Employees/employeesSlice";
 import { editEmployee, getEmployee, newEmployee } from "../../../store/Employees/employeesThunk";
-import { Loader, Loading } from "../../../styled/Loading";
 // import { format } from "date-fns";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
@@ -13,6 +12,7 @@ import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 import { isUserExist } from "../../../helpers/API/isExist";
 import { EmployeeForm } from "../../../helpers/API/interfaces";
 import { customToast } from "../../../helpers/toastify/customToast";
+import LoaderComponent from "../../Loader";
 
 function NewEmployee () {
     const navigate = useNavigate();
@@ -207,9 +207,7 @@ function NewEmployee () {
                     </GridContainer>
                 </Form>
             </>
-        : <Loading>
-            <Loader />
-        </Loading>
+        : <LoaderComponent />
     );
 }
 

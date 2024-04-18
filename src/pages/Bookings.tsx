@@ -6,7 +6,6 @@ import { bookings, orderBy } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
-import { Loader, Loading } from "../styled/Loading";
 import { SectionSelect } from "../styled/Form";
 import { MessageText, MessageTitle } from "../styled/Message";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/Span";
@@ -19,6 +18,7 @@ import { BookingData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { ThemeContext } from "styled-components";
 import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
+import LoaderComponent from "../components/Loader";
 
 function Bookings() {
     const navigate = useNavigate();
@@ -184,11 +184,7 @@ function Bookings() {
     ];
 
     if(isLoading) {
-        return (
-            <Loading>
-                <Loader />
-            </Loading>
-        )
+        return <LoaderComponent />
     }
     
     return (

@@ -14,11 +14,11 @@ import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectEmployees } from "../store/Employees/employeesSlice";
 import { deleteEmployee, getEmployeesThunk } from "../store/Employees/employeesThunk";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Loader, Loading } from "../styled/Loading";
 import { EmployeeData } from "../store/interfaces";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { Container, EmployeeDataModal } from "../styled/ImagePreviewInTable";
+import LoaderComponent from "../components/Loader";
 
 function Employees() {
     const navigate = useNavigate();
@@ -183,11 +183,7 @@ function Employees() {
     ];
 
     if(isLoading) {
-        return (
-            <Loading>
-                <Loader />
-            </Loading>
-        )
+        return <LoaderComponent />
     }
     
     return (

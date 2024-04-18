@@ -5,12 +5,12 @@ import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea,
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { selectBooking, availableRooms } from "../../../store/Bookings/bookingsSlice";
 import { format } from "date-fns";
-import { Loader, Loading } from "../../../styled/Loading";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
 import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 import { getRoomsThunk } from "../../../store/Rooms/roomsThunk";
+import LoaderComponent from "../../Loader";
 
 function NewBooking () {
     const navigate = useNavigate();
@@ -63,7 +63,9 @@ function NewBooking () {
         special_request: "Necesito mucha pizza",
         discount: 50,
         status: "Check In",
-        roomInfo: "661e6c37687a58494d48cb2a"
+        roomInfo: {
+            room_number: 4
+        } as any
     };
 
     const [formData, setFormData] = useState(booking);
@@ -112,19 +114,14 @@ function NewBooking () {
     return (
         (!currentId || currentId && fetched)
             ? <>
-                {currentId
-                    ? <Title>
-                        <span>
-                            EDITING <small>#{currentId}</small>
-                        </span>
-                        <BackButton />
-                    </Title>
-                    : <Title>
-                        <span>
-                            NEW BOOKING
-                        </span>
-                        <BackButton />
-                    </Title>}
+                <Title>
+                    <span>
+                        {currentId
+                            ? <>EDITING <small>#{currentId}</small></>
+                            : <>NEW BOOKING</>}
+                    </span>
+                    <BackButton />
+                </Title>
 
                 <Form id="new-room" name="new-room" onSubmit={(e)=> handleSubmit(e)}>
                     <GridContainer>
@@ -155,6 +152,9 @@ function NewBooking () {
                             }
                         </Select>
 
+                        <Label htmlFor="discount">Discount:</Label>
+                        <InputDate type="number" name="discount" id="discount" defaultValue={formData.discount} required/>
+
                         <Label htmlFor="check_in">Check In:</Label>
                         <InputDate type="datetime-local" name="check_in" id="check_in" defaultValue={formData.check_in} required/>
 
@@ -169,9 +169,7 @@ function NewBooking () {
                     </GridContainer>
                 </Form>
             </>
-        : <Loading>
-            <Loader />
-        </Loading>
+        : <LoaderComponent />
     );
 }
 

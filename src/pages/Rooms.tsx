@@ -6,7 +6,6 @@ import { orderBy, rooms } from "../helpers/Tabs/tabs";
 import Table, { Data } from "../components/Table/Table";
 import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
 import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
-import { Loader, Loading } from "../styled/Loading";
 import { SectionSelect } from "../styled/Form";
 import { MessageTitle } from "../styled/Message";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
@@ -19,6 +18,7 @@ import { RoomData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { calculateCentsToCurrency } from "../helpers/calculateCentsToCurrency";
 import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
+import LoaderComponent from "../components/Loader";
 
 function Rooms() {
     const navigate = useNavigate();
@@ -215,11 +215,7 @@ function Rooms() {
     ];
 
     if(isLoading) {
-        return (
-            <Loading>
-                <Loader />
-            </Loading>
-        )
+        return <LoaderComponent />
     }
 
     return (

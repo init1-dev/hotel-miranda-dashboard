@@ -7,10 +7,10 @@ import { useParams } from 'react-router-dom';
 import { selectRoom } from '../../../store/Rooms/roomsSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { getRoom } from '../../../store/Rooms/roomsThunk';
-import { Loader, Loading } from '../../../styled/Loading';
 import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
 import BackButton from '../../Buttons/BackButton';
 import { calculateCentsToCurrency } from '../../../helpers/calculateCentsToCurrency';
+import LoaderComponent from '../../Loader';
 
 SwiperCore.use([Navigation]);
 
@@ -118,9 +118,7 @@ function Room () {
 
                             </Preview>
                         </>
-                    : <Loading>
-                    <Loader />
-                </Loading>
+                    : <LoaderComponent />
             }
         </>
     );

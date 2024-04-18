@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import { editRoom, getRoom, newRoom } from "../../../store/Rooms/roomsThunk";
 import { selectRoom } from "../../../store/Rooms/roomsSlice";
-import { Loader, Loading } from "../../../styled/Loading";
 import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
 import { isRoomExist } from "../../../helpers/API/isExist";
 import { RoomForm } from "../../../helpers/API/interfaces";
 import { customToast } from "../../../helpers/toastify/customToast";
+import LoaderComponent from "../../Loader";
 
 function NewRoom () {
     const navigate = useNavigate();
@@ -184,9 +184,7 @@ function NewRoom () {
                     </GridContainer>
                 </Form>
             </>
-            : <Loading>
-                <Loader />
-            </Loading>
+            : <LoaderComponent />
     );
 }
 

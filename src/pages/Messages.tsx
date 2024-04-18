@@ -15,11 +15,11 @@ import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectMessages } from "../store/Messages/messagesSlice";
 import { editMessage, getMessagesThunk } from "../store/Messages/messagesThunk";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Loader, Loading } from "../styled/Loading";
 import { MessageData } from "../store/interfaces";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { StatusButtonArchive, StatusButtonUnarchive } from "../components/Dashboard/Messages/MessagesSlide";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
+import LoaderComponent from "../components/Loader";
 
 const messageStars = (row: number) => {
     const messageStars = [];
@@ -196,11 +196,7 @@ function Messages() {
     ];
 
     if(isLoading) {
-        return (
-            <Loading>
-                <Loader />
-            </Loading>
-        )
+        return <LoaderComponent />
     }
 
     return (

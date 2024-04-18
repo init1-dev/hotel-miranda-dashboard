@@ -5,10 +5,10 @@ import { Title } from "../../../styled/Form";
 import { ImageContainer, ImageDiv, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow, TopContainerRowXl } from "../../../styled/Preview";
 import { useCallback, useEffect, useState } from "react";
 import { getEmployee } from "../../../store/Employees/employeesThunk";
-import { Loader, Loading } from "../../../styled/Loading";
 import { SpanStyledCheckIn, SpanStyledCheckOut } from "../../../styled/Span";
 import { format } from "date-fns";
 import BackButton from "../../Buttons/BackButton";
+import LoaderComponent from "../../Loader";
 
 function Employee () {
     const dispatch = useAppDispatch();
@@ -103,9 +103,7 @@ function Employee () {
 
                             </Preview>
                         </>
-                    : <Loading>
-                    <Loader />
-                </Loading>
+                    : <LoaderComponent />
             }
             
             

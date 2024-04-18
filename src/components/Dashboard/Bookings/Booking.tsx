@@ -7,7 +7,6 @@ import { Navigation } from 'swiper/modules';
 import { Link, useParams } from 'react-router-dom';
 import { getBooking } from '../../../store/Bookings/bookingsThunk';
 import { selectBooking } from '../../../store/Bookings/bookingsSlice';
-import { Loader, Loading } from '../../../styled/Loading';
 import { format } from 'date-fns';
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../../styled/Span';
 import BackButton from '../../Buttons/BackButton';
@@ -17,6 +16,7 @@ import CustomSwal from '../../../helpers/Swal/CustomSwal';
 import { BookingData } from '../../../store/interfaces';
 import { customToast } from '../../../helpers/toastify/customToast';
 import { MessageTitle } from '../../../styled/Message';
+import LoaderComponent from '../../Loader';
 
 SwiperCore.use([Navigation]);
 
@@ -162,9 +162,7 @@ function Booking () {
 
                             </Preview>
                         </>
-                    : <Loading>
-                    <Loader />
-                </Loading>
+                    : <LoaderComponent />
             }
             
             
