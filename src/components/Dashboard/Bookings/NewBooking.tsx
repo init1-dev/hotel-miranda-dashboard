@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { newBooking, editBooking, getBooking } from "../../../store/Bookings/bookingsThunk";
 import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../../styled/Form";
@@ -10,6 +10,7 @@ import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
 import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 import { getRoomsThunk } from "../../../store/Rooms/roomsThunk";
+import { BookingData } from "../../../store/interfaces";
 import LoaderComponent from "../../Loader";
 
 function NewBooking () {
@@ -18,23 +19,26 @@ function NewBooking () {
     const { id } = useParams();
     const bookingData = useAppSelector(selectBooking);
     const rooms = useAppSelector(availableRooms);
+    const [formData, setFormData] = useState({} as BookingData);
+    console.log(rooms);
+    
     const location = useLocation().pathname;
     const isEdit = location.includes("edit");
     const currentId = isEdit ? id : null;
     const [fetched, setFetched] = useState(false);
     const theme = useContext(ThemeContext);
     
-    const initialFetch = useCallback(async () => {
+    const initialFetch = async () => {
+        await dispatch(getRoomsThunk())
         if(currentId){
             await dispatch(getBooking(String(id))).unwrap();
-            setFetched(true);
         }
-        await dispatch(getRoomsThunk())
-    }, [id, currentId, dispatch])
+        setFetched(true);
+    }
 
     useEffect(() => {
         initialFetch();
-    }, [initialFetch]);
+    }, []);
 
     useEffect(() => {
         if(currentId && bookingData.itemData) {
@@ -50,7 +54,19 @@ function NewBooking () {
         }
     }, [bookingData.itemData, currentId]);
 
-    const booking = {
+    useEffect(() => {
+        if(rooms.length > 0){
+            setFormData({
+                ...sampleBooking,
+                roomInfo: {
+                    ...rooms[0]
+                } as any
+            });
+        }
+        
+    }, [rooms])
+
+    const sampleBooking = {
         _id: "",
         full_name: "Martin McFly",
         email: "marty@email.com",
@@ -58,19 +74,14 @@ function NewBooking () {
         image: "",
         check_in: String(new Date("7/12/2024").toISOString().slice(0, 16)),
         check_out: String(new Date("7/15/2024").toISOString().slice(0, 16)),
-        // extra fields
         order_date: String(new Date(Date.now()).toISOString()),
         special_request: "Necesito mucha pizza",
         discount: 50,
         status: "Check In",
         roomInfo: {
-            room_number: 4
+            ...rooms[0]
         } as any
     };
-
-    const [formData, setFormData] = useState(booking);
-
-    console.log(formData);
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -84,7 +95,8 @@ function NewBooking () {
             special_request: e.currentTarget.special_request.value,
             number: e.currentTarget.number.value,
             check_in: e.currentTarget.check_in.value,
-            check_out: e.currentTarget.check_out.value
+            check_out: e.currentTarget.check_out.value,
+            roomInfo: rooms.find(room => room.room_number === e.currentTarget.room_number.value) as any
         };
         
         (currentId)
@@ -108,11 +120,14 @@ function NewBooking () {
             showConfirmButton: false
         }
 
+        console.log(formData);
+        console.log(formDataToUpdate);
+
         await CustomSwal({data: swalProps, theme: theme})
     }
 
     return (
-        (!currentId || currentId && fetched)
+        (fetched)
             ? <>
                 <Title>
                     <span>
@@ -142,8 +157,8 @@ function NewBooking () {
                     </GridContainer>
 
                     <GridContainer>
-                        <Label htmlFor="number">Room Number:</Label>
-                        <Select name="number" id="number" required>
+                        <Label htmlFor="roomNumber">Room Number:</Label>
+                        <Select name="roomNumber" id="roomNumber" required>
                             <option defaultValue={formData.roomInfo.room_number} hidden>{formData.roomInfo.room_number}</option>
                             {
                                 rooms.map((room, index) => {

@@ -8,6 +8,7 @@ import { query1350, query1500 } from '../helpers/responsive';
 
 export const Preview = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
+    border: 2px ridge ${({ theme }) => theme.iconsColor};
     padding: 1rem 0;
     border-radius: 0.5rem;
     display: grid;
@@ -125,6 +126,7 @@ export const ImageContainer = styled(PreviewContainer)`
     }
 
     img {
+        border: 1px solid ${({ theme }) => theme.iconsColor};
         width: 100%;
         height: 100%;
         border-radius: 0.5rem;
