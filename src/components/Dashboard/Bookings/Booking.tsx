@@ -1,18 +1,22 @@
-import { useCallback, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { Title } from "../../../styled/Form";
-import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from "../../../styled/Preview";
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import { Title } from '../../../styled/Form';
+import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from '../../../styled/Preview';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
-import { Link, useParams } from "react-router-dom";
-import { getBooking } from "../../../store/Bookings/bookingsThunk";
-import { selectBooking } from "../../../store/Bookings/bookingsSlice";
-import { Loader, Loading } from "../../../styled/Loading";
-import { format } from "date-fns";
-import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../../styled/Span";
-import BackButton from "../../Buttons/BackButton";
-import { calculateBookingDiscount, calculateCentsToCurrency } from "../../../helpers/calculateCentsToCurrency";
-import styled from "styled-components";
+import { Link, useParams } from 'react-router-dom';
+import { getBooking } from '../../../store/Bookings/bookingsThunk';
+import { selectBooking } from '../../../store/Bookings/bookingsSlice';
+import { Loader, Loading } from '../../../styled/Loading';
+import { format } from 'date-fns';
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../../styled/Span';
+import BackButton from '../../Buttons/BackButton';
+import { calculateBookingDiscount, calculateCentsToCurrency } from '../../../helpers/calculateCentsToCurrency';
+import styled, { ThemeContext } from 'styled-components';
+import CustomSwal from '../../../helpers/Swal/CustomSwal';
+import { BookingData } from '../../../store/interfaces';
+import { customToast } from '../../../helpers/toastify/customToast';
+import { MessageTitle } from '../../../styled/Message';
 
 SwiperCore.use([Navigation]);
 
@@ -21,6 +25,7 @@ function Booking () {
     const { id } = useParams();
     const bookingData = useAppSelector(selectBooking);
     const [fetched, setFetched] = useState(false);
+    const theme = useContext(ThemeContext);
 
     const roomPrice = bookingData.itemData?.roomInfo.price; 
     const roomDiscount = bookingData.itemData?.roomInfo.discount;
@@ -37,10 +42,31 @@ function Booking () {
         initialFetch()
     }, [initialFetch]);
 
+    const showDetails = async(e: React.MouseEvent<HTMLElement, MouseEvent>, info: BookingData | undefined) => {
+        e.stopPropagation();
+        console.log(info);
+        if(!info){
+            customToast('error', 'User info not found');
+        }
+        const swalProps = {
+            title: <SpanContainer>
+                <MessageTitle>User details:</MessageTitle>
+            </SpanContainer>,
+            html: <SpanContainer>
+                <small>Phone:</small>
+                <h5><strong>{info?.phone}</strong></h5>
+                <br />
+                <small>Email:</small>
+                <h5><strong>{info?.email}</strong></h5>
+            </SpanContainer>
+        }
+        await CustomSwal({data: swalProps, theme: theme})
+    }
+
     return (
         <>  
             {
-                (bookingData.status === "fulfilled" && fetched)
+                (bookingData.status === 'fulfilled' && fetched)
                     ? 
                         <>
                             <Title>
@@ -55,8 +81,8 @@ function Booking () {
                             <Preview>
 
                                 <InfoContainer>
-                                    <TopContainerRow>
-                                        <TextDiv>
+                                    <TopContainerRow style={{cursor:'pointer'}}>
+                                        <TextDiv onClick={(e) => showDetails(e, bookingData.itemData)}>
                                             <h3>{bookingData.itemData && bookingData.itemData.full_name}</h3>
                                             <small>#{bookingData.itemData && bookingData.itemData._id}</small>
                                         </TextDiv>
@@ -79,11 +105,11 @@ function Booking () {
                                             <h5>
                                                 {bookingData.itemData && 
                                                     <>
-                                                        {bookingData.itemData.roomInfo.room_type + " ["}
+                                                        {bookingData.itemData.roomInfo.room_type + ' ['}
                                                         <RoomLink to={`/dashboard/rooms/${bookingData.itemData.roomInfo._id}`}>
-                                                            {"Room #" + bookingData.itemData.roomInfo.room_number}
+                                                            {'Room #' + bookingData.itemData.roomInfo.room_number}
                                                         </RoomLink>
-                                                        {"]"}
+                                                        {']'}
                                                     </>
                                                 }
                                             </h5>
@@ -93,11 +119,13 @@ function Booking () {
                                             <h5>{bookingData.itemData && bookingPrice}€</h5>
                                         </TextDiv>
                                     </InfoContainerRow>
-                                    <hr />
+
                                     <TopContainerRow>
                                         <TextDiv>
-                                            <h5>Special request:</h5>
-                                            <small>{bookingData.itemData && bookingData.itemData.special_request}</small>
+                                            <small>Order date:</small>
+                                            <h5>
+                                                {bookingData.itemData && format( new Date(`${bookingData.itemData.order_date}`), 'PPPpp')}
+                                            </h5>
                                         </TextDiv>
                                     </TopContainerRow>
                                     <hr />
@@ -110,29 +138,26 @@ function Booking () {
                                 </InfoContainer>
 
                                 <ImageContainer>
-                                        {bookingData.itemData && bookingData.itemData.status === "In Progress" 
+                                        {bookingData.itemData && bookingData.itemData.status === 'In Progress' 
                                             && <SpanStyledInProgress>
                                                     {bookingData.itemData.status}
                                                 </SpanStyledInProgress> }
-                                        {bookingData.itemData && bookingData.itemData.status === "Check In" 
+                                        {bookingData.itemData && bookingData.itemData.status === 'Check In' 
                                             && <SpanStyledCheckIn>
                                                     {bookingData.itemData.status}
                                                 </SpanStyledCheckIn> }
-                                        {bookingData.itemData && bookingData.itemData.status === "Check Out"
+                                        {bookingData.itemData && bookingData.itemData.status === 'Check Out'
                                             && <SpanStyledCheckOut>
                                                     {bookingData.itemData.status}
                                                 </SpanStyledCheckOut> }
                                     <div>
-                                        <h4>
-                                            {bookingData.itemData && bookingData.itemData.type}
-                                        </h4>
-
+                                        <h4>Special request:</h4>
                                         <p>
                                             {bookingData.itemData && bookingData.itemData.special_request}
                                         </p>
                                     </div>
 
-                                    <img src={bookingData.itemData && bookingData.itemData.roomInfo.photo} alt="" />
+                                    <img src={bookingData.itemData && bookingData.itemData.roomInfo.photo} alt='' />
                                 </ImageContainer>
 
                             </Preview>

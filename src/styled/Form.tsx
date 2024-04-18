@@ -33,8 +33,16 @@ export const Form = styled.form`
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
-    margin: 1rem 20% 0 20%;
+    margin: 1rem 12% 0 12%;
     box-shadow: 1px 1px 5px black;
+
+    @media (max-width: ${query1500}) {
+        margin: 1rem 5% 0 5%;
+    }
+
+    @media (max-width: ${query1350}) {
+        margin: 1rem 2% 0 2%;
+    }
 
     button {
         border: 2px solid transparent;

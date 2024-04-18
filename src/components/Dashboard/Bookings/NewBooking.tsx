@@ -10,6 +10,7 @@ import { ThemeContext } from "styled-components";
 import CustomSwal from "../../../helpers/Swal/CustomSwal";
 import BackButton from "../../Buttons/BackButton";
 import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
+import { getRoomsThunk } from "../../../store/Rooms/roomsThunk";
 
 function NewBooking () {
     const navigate = useNavigate();
@@ -28,10 +29,11 @@ function NewBooking () {
             await dispatch(getBooking(String(id))).unwrap();
             setFetched(true);
         }
+        await dispatch(getRoomsThunk())
     }, [id, currentId, dispatch])
 
     useEffect(() => {
-        initialFetch()
+        initialFetch();
     }, [initialFetch]);
 
     useEffect(() => {
@@ -65,6 +67,8 @@ function NewBooking () {
     };
 
     const [formData, setFormData] = useState(booking);
+
+    console.log(formData);
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -143,7 +147,7 @@ function NewBooking () {
                     <GridContainer>
                         <Label htmlFor="number">Room Number:</Label>
                         <Select name="number" id="number" required>
-                            <option defaultValue={formData.number} hidden>{formData.number}</option>
+                            <option defaultValue={formData.roomInfo.room_number} hidden>{formData.roomInfo.room_number}</option>
                             {
                                 rooms.map((room, index) => {
                                     return <option key={index} defaultValue={room.room_number}>{room.room_number}</option>

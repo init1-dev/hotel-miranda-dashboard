@@ -54,6 +54,7 @@ $npm run dev
 - Dashboard KPIs to work with db
 - Bookings ADD and EDIT
 - Search input (work in progress)
+- MessagesSlide use db instead json
 
 ### TESTING:
 

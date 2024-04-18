@@ -8,6 +8,8 @@ function AuthStatus() {
     const auth = useContext(UserContext);
     const currentTheme = useContext(ThemeContext);
     const { user, email, photo } = auth.state;
+    console.log(auth.state.employeeId);
+    
     const formUser = useRef(String(user));
     const formEmail = useRef(String(email));
 
