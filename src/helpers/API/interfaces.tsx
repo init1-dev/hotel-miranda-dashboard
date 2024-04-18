@@ -19,3 +19,14 @@ export interface EmployeeForm extends EventTarget {
     start_date: HTMLFormElement,
     status: HTMLFormElement
 }
+
+export interface BookingForm extends EventTarget {
+    full_name: HTMLFormElement,
+    email: HTMLFormElement,
+    phone: HTMLFormElement,
+    special_request: HTMLFormElement,
+    discount: HTMLFormElement,
+    check_in: HTMLFormElement,
+    check_out: HTMLFormElement,
+    room_number: HTMLFormElement
+}

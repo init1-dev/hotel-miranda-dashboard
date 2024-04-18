@@ -44,7 +44,6 @@ function Booking () {
 
     const showDetails = async(e: React.MouseEvent<HTMLElement, MouseEvent>, info: BookingData | undefined) => {
         e.stopPropagation();
-        console.log(info);
         if(!info){
             customToast('error', 'User info not found');
         }

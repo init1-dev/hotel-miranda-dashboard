@@ -52,7 +52,6 @@ $npm run dev
 - premongo branch
 - implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
-- Bookings ADD and EDIT
 - Search input (work in progress)
 - MessagesSlide use db instead json
 

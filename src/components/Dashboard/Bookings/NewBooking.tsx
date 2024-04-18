@@ -12,6 +12,7 @@ import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
 import { getRoomsThunk } from "../../../store/Rooms/roomsThunk";
 import { BookingData } from "../../../store/interfaces";
 import LoaderComponent from "../../Loader";
+import { BookingForm } from "../../../helpers/API/interfaces";
 
 function NewBooking () {
     const navigate = useNavigate();
@@ -20,7 +21,6 @@ function NewBooking () {
     const bookingData = useAppSelector(selectBooking);
     const rooms = useAppSelector(availableRooms);
     const [formData, setFormData] = useState({} as BookingData);
-    console.log(rooms);
     
     const location = useLocation().pathname;
     const isEdit = location.includes("edit");
@@ -29,7 +29,7 @@ function NewBooking () {
     const theme = useContext(ThemeContext);
     
     const initialFetch = async () => {
-        await dispatch(getRoomsThunk())
+        await dispatch(getRoomsThunk()).unwrap();
         if(currentId){
             await dispatch(getBooking(String(id))).unwrap();
         }
@@ -71,36 +71,38 @@ function NewBooking () {
         full_name: "Martin McFly",
         email: "marty@email.com",
         phone: "678234512",
-        image: "",
+        image: "https://loremflickr.com/640/480/hotel,bedroom?lock=2637158431064064",
         check_in: String(new Date("7/12/2024").toISOString().slice(0, 16)),
         check_out: String(new Date("7/15/2024").toISOString().slice(0, 16)),
         order_date: String(new Date(Date.now()).toISOString()),
         special_request: "Necesito mucha pizza",
         discount: 50,
-        status: "Check In",
-        roomInfo: {
-            ...rooms[0]
-        } as any
+        status: "Check In"
     };
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const form = e.target as BookingForm;
         navigate("/dashboard/bookings");
+        
+        const roomToAdd = rooms.find(room => room.room_number === Number(form.room_number.value)) as any;
 
         const formDataToUpdate = {
             ...formData,
-            full_name: e.currentTarget.full_name.value,
-            email: e.currentTarget.email.value,
-            phone: e.currentTarget.phone.value,
-            special_request: e.currentTarget.special_request.value,
-            number: e.currentTarget.number.value,
-            check_in: e.currentTarget.check_in.value,
-            check_out: e.currentTarget.check_out.value,
-            roomInfo: rooms.find(room => room.room_number === e.currentTarget.room_number.value) as any
+            full_name: form.full_name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            special_request: form.special_request.value,
+            discount: Number(form.discount.value),
+            check_in: form.check_in.value,
+            check_out: form.check_out.value,
+            roomInfo: {
+                ...roomToAdd
+            }
         };
         
         (currentId)
-            ? dispatch(editBooking({
+            ? await dispatch(editBooking({
                 id: String(currentId),
                 newData: {
                     ...formDataToUpdate,
@@ -108,7 +110,7 @@ function NewBooking () {
                     check_out: format(formDataToUpdate.check_out, 'yyyy-MM-dd')
                 }
             }))
-            : dispatch(newBooking(formDataToUpdate))
+            : await dispatch(newBooking(formDataToUpdate))
 
         const swalProps = {
             text: currentId
@@ -119,9 +121,6 @@ function NewBooking () {
             timerProgressBar: true,
             showConfirmButton: false
         }
-
-        console.log(formData);
-        console.log(formDataToUpdate);
 
         await CustomSwal({data: swalProps, theme: theme})
     }
@@ -140,7 +139,6 @@ function NewBooking () {
 
                 <Form id="new-room" name="new-room" onSubmit={(e)=> handleSubmit(e)}>
                     <GridContainer>
-                        {/* {new Date(formData.order_date).toISOString()} */}
 
                         <Label htmlFor="full_name">Fullname:</Label>
                         <Input type="text" name="full_name" id="full_name" placeholder="Insert name" defaultValue={formData.full_name} required/>
@@ -157,8 +155,8 @@ function NewBooking () {
                     </GridContainer>
 
                     <GridContainer>
-                        <Label htmlFor="roomNumber">Room Number:</Label>
-                        <Select name="roomNumber" id="roomNumber" required>
+                        <Label htmlFor="room_number">Room Number:</Label>
+                        <Select name="room_number" id="room_number" required>
                             <option defaultValue={formData.roomInfo.room_number} hidden>{formData.roomInfo.room_number}</option>
                             {
                                 rooms.map((room, index) => {

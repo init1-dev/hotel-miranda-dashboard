@@ -35,7 +35,6 @@ function Layout() {
 const ButtonLayout = styled.button`
     background-color: ${({ theme }) => theme.bg};
     border: 1px;
-    /* border-color: ${({ theme }) => theme.themeButtonBg}; */
     color: ${({ theme }) => theme.text};
     padding: 0.5rem;
     cursor: pointer;

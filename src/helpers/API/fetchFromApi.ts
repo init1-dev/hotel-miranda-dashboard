@@ -43,8 +43,6 @@ export const fetchFromApi = async(requestMethod: string, query: string, token?: 
         fetchOptions.body = JSON.stringify(body);
     }
 
-    // console.log(fetchOptions);
-
     try {
         const response = await fetch(url, fetchOptions);
 
@@ -61,7 +59,6 @@ export const fetchFromApi = async(requestMethod: string, query: string, token?: 
         const contentType = response.headers.get('content-type');
         if(contentType && contentType.includes('application/json')){
             const data = await response.json();
-            // console.log(data);
             
             return data;
         }

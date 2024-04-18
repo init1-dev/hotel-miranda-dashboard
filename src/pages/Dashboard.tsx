@@ -8,9 +8,8 @@ function Dashboard() {
         <>
             <KpisComponent />
 
-            {/* <h2>CALENDARIO Y GRAFICOS</h2> */}
             <Calendar />
-            {/* <h2>BOOKINGS STATISTICS</h2> */}
+
             <MessagesSlider />
         </>
     );
