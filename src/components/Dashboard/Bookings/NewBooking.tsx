@@ -59,7 +59,7 @@ function NewBooking () {
             setFormData({
                 ...sampleBooking,
                 roomInfo: {
-                    ...rooms[0]
+                    ...rooms[10]
                 } as any
             });
         }

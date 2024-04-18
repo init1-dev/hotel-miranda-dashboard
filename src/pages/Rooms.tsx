@@ -19,6 +19,10 @@ import CustomSwal from "../helpers/Swal/CustomSwal";
 import { calculateCentsToCurrency } from "../helpers/calculateCentsToCurrency";
 import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
 import LoaderComponent from "../components/Loader";
+import { fetchFromApi } from "../helpers/API/fetchFromApi";
+import { bookingsCollection } from "../helpers/API/apiVariables";
+import { getTokenFromLocalStorage } from "../helpers/localStorage/getTokenFromLocalStorage";
+import { customToast } from "../helpers/toastify/customToast";
 
 function Rooms() {
     const navigate = useNavigate();
@@ -179,32 +183,40 @@ function Rooms() {
 
                         <ActionButtonIcon onClick={async(e) => {
                             e.stopPropagation();
-                            const swalProps = {
-                                title: `<small>You're going to delete room #${roomRow._id}</small>`,
-                                text: `This action is irreversible`,
-                                icon: 'warning' as const,
-                                showConfirmButton: true,
-                                showCancelButton: true,
-                                confirmButtonText: 'Delete',
-                                confirmButtonColor: '#ff0000',
-                                cancelButtonText: 'Cancel',
-                                reverseButtons: true
-                            }
-                            await CustomSwal({data: swalProps, theme: theme})
-                            .then(async(result) => {
-                                if (result.isConfirmed) {
-                                    dispatch(deleteRoom(roomRow));
-                                    const swalProps = {
-                                        text: `Room #${roomRow._id} deleted successfully`,
-                                        icon: 'success' as const,
-                                        timer: 2000,
-                                        timerProgressBar: true,
-                                        showConfirmButton: false
-                                    }
-                                    setCurrentPage(1);
-                                    await CustomSwal({data: swalProps, theme: theme})
+                            const token = getTokenFromLocalStorage();
+                            const doesAnyBookingContainRoom = await fetchFromApi('GET', `${bookingsCollection}/checkRoomInBookings/${row._id}`, token);
+
+                            if(!doesAnyBookingContainRoom?.data){
+                                const swalProps = {
+                                    title: `<small>You're going to delete room #${roomRow._id}</small>`,
+                                    text: `This action is irreversible`,
+                                    icon: 'warning' as const,
+                                    showConfirmButton: true,
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Delete',
+                                    confirmButtonColor: '#ff0000',
+                                    cancelButtonText: 'Cancel',
+                                    reverseButtons: true
                                 }
-                            });
+                                await CustomSwal({data: swalProps, theme: theme})
+                                .then(async(result) => {
+                                    if (result.isConfirmed) {
+                                        dispatch(deleteRoom(roomRow));
+                                        const swalProps = {
+                                            text: `Room #${roomRow._id} deleted successfully`,
+                                            icon: 'success' as const,
+                                            timer: 2000,
+                                            timerProgressBar: true,
+                                            showConfirmButton: false
+                                        }
+                                        setCurrentPage(1);
+                                        await CustomSwal({data: swalProps, theme: theme})
+                                    }
+                                });
+                            } else {
+                                customToast('error', "Rejected: This room has been used for some bookings.");
+                            }
+                            
                         }}>
                             <RiDeleteBin5Line />
                         </ActionButtonIcon>
