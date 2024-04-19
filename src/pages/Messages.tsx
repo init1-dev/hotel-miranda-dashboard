@@ -76,7 +76,7 @@ function Messages() {
         e.stopPropagation();
         const isRead = row.read === true;
         if(!isRead) {
-            dispatch(editMessage({row: row as MessageData, fieldToEdit: "read"}));
+            await dispatch(editMessage({row: row as MessageData, fieldToEdit: "read"}));
         }
         const swalProps = {
             title: <MessageTitle>{row.full_name} <small>#{row._id}</small></MessageTitle>,

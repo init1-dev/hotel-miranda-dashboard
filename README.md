@@ -53,7 +53,6 @@ $npm run dev
 - implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
 - Search input (work in progress)
-- MessagesSlide use db instead json
 - booking photo use client dni/passport instead room photo
 
 ### TESTING:

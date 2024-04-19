@@ -1,5 +1,4 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import messagesData from '../../../Data/messages.json';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,13 +12,24 @@ import { Star } from '../../../pages/Messages';
 import { Data } from '../../Table/Table';
 import { useContext } from 'react';
 import CustomSwal from '../../../helpers/Swal/CustomSwal';
-import { FaRegCheckCircle } from "react-icons/fa";
-import { FaRegTimesCircle } from "react-icons/fa";
+import { BsArchive } from "react-icons/bs";
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import { selectMessages } from '../../../store/Messages/messagesSlice';
+import { editMessage } from '../../../store/Messages/messagesThunk';
+import { MessageData } from '../../../store/interfaces';
+import LoaderComponent from '../../Loader';
 
 SwiperCore.use([Navigation]);
 
 function MessagesSlider() {
-    const selectedData = messagesData.slice(0, 10).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const dispatch = useAppDispatch();
+    const selectedData = useAppSelector(selectMessages);
+    const messagesData = Array.isArray(selectedData.data)
+        ? [...selectedData.data]
+            .filter((message) => message.archived === false)
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        : [];
+
     const theme = useContext(ThemeContext);
 
     const messageStars = (row: number) => {
@@ -32,15 +42,23 @@ function MessagesSlider() {
         return <span>{messageStars}</span>;
     }
 
+    const handleArchive = async(e: React.MouseEvent<HTMLElement, MouseEvent>, message: MessageData) => {
+        e.stopPropagation();
+        const isArchived = message.archived === true;
+        if(!isArchived){
+            await dispatch(editMessage({row: message as MessageData, fieldToEdit: "archived"}));
+        }
+    }
+
     const action = async(e: React.MouseEvent<HTMLElement, MouseEvent>, row: Data) => {
         e.stopPropagation()
         const swalProps = {
-            title: <MessageTitle>{row.full_name} <small>#{row.message_id}</small></MessageTitle>,
+            title: <MessageTitle>{row.full_name} <small>#{row._id}</small></MessageTitle>,
             html: (
                 <>
                     <MessageText><strong>Email:</strong> {row.email}</MessageText>
                     <MessageText><strong>Phone:</strong> {row.phone}</MessageText>
-                    <MessageText><strong>Date:</strong> {format( new Date(`${row.date}`), 'MMM do, yyyy')}</MessageText>
+                    <MessageText><strong>Date:</strong> {format( new Date(`${row.createdAt}`), 'MMM do, yyyy')}</MessageText>
                     <MessageText><strong>Rating:</strong> { messageStars(Number(row.stars)) }</MessageText>
                     <br />
                     <MessageText><strong>Subject:</strong> {row.subject}</MessageText>
@@ -56,59 +74,80 @@ function MessagesSlider() {
 
     return (
         <>
-            <SwiperItem
-                direction='horizontal'
-                slidesPerView={3}
-                spaceBetween={30}
-                navigation={true}
-                modules={[Navigation]}
-                className="mySwiper"
-            >
-                <h2>Latest Reviews by Customers</h2>
-                {selectedData.map((message, messageIndex) => {
-                    const timeAgo = formatDistanceToNow(new Date(message.date), {
-                        addSuffix: true,
-                        includeSeconds: true
-                    });
+            { messagesData.length > 0
+                ?   <SwiperItem
+                        direction='horizontal'
+                        slidesPerView={3}
+                        spaceBetween={30}
+                        navigation={true}
+                        modules={[Navigation]}
+                        className="mySwiper"
+                    >
+                        <h2>Latest Reviews by Customers</h2>
+                        { messagesData.map((message, messageIndex) => {
+                                const timeAgo = formatDistanceToNow(new Date(message.createdAt), {
+                                    addSuffix: true,
+                                    includeSeconds: true
+                                });
 
-                    return (
-                        <SwiperSlideItem key={messageIndex} onClick={(e) => action(e, message)}>
-                            <h4>
-                                {
-                                    (message.message.length > 150)
-                                        ? message.message.slice(0, 150) + "..."
-                                        : message.message
-                                }
-                            </h4>
-                            <InfoContainer>
-                                <div>
-                                    <SlideImg src={message.foto} alt="" />
-                                    <div>
-                                        <h6>{message.full_name}</h6>
-                                        <small>{timeAgo}</small>
-                                    </div>
-                                </div>
-                                <ButtonsContainer>
-                                    <StatusButtonArchive onClick={(e)=>{e.stopPropagation()}}>
-                                        <FaRegCheckCircle />
-                                    </StatusButtonArchive>
-    
-                                    <StatusButtonUnarchive onClick={(e)=>{e.stopPropagation()}}>
-                                        <FaRegTimesCircle />
-                                    </StatusButtonUnarchive>
-                                </ButtonsContainer>
-                            </InfoContainer>
-                        </SwiperSlideItem>
-                    )
-                })}
-            </SwiperItem>
+                                return (
+                                    <SwiperSlideItem key={messageIndex} onClick={(e) => action(e, message)}>
+                                        <h4>
+                                            {
+                                                (message.message.length > 150)
+                                                    ? message.message.slice(0, 150) + "..."
+                                                    : message.message
+                                            }
+                                        </h4>
+                                        <InfoContainer>
+                                            <div>
+                                                <SlideImg src={message.foto} alt="" />
+                                                <div>
+                                                    <h6>{message.full_name}</h6>
+                                                    <small>{timeAgo}</small>
+                                                </div>
+                                            </div>
+                                            <ButtonsContainer>
+                                                { message.archived === false
+                                                    && <StatusButtonUnarchive 
+                                                            onClick={(e)=>{
+                                                                handleArchive(e, message)
+                                                            }}
+                                                            style={{
+                                                                color:'white',
+                                                                boxShadow:'rgb(0 0 0 / 40%) 1px 1px 2px, rgb(0 0 0 / 30%) 0px 7px 13px -3px, rgb(0 0 0 / 20%) 0px -3px 0px inset',
+                                                                padding:'0.5rem',
+                                                                borderRadius:'0.5rem',
+                                                                backgroundColor:'#a11e1e'
+                                                            }}
+                                                        >
+                                                            <BsArchive />
+                                                        </StatusButtonUnarchive> 
+                                                }
+                                            </ButtonsContainer>
+                                        </InfoContainer>
+                                    </SwiperSlideItem>
+                                )
+                            })
+                        }
+                    </SwiperItem>
+                : <>
+                    <EmptyMessages>
+                        <h2>Latest Reviews by Customers</h2>
+                        <div>
+                            {/* <h5>There's no unread messages.</h5> */}
+                            <LoaderComponent />
+                        </div>
+                    </EmptyMessages>
+                </>
+                
+            }
         </>
     );
 }
 
 const SwiperItem = styled(Swiper)`
     background-color: ${({ theme }) => theme.contentBg};
-    position: relative;
     width: 100%;
     padding: 0.5rem 1.2rem 1.2rem 1.2rem;
     display: flex;
@@ -168,7 +207,22 @@ const SwiperItem = styled(Swiper)`
     }
 `
 
+export const StatusButtonArchive = styled.a`
+    cursor: pointer;
+    background-color: unset;
+    font-size: 20px;
+    color: #5AD07A;
+`
+
+export const StatusButtonUnarchive = styled(StatusButtonArchive)`
+    color: #ff1818;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 const SwiperSlideItem = styled(SwiperSlide)`
+    position: relative;
     border: 1px solid #80808042;
     border-radius: 0.5rem;
     text-align: center;
@@ -212,7 +266,6 @@ const InfoContainer = styled.div`
     
     div {
         display: inline-flex;
-        flex-direction: row;
         text-align: left;
         justify-content: center;
 
@@ -227,18 +280,6 @@ const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    margin-right: 1rem;
-`
-
-export const StatusButtonArchive = styled.a`
-    cursor: pointer;
-    background-color: unset;
-    font-size: 20px;
-    color: #5AD07A;
-`
-
-export const StatusButtonUnarchive = styled(StatusButtonArchive)`
-    color: #E23428;
 `
 
 const SlideImg = styled.img`
@@ -249,6 +290,27 @@ const SlideImg = styled.img`
     aspect-ratio: 1/1;
     object-fit: cover;
     margin-right: 0.5rem;
+`
+
+const EmptyMessages = styled.div`
+    background-color: ${({ theme }) => theme.contentBg};
+    height: 250px;
+    padding: 0.5rem 1.2rem 1.2rem 1.2rem;
+    border-radius: 0.5rem;
+
+    h2 {
+        padding: 0.5rem 0 0.5rem 0;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    div {
+        height: 80%;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 `
 
 export default MessagesSlider;
