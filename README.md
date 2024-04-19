@@ -42,7 +42,7 @@ $npm run dev
 
 ## Next Updates
 
-- Implement connection with API (Work in progress)
+- SQL
 
 ### TODO:
 - General refactor

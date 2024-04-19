@@ -19,6 +19,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import CustomSwal from "../helpers/Swal/CustomSwal";
 import { Container, EmployeeDataModal } from "../styled/ImagePreviewInTable";
 import LoaderComponent from "../components/Loader";
+import { customToast } from "../helpers/toastify/customToast";
 
 function Employees() {
     const navigate = useNavigate();
@@ -172,6 +173,8 @@ function Employees() {
                                     setCurrentPage(1);
                                     await CustomSwal({data: swalProps, theme: theme})
                                 }
+                            }).catch((error) => {
+                                customToast('error', error);
                             });
                         }}>
                             <RiDeleteBin5Line />

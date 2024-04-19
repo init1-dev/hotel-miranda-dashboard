@@ -19,6 +19,7 @@ import CustomSwal from "../helpers/Swal/CustomSwal";
 import { ThemeContext } from "styled-components";
 import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
 import LoaderComponent from "../components/Loader";
+import { customToast } from "../helpers/toastify/customToast";
 
 function Bookings() {
     const navigate = useNavigate();
@@ -173,6 +174,8 @@ function Bookings() {
                                     setCurrentPage(1);
                                     await CustomSwal({data: swalProps, theme: theme})
                                 }
+                            }).catch((error) => {
+                                customToast('error', error);
                             });
                         }}>
                             <RiDeleteBin5Line />

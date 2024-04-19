@@ -20,6 +20,7 @@ import CustomSwal from "../helpers/Swal/CustomSwal";
 import { StatusButtonArchive, StatusButtonUnarchive } from "../components/Dashboard/Messages/MessagesSlide";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import LoaderComponent from "../components/Loader";
+import { customToast } from "../helpers/toastify/customToast";
 
 const messageStars = (row: number) => {
     const messageStars = [];
@@ -177,7 +178,11 @@ function Messages() {
                         <ButtonContainer>
                             <Publish onClick={(e) => {
                                 e.stopPropagation();
-                                dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
+                                try {
+                                    dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
+                                } catch (error) {
+                                    customToast('error', String(error))
+                                }
                             }}>Archive</Publish>
                         </ButtonContainer>
                     )
@@ -186,7 +191,11 @@ function Messages() {
                         <ButtonContainer>
                             <Archive onClick={(e) => {
                                 e.stopPropagation();
-                                dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
+                                try {
+                                    dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
+                                } catch (error) {
+                                    customToast('error', String(error))
+                                }
                             }}>Publish</Archive>
                         </ButtonContainer>
                     )

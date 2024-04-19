@@ -212,6 +212,8 @@ function Rooms() {
                                         setCurrentPage(1);
                                         await CustomSwal({data: swalProps, theme: theme})
                                     }
+                                }).catch((error) => {
+                                    customToast('error', error);
                                 });
                             } else {
                                 customToast('error', "Rejected: This room has been used for some bookings.");
