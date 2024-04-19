@@ -8,7 +8,7 @@ function AuthStatus() {
     const auth = useContext(UserContext);
     const currentTheme = useContext(ThemeContext);
     const { user, email, photo, id } = auth.state;
-    // console.log(id);
+    console.log(id);
     
     const formUser = useRef(String(user));
     const formEmail = useRef(String(email));
@@ -17,22 +17,22 @@ function AuthStatus() {
         return <p>You are not logged in</p>;
     }
 
-    const handleSubmit = async(e: React.MouseEvent<HTMLElement, MouseEvent>, userInput: string, emailInput: string, password: string) => {
-        console.log(userInput, emailInput, password);
-        console.log(e);
+    // const handleSubmit = async(e: React.MouseEvent<HTMLElement, MouseEvent>, userInput: string, emailInput: string, password: string) => {
+    //     console.log(userInput, emailInput, password);
+    //     console.log(e);
         
-        // if(userInput !== user || emailInput !== email){
-        //     auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
-        // }
-        // const swalProps = {
-        //     title: 'Successfuly Updated!',
-        //     icon: 'success' as const,
-        //     timer: 2000,
-        //     timerProgressBar: true,
-        // }
+    //     // if(userInput !== user || emailInput !== email){
+    //     //     auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
+    //     // }
+    //     // const swalProps = {
+    //     //     title: 'Successfuly Updated!',
+    //     //     icon: 'success' as const,
+    //     //     timer: 2000,
+    //     //     timerProgressBar: true,
+    //     // }
 
-        // await CustomSwal({data: swalProps, theme: currentTheme})
-    };
+    //     // await CustomSwal({data: swalProps, theme: currentTheme})
+    // };
 
     const handleEditUser = async() => {
         const swalProps = {

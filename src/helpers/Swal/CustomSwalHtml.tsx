@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { PiPasswordDuotone } from "react-icons/pi";
-import UserContext from "../../contexts/Auth/UserContext";
+// import UserContext from "../../contexts/Auth/UserContext";
 import Swal from "sweetalert2";
 
 interface CustomSwalHtmlProps {
@@ -17,7 +17,7 @@ const CustomSwalHtml = ({
 }: CustomSwalHtmlProps) => {
     const formPassword = useRef(String(''));
     const [showPasswordInput, setShowPasswordInput] = useState(false);
-    const auth = useContext(UserContext);
+    // const auth = useContext(UserContext);
 
     const handlePasswordInput = () => {
         setShowPasswordInput(!showPasswordInput);
