@@ -9,7 +9,7 @@ export interface AuthState {
     auth: boolean;
     user: string;
     email: string;
-    employeeId: string;
+    id: string;
     photo: string;
     token?: string | null | undefined;
 }

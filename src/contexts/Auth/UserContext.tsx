@@ -6,7 +6,7 @@ const UserContext = createContext<{ state: State; dispatch: React.Dispatch<Actio
         auth: false, 
         user: null, 
         email: null, 
-        employeeId: null,
+        id: null,
         token: null,
         photo: null
     }, dispatch: () => {}

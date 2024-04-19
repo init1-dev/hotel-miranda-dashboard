@@ -66,7 +66,7 @@ function LoginPage() {
                 auth.dispatch({type: 'login', payload: {
                     user: user.user, 
                     email: user.email, 
-                    employeeId: user._id,
+                    id: user.id,
                     token: user.token,
                     photo: user.photo
                 }})
@@ -107,9 +107,9 @@ function LoginPage() {
                         <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="employee_email" placeholder="init1.dev@gmail.com" />
+                            <Input type="text" name="employee_email" placeholder="init1.dev@gmail.com" defaultValue={"init1.dev@gmail.com"}/>
 
-                            <Input type="password" name="password" placeholder="12345"/>
+                            <Input type="password" name="password" placeholder="12345" defaultValue={"12345"}/>
 
                             <Button type="submit" disabled={isLogingIn}>
                                 {isLogingIn ? "Logging in..." : "Login"}

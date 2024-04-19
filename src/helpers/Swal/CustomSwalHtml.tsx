@@ -22,69 +22,74 @@ const CustomSwalHtml = ({
         setShowPasswordInput(!showPasswordInput);
     }
 
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSubmit(data.user, data.email, formPassword.current);
+    }
+
     return <>
-        <form onSubmit={() => handleSubmit(data.user.current, data.email.current)}>
-                    <div>
-                        <Label htmlFor="username">Nombre de usuario:</Label>
-                        <InputStyle
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="Insert new username"
-                            defaultValue={data.user ? data.user.current : ''}
-                            onChange={(e) => data.user.current = e.target.value}
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="email">Correo electrónico:</Label>
-                        <InputStyle
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Insert new email"
-                            defaultValue={data.email ? data.email.current : ''}
-                            onChange={(e) => data.email.current = e.target.value}
-                        />
-                    </div>
-                    {
-                        showPasswordInput
-                            ? <ChangePasswordBtnRed
-                                type="button" 
-                                onClick={() => handlePasswordInput()}
-                            >
-                                Close
-                                <MdClose />
-                            </ChangePasswordBtnRed>
+        <form onSubmit={handleFormSubmit}>
+            <div>
+                <Label htmlFor="username">Nombre de usuario:</Label>
+                <InputStyle
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Insert new username"
+                    defaultValue={data.user ? data.user : ''}
+                    onChange={(e) => data.user = e.target.value}
+                />
+            </div>
+            <div>
+                <Label htmlFor="email">Correo electrónico:</Label>
+                <InputStyle
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Insert new email"
+                    defaultValue={data.email ? data.email : ''}
+                    onChange={(e) => data.email = e.target.value}
+                />
+            </div>
+            {
+                showPasswordInput
+                    ? <ChangePasswordBtnRed
+                        type="button" 
+                        onClick={() => handlePasswordInput()}
+                    >
+                        Close
+                        <MdClose />
+                    </ChangePasswordBtnRed>
 
-                            : <ChangePasswordBtn 
-                                type="button" 
-                                onClick={() => handlePasswordInput()}
-                            >
-                                Change password
-                                <PiPasswordDuotone />
-                            </ChangePasswordBtn>
-                    }
+                    : <ChangePasswordBtn 
+                        type="button" 
+                        onClick={() => handlePasswordInput()}
+                    >
+                        Change password
+                        <PiPasswordDuotone />
+                    </ChangePasswordBtn>
+            }
 
-                    <InputPasswordDiv
-                        style={{
-                            opacity: showPasswordInput ? "1" : '0',
-                            margin: showPasswordInput ? "1.5rem 0 auto 0" : "0",
-                            height: showPasswordInput ? "auto" : "0",
-                            overflow: "hidden"
-                        }}>
-                        <Label htmlFor="password">New password:</Label>
-                        <InputStyle
-                            type="email"
-                            id="password"
-                            name="email"
-                            placeholder="Insert new password"
-                            defaultValue={''}
-                            onChange={(e) => formPassword.current = e.target.value}
-                        />
-                    </InputPasswordDiv>
-                    
-                    <button type="submit" hidden></button>
-                </form>
+            <InputPasswordDiv
+                style={{
+                    opacity: showPasswordInput ? "1" : '0',
+                    margin: showPasswordInput ? "1.5rem 0 auto 0" : "0",
+                    height: showPasswordInput ? "auto" : "0",
+                    overflow: "hidden"
+                }}>
+                <Label htmlFor="password">New password:</Label>
+                <InputStyle
+                    type="email"
+                    id="password"
+                    name="email"
+                    placeholder="Insert new password"
+                    defaultValue={''}
+                    onChange={(e) => formPassword.current = e.target.value}
+                />
+            </InputPasswordDiv>
+            
+            <button type="submit" hidden></button>
+        </form>
     </>
 }
 
