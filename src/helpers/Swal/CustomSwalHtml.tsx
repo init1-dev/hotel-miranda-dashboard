@@ -1,4 +1,4 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import { useContext, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { PiPasswordDuotone } from "react-icons/pi";
@@ -24,9 +24,6 @@ interface CustomSwalHtmlProps {
 const CustomSwalHtml = ({
     data
 }:CustomSwalHtmlProps) => {
-    const theme = useContext(ThemeContext);
-    console.log(theme);
-    
     const auth = useContext(UserContext);
     const { id } = auth.state;
     const formUser = useRef(data.user);
@@ -61,25 +58,6 @@ const CustomSwalHtml = ({
         }
         Swal.clickConfirm();
     }
-
-    // const handleSubmit = async(e: React.MouseEvent<HTMLElement, MouseEvent>, userInput: string, emailInput: string, password: string) => {
-    //     console.log(userInput, emailInput, password);
-    //     console.log(e);
-        
-    //     if(userInput !== data.user || emailInput !== data.email){
-    //         auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
-    //     }
-    //     const swalProps = {
-    //         title: 'Successfuly Updated!',
-    //         icon: 'success' as const,
-    //         timer: 2000,
-    //         timerProgressBar: true,
-    //     }
-
-    //     Swal.clickConfirm();
-
-    //     // await CustomSwal({data: swalProps, theme: currentTheme})
-    // };
 
     return (<>
         <form onSubmit={(e) => handleFormSubmit(e)}>

@@ -10,7 +10,6 @@ function AuthStatus() {
     const theme = useContext(ThemeContext);
     const auth = useContext(UserContext);
     const dispatch = useAppDispatch();
-    console.log(auth);
     
     const { user, email, photo, id } = auth.state;
 
@@ -36,11 +35,11 @@ function AuthStatus() {
         }
 
         await CustomSwal({data: swalProps, theme: theme})
-        .then((result) => {
-            if(result.isConfirmed){
-                console.log("confirmado");
-            }
-        });
+        // .then((result) => {
+        //     if(result.isConfirmed){
+        //         console.log("confirmado");
+        //     }
+        // });
     }
 
     return (
