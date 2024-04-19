@@ -1,34 +1,87 @@
-import styled from "styled-components";
-import { useRef, useState } from "react";
+import styled, { ThemeContext } from "styled-components";
+import { useContext, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { PiPasswordDuotone } from "react-icons/pi";
-// import UserContext from "../../contexts/Auth/UserContext";
 import Swal from "sweetalert2";
+import UserContext from "../../contexts/Auth/UserContext";
+import { employeesCollection } from "../API/apiVariables";
+import { fetchFromApi } from "../API/fetchFromApi";
+import { getTokenFromLocalStorage } from "../localStorage/getTokenFromLocalStorage";
+import CustomSwal from "./CustomSwal";
+import { customToast } from "../toastify/customToast";
 
 interface CustomSwalHtmlProps {
     data: {
         user: any;
         email: any;
-    };
+        id: any;
+        dispatch: any;
+        authDispatch: any;
+        themeToUse: any;
+    }
 }
 
 const CustomSwalHtml = ({
     data
-}: CustomSwalHtmlProps) => {
-    const formPassword = useRef(String(''));
+}:CustomSwalHtmlProps) => {
+    const theme = useContext(ThemeContext);
+    console.log(theme);
+    
+    const auth = useContext(UserContext);
+    const { id } = auth.state;
+    const formUser = useRef(data.user);
+    const formEmail = useRef(data.email);
+    const formPassword = useRef('');
     const [showPasswordInput, setShowPasswordInput] = useState(false);
-    // const auth = useContext(UserContext);
-
+    
     const handlePasswordInput = () => {
         setShowPasswordInput(!showPasswordInput);
     }
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+        const form = {
+            fullname: String(e.currentTarget.username.value).trim(),
+            email: String(e.currentTarget.email.value).trim(),
+            password: String(e.currentTarget.password.value).trim()
+        }
+        const token = getTokenFromLocalStorage();
+        const updateEmployee = await fetchFromApi("PUT", `${employeesCollection}/${id}`, token, form);
+        if(updateEmployee?.status === 200){
+            data.authDispatch({type: 'edit', payload: {user: form.fullname, email: form.email}});
+            const swalProps = {
+                title: 'Successfuly Updated!',
+                icon: 'success' as const,
+                timer: 2000,
+                timerProgressBar: true,
+            }
+            await CustomSwal({data: swalProps, theme: data.themeToUse});
+        } else {
+            customToast('error', 'Unable to update user data');
+        }
+        Swal.clickConfirm();
     }
 
-    return <>
+    // const handleSubmit = async(e: React.MouseEvent<HTMLElement, MouseEvent>, userInput: string, emailInput: string, password: string) => {
+    //     console.log(userInput, emailInput, password);
+    //     console.log(e);
+        
+    //     if(userInput !== data.user || emailInput !== data.email){
+    //         auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
+    //     }
+    //     const swalProps = {
+    //         title: 'Successfuly Updated!',
+    //         icon: 'success' as const,
+    //         timer: 2000,
+    //         timerProgressBar: true,
+    //     }
+
+    //     Swal.clickConfirm();
+
+    //     // await CustomSwal({data: swalProps, theme: currentTheme})
+    // };
+
+    return (<>
         <form onSubmit={(e) => handleFormSubmit(e)}>
             <div>
                 <Label htmlFor="username">Nombre de usuario:</Label>
@@ -37,8 +90,8 @@ const CustomSwalHtml = ({
                     id="username"
                     name="username"
                     placeholder="Insert new username"
-                    defaultValue={data.user ? data.user : ''}
-                    onChange={(e) => data.user = e.target.value}
+                    defaultValue={formUser.current}
+                    onChange={(e) => formUser.current = e.target.value}
                 />
             </div>
             <div>
@@ -48,8 +101,8 @@ const CustomSwalHtml = ({
                     id="email"
                     name="email"
                     placeholder="Insert new email"
-                    defaultValue={data.email ? data.email : ''}
-                    onChange={(e) => data.email = e.target.value}
+                    defaultValue={formEmail.current}
+                    onChange={(e) => formEmail.current = e.target.value}
                 />
             </div>
             {
@@ -80,9 +133,9 @@ const CustomSwalHtml = ({
                 }}>
                 <Label htmlFor="password">New password:</Label>
                 <InputStyle
-                    type="email"
+                    type="password"
                     id="password"
-                    name="email"
+                    name="password"
                     placeholder="Insert new password"
                     defaultValue={''}
                     style={{marginBottom:'0'}}
@@ -107,7 +160,7 @@ const CustomSwalHtml = ({
                 </ChangePasswordBtnRed>
             </div>
         </form>
-    </>
+    </>)
 }
 
 const InputStyle = styled.input`

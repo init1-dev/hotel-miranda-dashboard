@@ -41,7 +41,7 @@ export const newEmployee = createAsyncThunk('employees/newEmployee', async (newD
     }
 })
 
-export const editEmployee = createAsyncThunk('employees/editEmployee', async ({id, newData}: {id: string, newData: EmployeeData} ) => {
+export const editEmployee = createAsyncThunk('employees/editEmployee', async ({id, newData}: {id: string, newData: any} ) => {
     try {
         const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;

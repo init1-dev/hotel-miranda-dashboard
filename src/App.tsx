@@ -1,4 +1,3 @@
-import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import './App.css'
 import router from './routes/Routes'
@@ -8,7 +7,7 @@ import { useState } from 'react'
 import { loadTheme, toggleTheme } from './helpers/theme/themeUtils'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-const AuthProvider = React.lazy(()=> import('./contexts/Auth/AuthContext'))
+import AuthProvider from './contexts/Auth/AuthContext';
 
 function App() {
   const [theme, setTheme] = useState(loadTheme);

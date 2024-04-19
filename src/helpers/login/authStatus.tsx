@@ -1,64 +1,46 @@
 import styled, { ThemeContext } from "styled-components";
-import { useContext, useRef } from "react";
-import UserContext from "../../contexts/Auth/UserContext";
+import { useContext } from "react";
 import CustomSwal from "../Swal/CustomSwal";
 import CustomSwalHtml from "../Swal/CustomSwalHtml";
+import UserContext from "../../contexts/Auth/UserContext";
+import AuthProvider from "../../contexts/Auth/AuthContext";
+import { useAppDispatch } from "../../hooks/store";
 
 function AuthStatus() {
+    const theme = useContext(ThemeContext);
     const auth = useContext(UserContext);
-    const currentTheme = useContext(ThemeContext);
-    const { user, email, photo, id } = auth.state;
-    console.log(id);
+    const dispatch = useAppDispatch();
+    console.log(auth);
     
-    const formUser = useRef(String(user));
-    const formEmail = useRef(String(email));
+    const { user, email, photo, id } = auth.state;
 
     if (!user) {
         return <p>You are not logged in</p>;
     }
 
-    // const handleSubmit = async(e: React.MouseEvent<HTMLElement, MouseEvent>, userInput: string, emailInput: string, password: string) => {
-    //     console.log(userInput, emailInput, password);
-    //     console.log(e);
-        
-    //     // if(userInput !== user || emailInput !== email){
-    //     //     auth.dispatch({type: 'edit', payload: {user: userInput, email: emailInput}})
-    //     // }
-    //     // const swalProps = {
-    //     //     title: 'Successfuly Updated!',
-    //     //     icon: 'success' as const,
-    //     //     timer: 2000,
-    //     //     timerProgressBar: true,
-    //     // }
-
-    //     // await CustomSwal({data: swalProps, theme: currentTheme})
-    // };
-
     const handleEditUser = async() => {
         const swalProps = {
             text: 'Edit:',
             html: (
-                <CustomSwalHtml data={{
-                    user: formUser.current,
-                    email: formEmail.current
-                }}/>
-            ),
-            // showConfirmButton: true,
-            // showCancelButton: true,
-            confirmButtonText: 'Update',
-            confirmButtonColor: 'green',
-            cancelButtonText: 'Cancel',
-            reverseButtons: true
+                <AuthProvider>
+                    <CustomSwalHtml data={{
+                        user: String(user),
+                        email: String(email),
+                        id: String(id),
+                        dispatch: dispatch,
+                        authDispatch: auth.dispatch,
+                        themeToUse: theme
+                    }}/>
+                </AuthProvider>
+            )
         }
 
-        await CustomSwal({data: swalProps, theme: currentTheme})
-        // .then((result) => {
-        //     console.log(result);
-            
-        //     if (result.isConfirmed) {
-        //         handleSubmit(formUser.current, formEmail.current, "caca")
-        //     }
-        // });
+        await CustomSwal({data: swalProps, theme: theme})
+        .then((result) => {
+            if(result.isConfirmed){
+                console.log("confirmado");
+            }
+        });
     }
 
     return (
