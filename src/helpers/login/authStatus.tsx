@@ -41,10 +41,10 @@ function AuthStatus() {
                 <CustomSwalHtml data={{
                     user: formUser.current,
                     email: formEmail.current
-                }} handleSubmit={handleSubmit}/>
+                }}/>
             ),
-            showConfirmButton: true,
-            showCancelButton: true,
+            // showConfirmButton: true,
+            // showCancelButton: true,
             confirmButtonText: 'Update',
             confirmButtonColor: 'green',
             cancelButtonText: 'Cancel',

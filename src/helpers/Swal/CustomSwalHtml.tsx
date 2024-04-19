@@ -1,22 +1,23 @@
 import styled from "styled-components";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { PiPasswordDuotone } from "react-icons/pi";
+import UserContext from "../../contexts/Auth/UserContext";
+import Swal from "sweetalert2";
 
 interface CustomSwalHtmlProps {
     data: {
         user: any;
         email: any;
     };
-    handleSubmit: Function;
 }
 
 const CustomSwalHtml = ({
-    data,
-    handleSubmit
+    data
 }: CustomSwalHtmlProps) => {
     const formPassword = useRef(String(''));
     const [showPasswordInput, setShowPasswordInput] = useState(false);
+    const auth = useContext(UserContext);
 
     const handlePasswordInput = () => {
         setShowPasswordInput(!showPasswordInput);
@@ -24,11 +25,11 @@ const CustomSwalHtml = ({
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleSubmit(data.user, data.email, formPassword.current);
+        
     }
 
     return <>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={(e) => handleFormSubmit(e)}>
             <div>
                 <Label htmlFor="username">Nombre de usuario:</Label>
                 <InputStyle
@@ -73,7 +74,7 @@ const CustomSwalHtml = ({
             <InputPasswordDiv
                 style={{
                     opacity: showPasswordInput ? "1" : '0',
-                    margin: showPasswordInput ? "1.5rem 0 auto 0" : "0",
+                    margin: showPasswordInput ? "1rem 0 auto 0" : "0",
                     height: showPasswordInput ? "auto" : "0",
                     overflow: "hidden"
                 }}>
@@ -84,11 +85,27 @@ const CustomSwalHtml = ({
                     name="email"
                     placeholder="Insert new password"
                     defaultValue={''}
+                    style={{marginBottom:'0'}}
                     onChange={(e) => formPassword.current = e.target.value}
                 />
             </InputPasswordDiv>
             
-            <button type="submit" hidden></button>
+            <div style={{display: 'flex', width:'75%', margin:'0 auto', gap:'1rem'}}>
+                <ChangePasswordBtnRed
+                    type="button"
+                    style={{backgroundColor:'grey', marginTop:'1rem'}}
+                    onClick={() => Swal.close()}
+                >
+                    CANCEL
+                </ChangePasswordBtnRed>
+
+                <ChangePasswordBtnRed 
+                    type="submit"
+                    style={{backgroundColor:'green', marginTop:'1rem'}}
+                >
+                    SAVE CHANGES
+                </ChangePasswordBtnRed>
+            </div>
         </form>
     </>
 }
@@ -137,6 +154,16 @@ const ChangePasswordBtn = styled.button`
 const ChangePasswordBtnRed = styled(ChangePasswordBtn)`
     background-color: red;
     color: white;
+    filter: saturate(75%);
+
+    &:hover {
+        filter: saturate(100%);
+        border: 1px solid transparent;
+    }
+
+    &:active, &:focus, &:focus-visible {
+        outline: none;
+    }
 `
 
 export default CustomSwalHtml;
