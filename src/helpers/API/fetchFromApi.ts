@@ -1,3 +1,4 @@
+import { getTokenFromLocalStorage } from "../localStorage/getTokenFromLocalStorage";
 import { customToast } from "../toastify/customToast";
 
 const databaseUrl = import.meta.env.VITE_API_URL;
@@ -7,22 +8,23 @@ interface FetchResponse extends Response{
     data: any;
 }
 
-export const fetchFromApi = async(requestMethod: string, query: string, token?: string | null, body?: any, requestOptions?: object): Promise<FetchResponse | null> => {
+export const fetchFromApi = async(requestMethod: string, path: string, body?: any, requestOptions?: object): Promise<FetchResponse | null> => {
 
     if(!['GET', 'POST', 'PUT', 'DELETE'].includes(requestMethod.toUpperCase())){
         throw new Error('Invalid request method. Allowed methods: GET, POST, PUT, DELETE.');
     }
 
-    if (!query.trim()) {
+    if (!path.trim()) {
         throw new Error('Query parameter cannot be empty.');
     }
 
-    const url: string = `${databaseUrl}/${query}/`;
+    const token = getTokenFromLocalStorage();
+    const url: string = `${databaseUrl}/${path}/`;
 
     let fetchOptions: RequestInit = {
         method: requestMethod,
         headers: {
-            'Authorization': `Bearer ${token}` || ""
+            'Authorization': `Bearer ${token || ""}`
         },
         body: undefined
     }

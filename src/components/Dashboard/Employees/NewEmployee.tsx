@@ -87,16 +87,18 @@ function NewEmployee () {
                 status:form.status.value,
                 photo:form.photo.value
             };
-            
-            (currentId)
-                ? dispatch(editEmployee({
+
+            if(currentId){
+                dispatch(editEmployee({
                     id: String(currentId),
                     newData: {
                         ...formDataToUpdate,
                         start_date: String(new Date(formDataToUpdate.start_date))
                     }
                 }))
-                : dispatch(newEmployee(formDataToUpdate))
+            } else {
+                dispatch(newEmployee(formDataToUpdate))
+            }
             
             const swalProps = {
                 text: currentId

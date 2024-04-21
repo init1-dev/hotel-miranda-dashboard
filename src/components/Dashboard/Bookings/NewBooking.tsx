@@ -101,8 +101,8 @@ function NewBooking () {
             }
         };
         
-        (currentId)
-            ? await dispatch(editBooking({
+        if(currentId){
+            await dispatch(editBooking({
                 id: String(currentId),
                 newData: {
                     ...formDataToUpdate,
@@ -110,7 +110,9 @@ function NewBooking () {
                     check_out: format(formDataToUpdate.check_out, 'yyyy-MM-dd')
                 }
             }))
-            : await dispatch(newBooking(formDataToUpdate))
+        } else {
+            await dispatch(newBooking(formDataToUpdate))
+        }
 
         const swalProps = {
             text: currentId

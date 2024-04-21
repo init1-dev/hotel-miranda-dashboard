@@ -2,16 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { roomsCollection } from '../../helpers/API/apiVariables';
 import { RoomData } from '../interfaces';
 import { fetchFromApi } from '../../helpers/API/fetchFromApi';
-import { getTokenFromLocalStorage } from '../../helpers/localStorage/getTokenFromLocalStorage';
 import { customToast } from '../../helpers/toastify/customToast';
 
 export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
     try {
-        const token = getTokenFromLocalStorage();
-        const data = await fetchFromApi("GET", roomsCollection, token);
-        if(data?.status === 200 && data?.data.length === 0){
-            customToast('warn', 'Empty data', {position: "bottom-right"});
-        }
+        const data = await fetchFromApi("GET", roomsCollection);
         return data?.data;
     } catch (error) {
         customToast('error', 'Error fetching data', {position: "bottom-right"});
@@ -21,8 +16,7 @@ export const getRoomsThunk = createAsyncThunk('rooms/fetchRooms', async () => {
 
 export const getRoom = createAsyncThunk('rooms/fetchRoom', async (id: string) => {    
     try {
-        const token = getTokenFromLocalStorage();
-        const data = await fetchFromApi("GET", `${roomsCollection}/${id}`, token);
+        const data = await fetchFromApi("GET", `${roomsCollection}/${id}`);
         return data?.data;
     } catch (error) {
         customToast('error', 'Error fetching data');
@@ -32,9 +26,8 @@ export const getRoom = createAsyncThunk('rooms/fetchRoom', async (id: string) =>
 
 export const newRoom = createAsyncThunk('rooms/newRoom', async (newData: RoomData) => {
     try {
-        const token = getTokenFromLocalStorage();
         const { _id, ...itemToFetch } = newData;
-        const newRoom = await fetchFromApi("POST", `${roomsCollection}`, token, itemToFetch);
+        const newRoom = await fetchFromApi("POST", `${roomsCollection}`, itemToFetch);
         return newRoom?.data;
     } catch (error) {
         throw new Error(`Error: ${error}`);
@@ -43,9 +36,8 @@ export const newRoom = createAsyncThunk('rooms/newRoom', async (newData: RoomDat
 
 export const editRoom = createAsyncThunk('rooms/editRoom', async ({id, newData}: {id: string, newData: RoomData} ) => {    
     try {
-        const token = getTokenFromLocalStorage();
         const { createdAt, updatedAt, __v, ...itemToFetch } = newData;
-        await fetchFromApi("PUT", `${roomsCollection}/${id}`, token, itemToFetch);
+        await fetchFromApi("PUT", `${roomsCollection}/${id}`, itemToFetch);
         return itemToFetch;
 
     } catch (error) {
@@ -55,8 +47,7 @@ export const editRoom = createAsyncThunk('rooms/editRoom', async ({id, newData}:
 
 export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async ({_id}: RoomData) => {
     try {
-        const token = getTokenFromLocalStorage();
-        await fetchFromApi("DELETE", `${roomsCollection}/${_id}`, token);
+        await fetchFromApi("DELETE", `${roomsCollection}/${_id}`);
 
         return _id;
     } catch (error) {

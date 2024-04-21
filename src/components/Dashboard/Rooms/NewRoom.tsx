@@ -93,13 +93,15 @@ function NewRoom () {
                 amenities: handleAmenities(form.amenities),
                 photo: form.photo.value
             };
-            
-            (currentId)
-                ? dispatch(editRoom({
+
+            if(currentId){
+                dispatch(editRoom({
                     id: String(currentId),
                     newData: formDataToUpdate
                 }))
-                : dispatch(newRoom(formDataToUpdate))
+            } else {
+                dispatch(newRoom(formDataToUpdate))
+            }
     
             const swalProps = {
                 text: currentId

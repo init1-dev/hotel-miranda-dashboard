@@ -76,6 +76,12 @@ const Table = ({
                     ))}
                 </tbody>
             </TableStyle>
+            {
+                selectedData.length === 0
+                    && <div style={{width:"100%", textAlign:"center"}}>
+                        <p>No data</p>
+                    </div>
+            }
             <Pagination 
                 dataLength={data.length} 
                 itemsPerPage={itemsPerPage} 
