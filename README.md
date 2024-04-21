@@ -52,6 +52,13 @@ $npm run dev
 - Dashboard KPIs to work with db
 - Search input (work in progress)
 - booking photo use client dni/passport instead room photo
+- instead of toastfy when table has no results show empty table instead of toast with no results
+- change name newRoom for RoomForm and put into pages instead components/dashboard (cause it's a page)
+- if else instead ternary for logic (ex: newRoom currentId ternary)
+- getToken in fetchFromApi instead of thunks
+- fetchFromApi 'Authorization': `Bearer ${token}` || ""
+- fetchFromApi change name of query param for url or path
+- check if TopBarComponent loads messages many times
 
 ### TESTING:
 
