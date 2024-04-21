@@ -12,7 +12,7 @@ import { RoomForm } from "../../../helpers/API/interfaces";
 import { customToast } from "../../../helpers/toastify/customToast";
 import LoaderComponent from "../../Loader";
 
-function NewRoom () {
+function RoomForm () {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { id } = useParams();
@@ -191,7 +191,7 @@ function NewRoom () {
     );
 }
 
-export default NewRoom ;
+export default RoomForm ;
 
 const roomTypes = [ "Single Bed", "Double Bed", "Double Superior", "Suite" ];
 

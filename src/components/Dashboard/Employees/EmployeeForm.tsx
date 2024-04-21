@@ -14,7 +14,7 @@ import { EmployeeForm } from "../../../helpers/API/interfaces";
 import { customToast } from "../../../helpers/toastify/customToast";
 import LoaderComponent from "../../Loader";
 
-function NewEmployee () {
+function EmployeeForm () {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { id } = useParams();
@@ -251,4 +251,4 @@ const EmployeeTypes = [
 
 const EmployeeStatus = [ "Active", "Inactive" ];
 
-export default NewEmployee ;
+export default EmployeeForm ;

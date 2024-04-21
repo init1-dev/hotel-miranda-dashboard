@@ -14,7 +14,7 @@ import { BookingData } from "../../../store/interfaces";
 import LoaderComponent from "../../Loader";
 import { BookingForm } from "../../../helpers/API/interfaces";
 
-function NewBooking () {
+function BookingForm () {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { id } = useParams();
@@ -188,4 +188,4 @@ function NewBooking () {
     );
 }
 
-export default NewBooking;
+export default BookingForm;
