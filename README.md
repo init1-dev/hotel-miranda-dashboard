@@ -46,8 +46,7 @@ $npm run dev
 
 ### TODO:
 - General refactor
-- swal to manage errors in get, post, put or delete
-- premongo branch
+- swal to manage errors in get, post, put or delete (fix)
 - implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
 - Search input (work in progress)

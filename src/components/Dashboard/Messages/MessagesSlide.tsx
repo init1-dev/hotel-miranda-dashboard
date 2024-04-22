@@ -101,7 +101,7 @@ function MessagesSlider() {
                                         </h4>
                                         <InfoContainer>
                                             <div>
-                                                <SlideImg src={message.foto} alt="" />
+                                                {/* <SlideImg src={message.foto} alt="" /> */}
                                                 <div>
                                                     <h6>{message.full_name}</h6>
                                                     <small>{timeAgo}</small>
@@ -282,15 +282,15 @@ const ButtonsContainer = styled.div`
     gap: 1rem;
 `
 
-const SlideImg = styled.img`
-    display: block;
-    border-radius: 0.5rem;
-    width: auto;
-    height: 50px;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    margin-right: 0.5rem;
-`
+// const SlideImg = styled.img`
+//     display: block;
+//     border-radius: 0.5rem;
+//     width: auto;
+//     height: 50px;
+//     aspect-ratio: 1/1;
+//     object-fit: cover;
+//     margin-right: 0.5rem;
+// `
 
 const EmptyMessages = styled.div`
     background-color: ${({ theme }) => theme.contentBg};
