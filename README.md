@@ -50,7 +50,6 @@ $npm run dev
 - implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
 - Search input (work in progress)
-- check if TopBarComponent loads messages many times
 
 ### TESTING:
 
