@@ -1,18 +1,18 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { newBooking, editBooking, getBooking } from "../../../store/Bookings/bookingsThunk";
-import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../../styled/Form";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { newBooking, editBooking, getBooking } from "../../store/Bookings/bookingsThunk";
+import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { selectBooking, availableRooms } from "../../../store/Bookings/bookingsSlice";
+import { selectBooking, availableRooms } from "../../store/Bookings/bookingsSlice";
 import { format } from "date-fns";
 import { ThemeContext } from "styled-components";
-import CustomSwal from "../../../helpers/Swal/CustomSwal";
-import BackButton from "../../Buttons/BackButton";
-import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
-import { getRoomsThunk } from "../../../store/Rooms/roomsThunk";
-import { BookingData } from "../../../store/interfaces";
-import LoaderComponent from "../../Loader";
-import { BookingForm } from "../../../helpers/API/interfaces";
+import CustomSwal from "../../helpers/Swal/CustomSwal";
+import BackButton from "../../components/Buttons/BackButton";
+import { dateFromDBFormat } from "../../helpers/dateFromDBFormat";
+import { getRoomsThunk } from "../../store/Rooms/roomsThunk";
+import { BookingData } from "../../store/interfaces";
+import LoaderComponent from "../../components/Loader";
+import { BookingForm } from "../../helpers/API/interfaces";
 
 function BookingForm () {
     const navigate = useNavigate();

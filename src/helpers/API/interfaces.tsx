@@ -1,4 +1,5 @@
 export interface RoomForm extends EventTarget {
+    name: HTMLFormElement,
     room_type: HTMLFormElement,
     room_number: HTMLFormElement,
     description: HTMLFormElement,

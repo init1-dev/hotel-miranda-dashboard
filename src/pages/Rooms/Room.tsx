@@ -1,16 +1,16 @@
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
-import { Title } from "../../../styled/Form";
-import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from "../../../styled/Preview";
-import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import { Title } from "../../styled/Form";
+import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from "../../styled/Preview";
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useParams } from 'react-router-dom';
-import { selectRoom } from '../../../store/Rooms/roomsSlice';
+import { selectRoom } from '../../store/Rooms/roomsSlice';
 import { useEffect, useState } from 'react';
-import { getRoom } from '../../../store/Rooms/roomsThunk';
-import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../../styled/Span';
-import BackButton from '../../Buttons/BackButton';
-import { calculateCentsToCurrency } from '../../../helpers/calculateCentsToCurrency';
-import LoaderComponent from '../../Loader';
+import { getRoom } from '../../store/Rooms/roomsThunk';
+import { SpanStyledCheckIn, SpanStyledCheckOut } from '../../styled/Span';
+import BackButton from '../../components/Buttons/BackButton';
+import { calculateCentsToCurrency } from '../../helpers/calculateCentsToCurrency';
+import LoaderComponent from '../../components/Loader';
 
 SwiperCore.use([Navigation]);
 

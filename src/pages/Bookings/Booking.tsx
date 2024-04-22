@@ -1,22 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { Title } from '../../../styled/Form';
-import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from '../../../styled/Preview';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { Title } from '../../styled/Form';
+import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from '../../styled/Preview';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import { Link, useParams } from 'react-router-dom';
-import { getBooking } from '../../../store/Bookings/bookingsThunk';
-import { selectBooking } from '../../../store/Bookings/bookingsSlice';
+import { getBooking } from '../../store/Bookings/bookingsThunk';
+import { selectBooking } from '../../store/Bookings/bookingsSlice';
 import { format } from 'date-fns';
-import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../../styled/Span';
-import BackButton from '../../Buttons/BackButton';
-import { calculateBookingDiscount, calculateCentsToCurrency } from '../../../helpers/calculateCentsToCurrency';
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../styled/Span';
+import BackButton from '../../components/Buttons/BackButton';
+import { calculateBookingDiscount, calculateCentsToCurrency } from '../../helpers/calculateCentsToCurrency';
 import styled, { ThemeContext } from 'styled-components';
-import CustomSwal from '../../../helpers/Swal/CustomSwal';
-import { BookingData } from '../../../store/interfaces';
-import { customToast } from '../../../helpers/toastify/customToast';
-import { MessageTitle } from '../../../styled/Message';
-import LoaderComponent from '../../Loader';
+import CustomSwal from '../../helpers/Swal/CustomSwal';
+import { BookingData } from '../../store/interfaces';
+import { customToast } from '../../helpers/toastify/customToast';
+import { MessageTitle } from '../../styled/Message';
+import LoaderComponent from '../../components/Loader';
 
 SwiperCore.use([Navigation]);
 

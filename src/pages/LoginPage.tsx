@@ -31,7 +31,7 @@ function LoginPage() {
 
     const userLogin  = async (employee_id: string, password: string) => {
         try {
-            const data = await fetchFromApi("POST", `${apiLoginPath}`, null, {
+            const data = await fetchFromApi("LOGIN", `${apiLoginPath}`, {
                 username: employee_id || "",
                 password: password || ""
             });

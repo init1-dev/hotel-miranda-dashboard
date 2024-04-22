@@ -1,16 +1,17 @@
-import { AmenitiesSelect, Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../../styled/Form";
+import { AmenitiesSelect, Button, Form, GridContainer, Input, Label, Select, TextArea, Title } from "../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { editRoom, getRoom, newRoom } from "../../../store/Rooms/roomsThunk";
-import { selectRoom } from "../../../store/Rooms/roomsSlice";
+import { editRoom, getRoom, newRoom } from "../../store/Rooms/roomsThunk";
+import { selectRoom } from "../../store/Rooms/roomsSlice";
 import { ThemeContext } from "styled-components";
-import CustomSwal from "../../../helpers/Swal/CustomSwal";
-import BackButton from "../../Buttons/BackButton";
-import { isRoomExist } from "../../../helpers/API/isExist";
-import { RoomForm } from "../../../helpers/API/interfaces";
-import { customToast } from "../../../helpers/toastify/customToast";
-import LoaderComponent from "../../Loader";
+import CustomSwal from "../../helpers/Swal/CustomSwal";
+import BackButton from "../../components/Buttons/BackButton";
+import { isExistInCollection } from "../../helpers/API/isExist";
+import { RoomForm } from "../../helpers/API/interfaces";
+import { customToast } from "../../helpers/toastify/customToast";
+import LoaderComponent from "../../components/Loader";
+import { roomsCollection } from "../../helpers/API/apiVariables";
 
 function RoomForm () {
     const navigate = useNavigate();
@@ -46,16 +47,16 @@ function RoomForm () {
     const initialRoom = {
         _id: "",
         name: "Suite Premium Delux",
-        photo: "/room.jpg",
         room_type: "Suite",
         room_number: 50,
         description: "A room description typically includes details such as the room's size, amenities, furnishings, and any unique features or characteristics it may have.",
-        offer: false,
-        discount: 10,
-        price: 55000,
         cancellation: "A cancellation policy outlines the terms and conditions under which reservations can be canceled, including any applicable fees, deadlines, and procedures.",
+        offer: false,
+        price: 55000,
+        discount: 10,
         amenities: [ "24/7 Online Support", "Grocery", "Cleaning" ],
-        status: "Available"
+        status: "Available",
+        photo: "/room.jpg"
     };
 
     const [formData, setFormData] = useState(initialRoom);
@@ -74,15 +75,16 @@ function RoomForm () {
         const form = e.target as RoomForm;
         
         try {
-            const isExist = await isRoomExist(form.room_number.value, currentId);
+            const isRoomExist = await isExistInCollection("Room", roomsCollection, form.room_number.value, currentId);
 
-            if(isExist){
+            if(isRoomExist){
                 customToast('error', 'Room already exist');
                 throw new Error("Room already exist");
             }
             
             const formDataToUpdate = {
                 ...formData,
+                name: form.name.value,
                 room_type: form.room_type.value,
                 room_number: form.room_number.value,
                 description: form.description.value,
@@ -141,6 +143,9 @@ function RoomForm () {
 
                 <Form id="new-room" name="new-room" onSubmit={(e)=> handleSubmit(e)}>
                     <GridContainer>
+                        <Label htmlFor="name">Room Name:</Label>
+                        <Input type="text" name="name" id="name" defaultValue={formData.name} placeholder="Room name" required/>
+
                         <Label htmlFor="room_type">Room Type:</Label>
                         <Select name="room_type" id="room_type" required>
                             <option defaultValue={formData.room_type} hidden>{formData.room_type}</option>

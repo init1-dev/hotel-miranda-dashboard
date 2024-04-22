@@ -1,18 +1,19 @@
-import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../../styled/Form";
+import { Button, Form, GridContainer, Input, InputDate, Label, Select, TextArea, Title } from "../../styled/Form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { selecEmployee } from "../../../store/Employees/employeesSlice";
-import { editEmployee, getEmployee, newEmployee } from "../../../store/Employees/employeesThunk";
+import { selecEmployee } from "../../store/Employees/employeesSlice";
+import { editEmployee, getEmployee, newEmployee } from "../../store/Employees/employeesThunk";
 // import { format } from "date-fns";
 import { ThemeContext } from "styled-components";
-import CustomSwal from "../../../helpers/Swal/CustomSwal";
-import BackButton from "../../Buttons/BackButton";
-import { dateFromDBFormat } from "../../../helpers/dateFromDBFormat";
-import { isUserExist } from "../../../helpers/API/isExist";
-import { EmployeeForm } from "../../../helpers/API/interfaces";
-import { customToast } from "../../../helpers/toastify/customToast";
-import LoaderComponent from "../../Loader";
+import CustomSwal from "../../helpers/Swal/CustomSwal";
+import BackButton from "../../components/Buttons/BackButton";
+import { dateFromDBFormat } from "../../helpers/dateFromDBFormat";
+import { isExistInCollection } from "../../helpers/API/isExist";
+import { EmployeeForm } from "../../helpers/API/interfaces";
+import { customToast } from "../../helpers/toastify/customToast";
+import LoaderComponent from "../../components/Loader";
+import { employeesCollection } from "../../helpers/API/apiVariables";
 
 function EmployeeForm () {
     const navigate = useNavigate();
@@ -68,9 +69,9 @@ function EmployeeForm () {
         const form = e.target as EmployeeForm;
         
         try {
-            const isExist = await isUserExist(form.email.value, currentId);
+            const isEmployeeExist = await isExistInCollection("User", employeesCollection, form.email.value, currentId);
             
-            if(isExist){
+            if(isEmployeeExist){
                 customToast('error', 'User already exist');
                 throw new Error("User already exist");
             }

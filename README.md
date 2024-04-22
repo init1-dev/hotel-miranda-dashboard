@@ -51,7 +51,6 @@ $npm run dev
 - implement TopBarContainer icon alert to work with db
 - Dashboard KPIs to work with db
 - Search input (work in progress)
-- change name newRoom for RoomForm and put into pages instead components/dashboard (cause it's a page)
 - check if TopBarComponent loads messages many times
 
 ### TESTING:

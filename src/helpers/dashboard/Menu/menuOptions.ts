@@ -4,12 +4,12 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoPersonOutline } from "react-icons/io5";
 import { Dashboard, Bookings, Rooms, Contact, Users } from "../../../pages/pages-module";
-import Booking from "../../../components/Dashboard/Bookings/Booking";
-import Room from "../../../components/Dashboard/Rooms/Room";
-import Employee from "../../../components/Dashboard/Employees/Employee";
-import EmployeeForm from "../../../components/Dashboard/Employees/EmployeeForm";
-import RoomForm from "../../../components/Dashboard/Rooms/RoomForm";
-import BookingForm from "../../../components/Dashboard/Bookings/BookingForm";
+import Booking from "../../../pages/Bookings/Booking";
+import BookingForm from "../../../pages/Bookings/BookingForm";
+import Room from "../../../pages/Rooms/Room";
+import RoomForm from "../../../pages/Rooms/RoomForm";
+import Employee from "../../../pages/Employees/Employee";
+import EmployeeForm from "../../../pages/Employees/EmployeeForm";
 
 export const RouterMenuOptions = [
     { path: '', component: Dashboard, children: [] },

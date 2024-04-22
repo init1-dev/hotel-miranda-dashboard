@@ -8,25 +8,41 @@ interface FetchResponse extends Response{
     data: any;
 }
 
-export const fetchFromApi = async(requestMethod: string, path: string, body?: any, requestOptions?: object): Promise<FetchResponse | null> => {
+export const fetchFromApi = async(
+    requestMethod: string, 
+    path: string, 
+    body?: any,
+    requestOptions?: object
+): Promise<FetchResponse | null> => {
 
-    if(!['GET', 'POST', 'PUT', 'DELETE'].includes(requestMethod.toUpperCase())){
-        throw new Error('Invalid request method. Allowed methods: GET, POST, PUT, DELETE.');
+    if(!['GET', 'POST', 'PUT', 'DELETE', 'LOGIN'].includes(requestMethod.toUpperCase())){
+        throw new Error('Invalid request method. Allowed methods: GET, POST, PUT, DELETE, LOGIN.');
     }
 
     if (!path.trim()) {
         throw new Error('Query parameter cannot be empty.');
     }
 
-    const token = getTokenFromLocalStorage();
     const url: string = `${databaseUrl}/${path}/`;
 
     let fetchOptions: RequestInit = {
-        method: requestMethod,
-        headers: {
-            'Authorization': `Bearer ${token || ""}`
-        },
-        body: undefined
+        method: requestMethod === 'LOGIN' ? 'POST' : requestMethod,
+        headers: undefined,
+        body: body ? JSON.stringify(body) : undefined
+    }
+
+    if(body){
+        fetchOptions.headers = {
+            'Content-Type': 'application/json'
+        };
+    }
+
+    if(requestMethod !== 'LOGIN'){
+        const token = getTokenFromLocalStorage();
+        fetchOptions.headers = {
+            ...fetchOptions.headers,
+            'Authorization': `Bearer ${token}`
+        }
     }
 
     if(requestOptions){
@@ -34,15 +50,6 @@ export const fetchFromApi = async(requestMethod: string, path: string, body?: an
             ...fetchOptions.headers,
             ...requestOptions
         }
-    }
-
-    if(body) {
-        fetchOptions.headers = {
-            ...fetchOptions.headers,
-            'Content-Type': 'application/json'
-        };
-
-        fetchOptions.body = JSON.stringify(body);
     }
 
     try {

@@ -1,28 +1,27 @@
 import styled, { ThemeContext } from "styled-components";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { orderBy, rooms } from "../helpers/Tabs/tabs";
-import Table, { Data } from "../components/Table/Table";
-import { TabsComponent } from "../components/Dashboard/Tabs/TabsComponent";
-import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../styled/Button";
-import { SectionSelect } from "../styled/Form";
-import { MessageTitle } from "../styled/Message";
-import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../styled/Span";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { orderBy, rooms } from "../../helpers/Tabs/tabs";
+import Table, { Data } from "../../components/Table/Table";
+import { TabsComponent } from "../../components/Dashboard/Tabs/TabsComponent";
+import { ActionButtonIcon, ButtonContainer, ButtonStyledViewNotes, ButtonStyledViewNotesDisabled, NewButton } from "../../styled/Button";
+import { SectionSelect } from "../../styled/Form";
+import { MessageTitle } from "../../styled/Message";
+import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut } from "../../styled/Span";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { action } from "../helpers/action";
-import { selectRooms } from "../store/Rooms/roomsSlice";
-import { deleteRoom, getRoomsThunk } from "../store/Rooms/roomsThunk";
-import { RoomData } from "../store/interfaces";
-import CustomSwal from "../helpers/Swal/CustomSwal";
-import { calculateCentsToCurrency } from "../helpers/calculateCentsToCurrency";
-import { Container, ImagePreview, Imagen } from "../styled/ImagePreviewInTable";
-import LoaderComponent from "../components/Loader";
-import { fetchFromApi } from "../helpers/API/fetchFromApi";
-import { bookingsCollection } from "../helpers/API/apiVariables";
-import { getTokenFromLocalStorage } from "../helpers/localStorage/getTokenFromLocalStorage";
-import { customToast } from "../helpers/toastify/customToast";
+import { action } from "../../helpers/action";
+import { selectRooms } from "../../store/Rooms/roomsSlice";
+import { deleteRoom, getRoomsThunk } from "../../store/Rooms/roomsThunk";
+import { RoomData } from "../../store/interfaces";
+import CustomSwal from "../../helpers/Swal/CustomSwal";
+import { calculateCentsToCurrency } from "../../helpers/calculateCentsToCurrency";
+import { Container, ImagePreview, Imagen } from "../../styled/ImagePreviewInTable";
+import LoaderComponent from "../../components/Loader";
+import { fetchFromApi } from "../../helpers/API/fetchFromApi";
+import { bookingsCollection } from "../../helpers/API/apiVariables";
+import { customToast } from "../../helpers/toastify/customToast";
 
 function Rooms() {
     const navigate = useNavigate();
@@ -183,8 +182,7 @@ function Rooms() {
 
                         <ActionButtonIcon onClick={async(e) => {
                             e.stopPropagation();
-                            const token = getTokenFromLocalStorage();
-                            const doesAnyBookingContainRoom = await fetchFromApi('GET', `${bookingsCollection}/checkRoomInBookings/${row._id}`, token);
+                            const doesAnyBookingContainRoom = await fetchFromApi('GET', `${bookingsCollection}/checkRoomInBookings/${row._id}`);
 
                             if(!doesAnyBookingContainRoom?.data){
                                 const swalProps = {

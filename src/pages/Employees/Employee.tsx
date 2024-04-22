@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { selecEmployee } from "../../../store/Employees/employeesSlice";
-import { Title } from "../../../styled/Form";
-import { ImageContainer, ImageDiv, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow, TopContainerRowXl } from "../../../styled/Preview";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { selecEmployee } from "../../store/Employees/employeesSlice";
+import { Title } from "../../styled/Form";
+import { ImageContainer, ImageDiv, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow, TopContainerRowXl } from "../../styled/Preview";
 import { useEffect, useState } from "react";
-import { getEmployee } from "../../../store/Employees/employeesThunk";
-import { SpanStyledCheckIn, SpanStyledCheckOut } from "../../../styled/Span";
+import { getEmployee } from "../../store/Employees/employeesThunk";
+import { SpanStyledCheckIn, SpanStyledCheckOut } from "../../styled/Span";
 import { format } from "date-fns";
-import BackButton from "../../Buttons/BackButton";
-import LoaderComponent from "../../Loader";
+import BackButton from "../../components/Buttons/BackButton";
+import LoaderComponent from "../../components/Loader";
 
 function Employee () {
     const dispatch = useAppDispatch();
