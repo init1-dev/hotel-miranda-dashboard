@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import UserContext from "../../contexts/Auth/UserContext";
 import { employeesCollection } from "../API/apiVariables";
 import { fetchFromApi } from "../API/fetchFromApi";
-import { getTokenFromLocalStorage } from "../localStorage/getTokenFromLocalStorage";
 import CustomSwal from "./CustomSwal";
 import { customToast } from "../toastify/customToast";
 
@@ -42,8 +41,8 @@ const CustomSwalHtml = ({
             email: String(e.currentTarget.email.value).trim(),
             password: String(e.currentTarget.password.value).trim()
         }
-        const token = getTokenFromLocalStorage();
-        const updateEmployee = await fetchFromApi("PUT", `${employeesCollection}/${id}`, token, form);
+        
+        const updateEmployee = await fetchFromApi("PUT", `${employeesCollection}/${id}`, form);
         if(updateEmployee?.status === 200){
             data.authDispatch({type: 'edit', payload: {user: form.fullname, email: form.email}});
             const swalProps = {
