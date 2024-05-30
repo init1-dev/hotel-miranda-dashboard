@@ -58,6 +58,8 @@ $npm run dev
 ## Project Urls
 
 - MIRANDA WEB: [DEPLOY](http://hotel-miranda-web.s3-website.eu-west-3.amazonaws.com/) | [REPO](https://github.com/init1-dev/hotel-miranda-web)
+- MIRANDA WEB PHP: [DEPLOY](https://miranda-php.in1t.dev/) | [REPO](https://github.com/init1-dev/hotel-miranda-PHP)
+- MIRANDA WEB LARAVEL: [DEPLOY](https://miranda-laravel.in1t.dev/) | [REPO](https://github.com/init1-dev/miranda-laravel)
 - MIRANDA DASHBOARD: [DEPLOY](http://hotel-miranda-dashboard-init.s3-website.eu-west-3.amazonaws.com/dashboard) | [REPO](https://github.com/init1-dev/hotel-miranda-dashboard)
 - MIRANDA BACKEND: [DEPLOY](https://4oi46otzmb.execute-api.eu-west-3.amazonaws.com/dev/) | [REPO](https://github.com/init1-dev/typescript-node-express)
 
