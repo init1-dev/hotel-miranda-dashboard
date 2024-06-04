@@ -198,6 +198,6 @@ function RoomForm () {
 
 export default RoomForm ;
 
-const roomTypes = [ "Single Bed", "Double Bed", "Double Superior", "Suite" ];
+const roomTypes = [ "Single Bed", "Double bed", "Double Superior", "Suite" ];
 
-const amenities = [ "Breakfast", "Smart Security", "Strong Locker", "Shower", "24/7 Online Support", "Kitchen", "Cleaning", "Expert Team", "High speed WiFi", "Air conditioner", "Towels", "Grocery", "Single bed", "Shop near" ];
+const amenities = ['Breakfast', 'Smart Security', 'Strong Locker', 'Shower', '24/7 Online Support', 'Kitchen', 'Cleaning', 'Expert Team', 'High Speed Wifi', 'Air Conditioner', 'Towels', 'Grocery', 'Single Bed', 'Shop Near'];

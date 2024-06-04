@@ -217,7 +217,10 @@ function Bookings() {
                                             })
                                         }
                                     </SectionSelect>
-                                    <NewButton to={"/dashboard/bookings/new"}>
+                                    <NewButton 
+                                        className="new-booking" 
+                                        to={"/dashboard/bookings/new"}
+                                    >
                                         <FaPlus />
                                         NEW BOOKING
                                     </NewButton>

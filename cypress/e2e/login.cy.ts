@@ -30,7 +30,7 @@ describe('Authentication spec', () => {
         cy.visit('')
         login()
         cy.url().should('include', "/dashboard")
-        cy.contains('p', 'init.dev').invoke('css', 'color').should('equal', 'rgb(0, 0, 0)')
+        cy.contains('p', 'init.dev').invoke('css', 'color').should('equal', 'rgb(59, 59, 59)')
         cy.contains('small', 'init1.dev@gmail.com').invoke('css', 'color').should('equal', 'rgb(136, 136, 136)')
     })
 
@@ -46,10 +46,10 @@ describe('Authentication spec', () => {
         login()
 
         cy.get('button').contains("🌙").click()
-        cy.contains('h4', 'Dashboard').invoke('css', 'color').should('equal', 'rgb(255, 255, 255)')
+        cy.contains('h4', 'Dashboard').invoke('css', 'color').should('equal', 'rgb(233, 233, 233)')
 
         cy.get('button').contains("☀️").click()
-        cy.contains('h4', 'Dashboard').invoke('css', 'color').should('equal', 'rgb(0, 0, 0)')
+        cy.contains('h4', 'Dashboard').invoke('css', 'color').should('equal', 'rgb(59, 59, 59)')
     })
 
     it('do a logout', () => {

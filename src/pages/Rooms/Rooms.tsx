@@ -173,14 +173,14 @@ function Rooms() {
                 const roomRow = row as RoomData
                 return (
                     <ButtonContainer>
-                        <ActionButtonIcon onClick={(e) => {
+                        <ActionButtonIcon className="edit" onClick={(e) => {
                             e.stopPropagation()
                             navigate(`edit/${roomRow._id}`)
                         }}>
                             <FaRegEdit />
                         </ActionButtonIcon>
 
-                        <ActionButtonIcon onClick={async(e) => {
+                        <ActionButtonIcon className={`delete-${roomRow.room_number}`} onClick={async(e) => {
                             e.stopPropagation();
                             const doesAnyBookingContainRoom = await fetchFromApi('GET', `${bookingsCollection}/checkRoomInBookings/${row._id}`);
 

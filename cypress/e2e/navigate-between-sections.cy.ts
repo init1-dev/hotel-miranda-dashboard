@@ -23,6 +23,12 @@ describe('Navigate between sections spec', () => {
 
         cy.wait(2000)
 
+        cy.get('a.new-booking').click()
+
+        cy.get('button[type=submit]').click()
+
+        cy.wait(2000)
+
         cy.get('table tbody tr').first()
             .find('button')
             .eq(2)
@@ -30,7 +36,9 @@ describe('Navigate between sections spec', () => {
 
         cy.contains('button', 'Delete').click()
 
+        cy.wait(2000)
+
         cy.get('table tbody tr').first()
-            .contains('h4', 'Kat Prowting')
+            .contains('h4', 'Cristina Boyle')
     })
 })
