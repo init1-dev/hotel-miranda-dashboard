@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "jest",
     "cy": "cypress open",
-    "cy:run": "npx cypress run --record --key ",
+    "cy:run": "cypress run --browser chrome",
     "dev-test": "vite --host",
     "deploy": "npm run build && aws s3 sync ./dist s3://hotel-miranda-dashboard-init --delete --acl public-read"
   },

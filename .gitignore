@@ -25,3 +25,4 @@ dist-ssr
 
 #cypress screenshots
 cypress/screenshots
+cypress/downloads

@@ -24,11 +24,10 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # - name: Run Cypress tests
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     start: npm run dev
-      #     wait-on: 
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev-test
 
       - name: Sync S3 bucket
         uses: jakejarvis/s3-sync-action@master
