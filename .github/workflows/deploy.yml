@@ -1,14 +1,13 @@
 name: Deploy React App to S3
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.merged == true
 
     steps:
       - name: Checkout repository
