@@ -176,19 +176,6 @@ function Messages() {
                 if (row.archived === false) {
                     return (
                         <ButtonContainer>
-                            <Publish onClick={(e) => {
-                                e.stopPropagation();
-                                try {
-                                    dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
-                                } catch (error) {
-                                    customToast('error', String(error))
-                                }
-                            }}>Archive</Publish>
-                        </ButtonContainer>
-                    )
-                } else {
-                    return (
-                        <ButtonContainer>
                             <Archive onClick={(e) => {
                                 e.stopPropagation();
                                 try {
@@ -196,7 +183,20 @@ function Messages() {
                                 } catch (error) {
                                     customToast('error', String(error))
                                 }
-                            }}>Publish</Archive>
+                            }}>Archive</Archive>
+                        </ButtonContainer>
+                    )
+                } else {
+                    return (
+                        <ButtonContainer>
+                            <Publish onClick={(e) => {
+                                e.stopPropagation();
+                                try {
+                                    dispatch(editMessage({row: employeeRow, fieldToEdit: "archived"}));
+                                } catch (error) {
+                                    customToast('error', String(error))
+                                }
+                            }}>Publish</Publish>
                         </ButtonContainer>
                     )
                 }

@@ -47,7 +47,7 @@ export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, 
     }
 })
 
-export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({_id}: BookingData) => {
+export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (_id: string) => {
     try {
         await fetchFromApi("DELETE", `${bookingsCollection}/${_id}`);
 

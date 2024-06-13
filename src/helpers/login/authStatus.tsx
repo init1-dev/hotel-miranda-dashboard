@@ -35,11 +35,6 @@ function AuthStatus() {
         }
 
         await CustomSwal({data: swalProps, theme: theme})
-        // .then((result) => {
-        //     if(result.isConfirmed){
-        //         console.log("confirmado");
-        //     }
-        // });
     }
 
     return (

@@ -1,30 +1,36 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SideBarComponent } from "../components/Dashboard/Menu/SideBarComponent";
 import { TopbarComponent } from "../components/Dashboard/Menu/TopbarComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const DashboardPage = () => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
-    // useEffect(() => {
-    //     const handleKeyDown = (event: KeyboardEvent) => {
-    //         if (event.key === "Escape" && location.pathname !== "/dashboard") {
-    //             navigate(-1);
-    //         }
-    //     };
+    const paths = ['/bookings', '/rooms', '/messages', '/employees'];
 
-    //     window.onkeyup = handleKeyDown;
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape" && paths.includes(location.pathname)) {
+                navigate("/dashboard");
+            } else {
+                if(location.pathname !== '/dashboard') {
+                    navigate(-1);
+                }
+            }
+        };
 
-    //     return () => {
-    //         window.onkeyup = null;
-    //     };
-    // }, [navigate]);
+        window.onkeyup = handleKeyDown;
+
+        return () => {
+            window.onkeyup = null;
+        };
+    }, [navigate]);
 
     return (
         <div>

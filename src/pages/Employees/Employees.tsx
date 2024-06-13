@@ -15,11 +15,10 @@ import { selectEmployees } from "../../store/Employees/employeesSlice";
 import { deleteEmployee, getEmployeesThunk } from "../../store/Employees/employeesThunk";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { EmployeeData } from "../../store/interfaces";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import CustomSwal from "../../helpers/Swal/CustomSwal";
 import { Container, EmployeeDataModal } from "../../styled/ImagePreviewInTable";
 import LoaderComponent from "../../components/Loader";
-import { customToast } from "../../helpers/toastify/customToast";
+import DeleteButton from "../../components/Buttons/DeleteButton";
 
 function Employees() {
     const navigate = useNavigate();
@@ -135,7 +134,7 @@ function Employees() {
         {
             'label': 'Actions',
             display : (row: Data) => {
-                const employeeRow = row as EmployeeData
+                const employeeRow = row as EmployeeData;
                 return (
                     <ButtonContainer>
                         <ActionButtonIcon onClick={(e) => {
@@ -145,40 +144,11 @@ function Employees() {
                             <FaRegEdit />
                         </ActionButtonIcon>
 
-                        <ActionButtonIcon onClick={async(e) => {
-                            e.stopPropagation()
-                            const swalProps = {
-                                title: `<small>You're going to delete employee #${employeeRow._id}</small>`,
-                                text: `This action is irreversible`,
-                                icon: 'warning' as const,
-                                showConfirmButton: true,
-                                showCancelButton: true,
-                                confirmButtonText: 'Delete',
-                                confirmButtonColor: '#ff0000',
-                                cancelButtonText: 'Cancel',
-                                reverseButtons: true
-                            }
-
-                            await CustomSwal({data: swalProps, theme: theme})
-                            .then(async(result) => {
-                                if (result.isConfirmed) {
-                                    dispatch(deleteEmployee(employeeRow));
-                                    const swalProps = {
-                                        text: `Employee #${employeeRow._id} deleted successfully`,
-                                        icon: 'success' as const,
-                                        timer: 2000,
-                                        timerProgressBar: true,
-                                        showConfirmButton: false
-                                    }
-                                    setCurrentPage(1);
-                                    await CustomSwal({data: swalProps, theme: theme})
-                                }
-                            }).catch((error) => {
-                                customToast('error', error);
-                            });
-                        }}>
-                            <RiDeleteBin5Line />
-                        </ActionButtonIcon>
+                        <DeleteButton 
+                            type='Employee' 
+                            action={deleteEmployee} 
+                            id={employeeRow._id!}
+                        />
                     </ButtonContainer>
                 )
             }

@@ -45,7 +45,7 @@ export const editRoom = createAsyncThunk('rooms/editRoom', async ({id, newData}:
     }
 })
 
-export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async ({_id}: RoomData) => {
+export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (_id: string) => {
     try {
         await fetchFromApi("DELETE", `${roomsCollection}/${_id}`);
 

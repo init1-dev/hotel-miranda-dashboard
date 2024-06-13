@@ -10,7 +10,6 @@ import { SectionSelect } from "../../styled/Form";
 import { MessageText, MessageTitle } from "../../styled/Message";
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../styled/Span";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import { action } from "../../helpers/action";
 import { selectBookings } from "../../store/Bookings/bookingsSlice";
 import { deleteBooking, getBookings } from "../../store/Bookings/bookingsThunk";
@@ -19,7 +18,7 @@ import CustomSwal from "../../helpers/Swal/CustomSwal";
 import { ThemeContext } from "styled-components";
 import { Container, ImagePreview, Imagen } from "../../styled/ImagePreviewInTable";
 import LoaderComponent from "../../components/Loader";
-import { customToast } from "../../helpers/toastify/customToast";
+import DeleteButton from "../../components/Buttons/DeleteButton";
 
 function Bookings() {
     const navigate = useNavigate();
@@ -145,41 +144,11 @@ function Bookings() {
                             <FaRegEdit />
                         </ActionButtonIcon>
 
-                        <ActionButtonIcon onClick={async(e) => {
-                            e.stopPropagation()
-
-                            const swalProps = {
-                                title: `<small>You're going to delete booking #${bookingRow._id}</small>`,
-                                text: `This action is irreversible`,
-                                icon: 'warning' as const,
-                                showConfirmButton: true,
-                                showCancelButton: true,
-                                confirmButtonText: 'Delete',
-                                confirmButtonColor: '#ff0000',
-                                cancelButtonText: 'Cancel',
-                                reverseButtons: true
-                            }
-
-                            await CustomSwal({data: swalProps, theme: theme})
-                            .then(async(result) => {
-                                if (result.isConfirmed) {
-                                    dispatch(deleteBooking(bookingRow));
-                                    const swalProps = {
-                                        text: `Booking #${bookingRow._id} deleted successfully`,
-                                        icon: 'success' as const,
-                                        timer: 2000,
-                                        timerProgressBar: true,
-                                        showConfirmButton: false
-                                    }
-                                    setCurrentPage(1);
-                                    await CustomSwal({data: swalProps, theme: theme})
-                                }
-                            }).catch((error) => {
-                                customToast('error', error);
-                            });
-                        }}>
-                            <RiDeleteBin5Line />
-                        </ActionButtonIcon>
+                        <DeleteButton 
+                            type='Booking' 
+                            action={deleteBooking} 
+                            id={bookingRow._id!}
+                        />
                     </ButtonContainer>
                 )
             }

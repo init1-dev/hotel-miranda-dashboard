@@ -5,7 +5,7 @@ import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, Te
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import { Link, useParams } from 'react-router-dom';
-import { getBooking } from '../../store/Bookings/bookingsThunk';
+import { deleteBooking, getBooking } from '../../store/Bookings/bookingsThunk';
 import { selectBooking } from '../../store/Bookings/bookingsSlice';
 import { format } from 'date-fns';
 import { SpanContainer, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from '../../styled/Span';
@@ -17,6 +17,8 @@ import { BookingData } from '../../store/interfaces';
 import { customToast } from '../../helpers/toastify/customToast';
 import { MessageTitle } from '../../styled/Message';
 import LoaderComponent from '../../components/Loader';
+import { ButtonContainer } from '../../styled/Button';
+import DeleteButton from '../../components/Buttons/DeleteButton';
 
 SwiperCore.use([Navigation]);
 
@@ -74,7 +76,16 @@ function Booking () {
                                         #{bookingData.itemData && bookingData.itemData._id}
                                     </small>
                                 </p>
-                                <BackButton />
+                                <ButtonContainer>
+                                    <DeleteButton 
+                                        type='Booking' 
+                                        action={deleteBooking} 
+                                        id={bookingData.itemData?._id!}
+                                        goBack
+                                    />
+                                    
+                                    <BackButton />
+                                </ButtonContainer>
                             </Title>
 
                             <Preview>

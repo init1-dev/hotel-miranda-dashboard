@@ -170,7 +170,7 @@ function Rooms() {
         {
             'label': 'Actions',
             display : (row: Data) => {
-                const roomRow = row as RoomData
+                const roomRow = row as RoomData;
                 return (
                     <ButtonContainer>
                         <ActionButtonIcon className="edit" onClick={(e) => {
@@ -199,7 +199,7 @@ function Rooms() {
                                 await CustomSwal({data: swalProps, theme: theme})
                                 .then(async(result) => {
                                     if (result.isConfirmed) {
-                                        dispatch(deleteRoom(roomRow));
+                                        dispatch(deleteRoom(roomRow._id!));
                                         const swalProps = {
                                             text: `Room #${roomRow._id} deleted successfully`,
                                             icon: 'success' as const,

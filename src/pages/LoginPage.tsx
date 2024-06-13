@@ -102,14 +102,20 @@ function LoginPage() {
 
                         <LoginInfo>
                             <AuthStatus />
+                            <div className="login">
+                                (
+                                <small>init1.dev@gmail.com</small>|
+                                <small>12345</small>
+                                )
+                            </div>
                         </LoginInfo>
 
                         <Form onSubmit={(e) => handleSubmit(e)} style={{marginTop: '2rem'}} replace>
                             <input type="hidden" name="redirectTo" value={from} />
 
-                            <Input type="text" name="employee_email" placeholder="init1.dev@gmail.com" defaultValue={"init1.dev@gmail.com"}/>
+                            <Input type="text" name="employee_email" placeholder="Insert username" />
 
-                            <Input type="password" name="password" placeholder="12345" defaultValue={"12345"}/>
+                            <Input type="password" name="password" placeholder="Insert password" />
 
                             <Button type="submit" disabled={isLogingIn}>
                                 {isLogingIn ? "Logging in..." : "Login"}
@@ -150,9 +156,19 @@ const UserIcon = styled(FaUserCircle)`
 `
 
 const LoginInfo = styled.div`
-    padding: 0%.5rem;
+    padding: 0.5rem;
     color: ${({ theme }) => theme.text};
     border-radius: 1rem;
+
+    .login {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        color: ${({ theme }) => theme.text};
+        filter: brightness(50%);
+    }
 `
 
 const Input = styled.input`

@@ -45,7 +45,7 @@ export const editEmployee = createAsyncThunk('employees/editEmployee', async ({i
     }
 })
 
-export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async ({_id}: EmployeeData) => {
+export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async (_id: string) => {
     try {
         await fetchFromApi("DELETE", `${employeesCollection}/${_id}`);
 
