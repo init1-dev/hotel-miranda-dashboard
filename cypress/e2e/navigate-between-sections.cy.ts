@@ -39,6 +39,6 @@ describe('Navigate between sections spec', () => {
         cy.wait(2000)
 
         cy.get('table tbody tr').first()
-            .contains('h4', 'Cristina Boyle')
+            .contains('h4', 'Eloise Daugherty')
     })
 })

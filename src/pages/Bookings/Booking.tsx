@@ -54,6 +54,9 @@ function Booking () {
                 <MessageTitle>User details:</MessageTitle>
             </SpanContainer>,
             html: <SpanContainer>
+                <small>Guest name:</small>
+                <h5><strong>{info?.full_name}</strong></h5>
+                <br />
                 <small>Phone:</small>
                 <h5><strong>{info?.phone}</strong></h5>
                 <br />
