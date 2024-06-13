@@ -12,15 +12,17 @@ export const DashboardPage = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
-    const paths = ['/bookings', '/rooms', '/messages', '/employees'];
+    const paths = ['/dashboard/bookings', '/dashboard/rooms', '/dashboard/messages', '/dashboard/employees'];
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape" && paths.includes(location.pathname)) {
-                navigate("/dashboard");
-            } else {
-                if(location.pathname !== '/dashboard') {
-                    navigate(-1);
+            if(event.key === "Escape"){
+                if (paths.includes(location.pathname)) {
+                    navigate("/dashboard");
+                } else {
+                    if(location.pathname !== '/dashboard') {
+                        navigate(-1);
+                    }
                 }
             }
         };

@@ -22,7 +22,7 @@ export const Title = styled.h1`
 
     small {
         user-select: text;
-        filter: sepia()
+        filter: sepia();
     }
 `
 

@@ -36,7 +36,7 @@ function Booking () {
     const bookingPrice = calculateBookingDiscount(roomPriceToCurrency, bookingDiscount);
 
     const initialFetch = async () => {
-        await dispatch(getBooking(String(id)));
+        await dispatch(getBooking(String(id))).unwrap();
         setFetched(true);
     }
 
