@@ -132,56 +132,66 @@ function Room () {
 
                             </Preview>
 
-                            <StyledContainer>
-                                <ContainerHeader>
-                                    <span>
-                                        Active bookings in Room: <small>#{roomData.itemData?.room_number}</small>
-                                    </span>
-                                    <StyledButton onClick={(e) => handleChangeVisibility(e)}>
-                                        {
-                                            bookingsVisible
-                                                ?   <>
-                                                        Hide <FiEyeOff />
-                                                    </>
-                                                :   <>
-                                                        Show <FiEye />
-                                                    </>
-                                        }
-                                    </StyledButton>
-                                </ContainerHeader>
+                            {
+                                bookingsInThisRoom.length > 0 &&
 
-                                <StyledBookingsTable $visible={bookingsVisible}>
-                                    <thead>
-                                        <tr>
-                                            <th>Guest</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            bookingsInThisRoom.map((booking, i) => {
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>{ booking.full_name }</td>
-                                                        <td>{ booking.email }</td>
-                                                        <td>{ booking.phone }</td>
-                                                        <td className='actions'>
-                                                            <StyledButton 
-                                                                as={Link} 
-                                                                to={`/dashboard/bookings/${booking._id}`}
-                                                            >
-                                                                <FiEye />
-                                                            </StyledButton>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </StyledBookingsTable>
-                            </StyledContainer>
+                                <StyledContainer>
+                                    <ContainerHeader>
+                                        <span>
+                                            Active bookings in Room: <small>#{roomData.itemData?.room_number}
+                                        </small>
+                                        
+                                        <StyledLength>({bookingsInThisRoom.length})</StyledLength>
+    
+                                        </span>
+                                        <StyledButton onClick={(e) => handleChangeVisibility(e)}>
+                                            {
+                                                bookingsVisible
+                                                    ?   <>
+                                                            Hide <FiEyeOff />
+                                                        </>
+                                                    :   <>
+                                                            Show <FiEye />
+                                                        </>
+                                            }
+                                        </StyledButton>
+                                    </ContainerHeader>
+
+                                    <StyledBookingsTable $visible={bookingsVisible}>
+                                        <thead>
+                                            <tr>
+                                                <th>Guest</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                bookingsInThisRoom.map((booking, i) => {
+                                                    return (
+                                                        <tr key={i}>
+                                                            <td>{ booking.full_name }</td>
+                                                            <td>{ booking.email }</td>
+                                                            <td>{ booking.phone }</td>
+                                                            <td className='actions'>
+                                                                <StyledButton 
+                                                                    as={Link} 
+                                                                    to={`/dashboard/bookings/${booking._id}`}
+                                                                >
+                                                                    <FiEye />
+                                                                </StyledButton>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </StyledBookingsTable>
+                                </StyledContainer>
+                            }
+
+                            
                         </>
                     : <LoaderComponent />
             }
@@ -204,6 +214,11 @@ const ContainerHeader = styled.h3`
         user-select: text;
         filter: sepia();
     }
+`;
+
+const StyledLength = styled.span`
+    margin-left: 0.35rem;
+    font-size: 15px;
 `;
 
 const StyledButton = styled.button`

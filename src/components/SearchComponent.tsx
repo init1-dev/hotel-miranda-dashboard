@@ -3,9 +3,13 @@ import { ImSearch } from "react-icons/im";
 
 const SearchComponent = () => {
     return (
-        <Search type="button">
-            <ImSearch />
-        </Search>
+        <>
+            <SearchInput type="text"/>
+
+            <Search type="button">
+                <ImSearch />
+            </Search>
+        </>
     );
 }
 
@@ -14,6 +18,7 @@ const Search = styled.button`
     outline: unset;
     background-color: ${({ theme }) => theme.contentBg};
     color: ${({ theme }) => theme.text};
+    box-shadow: 1px 1px 6px -4px black;
 
     &:hover {
         border-color: ${({ theme }) => theme.iconsColor};
@@ -24,12 +29,12 @@ const Search = styled.button`
     }
 `;
 
-// const SearchInput = styled.input`
-//     border-radius: 0.5rem;
-//     border: 1px solid black;
-//     height: 25px;
-//     width: 25%;
-//     padding: 0 0.5rem;
-// `;
+const SearchInput = styled.input`
+    background-color: ${({ theme }) => theme.theme === 'light' ? '#ffffff' : '#ebebeb'};
+    border-radius: 0.5rem;
+    border: 1px solid ${({ theme }) => theme.theme === 'light' ? 'lightgrey' : 'black'};
+    box-shadow: 2px 2px 4px -4px black;
+    padding: 0 0.5rem;
+`;
 
 export default SearchComponent;

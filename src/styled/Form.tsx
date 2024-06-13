@@ -123,7 +123,7 @@ export const Select = styled.select`
     color: ${({ theme }) => theme.text};;
     background-color: ${({ theme }) => theme.bg};
     border: 0;
-    box-shadow: #000000 2px 2px 10px -5px;
+    box-shadow: #000000 2px 2px 6px -5px;
     border: 1px solid #80808042;
 
     &:focus, &:focus-visible {
@@ -136,7 +136,7 @@ export const SectionSelect = styled(Select)`
     width: auto;
     background-color: unset;
     color: ${({ theme }) => theme.tabButtonColor};
-    border: 2px solid ${({ theme }) => theme.tabButtonColor};
+    border: 2px solid ${({ theme }) => theme.theme === 'light' ? 'grey' : '#7bcf92'};
 
     &:focus, &:focus-visible {
         border: 2px solid ${({theme}) => theme.tabButtonColor};

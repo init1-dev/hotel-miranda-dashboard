@@ -19,6 +19,7 @@ import CustomSwal from "../../helpers/Swal/CustomSwal";
 import { Container, EmployeeDataModal } from "../../styled/ImagePreviewInTable";
 import LoaderComponent from "../../components/Loader";
 import DeleteButton from "../../components/Buttons/DeleteButton";
+import SearchComponent from "../../components/SearchComponent";
 
 function Employees() {
     const navigate = useNavigate();
@@ -171,6 +172,8 @@ function Employees() {
                                 resetPage={resetPage}
                             >
                                 <ButtonContainer>
+                                    <SearchComponent />
+
                                     <SectionSelect 
                                         onChange={(e) => setCurrentOrder(e.target.value)}
                                         name="room-type" 
@@ -182,6 +185,7 @@ function Employees() {
                                             })
                                         }
                                     </SectionSelect>
+
                                     <NewButton to={"/dashboard/employees/new"}>
                                         <FaPlus />
                                         NEW EMPLOYEE
