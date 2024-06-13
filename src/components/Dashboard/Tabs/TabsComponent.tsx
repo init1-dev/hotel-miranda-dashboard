@@ -1,6 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
 import styled from "styled-components";
-import { ImSearch } from "react-icons/im";
 import { query1350, query1500 } from "../../../helpers/responsive";
 
 export interface SectionData {
@@ -48,12 +47,8 @@ export const TabsComponent = ({
                         )) 
                     }
                 </TabsContent>
-                {/* <SearchInput type="search" /> */}
                 {children}
             </TabsContainer>
-            <Search type="button">
-                <ImSearch />
-            </Search>
         </div>
     )
 
@@ -62,19 +57,18 @@ export const TabsComponent = ({
 const TabsContainer = styled.div`
     display: flex;
     width: 100%;
-    margin-right: 1rem;
     justify-content: space-between;
     align-items: baseline;
     height: 70px;
     gap: 1rem;
     user-select: none;
-`
+`;
 
 const TabsContent = styled.div`
     display: flex;
     align-items: center;
     padding: 0 1rem 0 1rem;
-`
+`;
 
 const Tab = styled.button`
     all: unset;
@@ -107,27 +101,4 @@ const Tab = styled.button`
         border-bottom: 2px solid #57996a;
         color: #57996a;
     }
-`
-
-const Search = styled.button`
-    color: white;
-    outline: unset;
-    background-color: ${({ theme }) => theme.contentBg};
-    color: ${({ theme }) => theme.text};
-
-    &:hover {
-        border-color: ${({ theme }) => theme.iconsColor};
-    }
-
-    &:focus, &:focus-visible {
-        outline: unset;
-    }
-`
-
-// const SearchInput = styled.input`
-//     border-radius: 0.5rem;
-//     border: 1px solid black;
-//     height: 25px;
-//     width: 25%;
-//     padding: 0 0.5rem;
-// `
+`;

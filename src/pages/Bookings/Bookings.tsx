@@ -19,6 +19,7 @@ import { ThemeContext } from "styled-components";
 import { Container, ImagePreview, Imagen } from "../../styled/ImagePreviewInTable";
 import LoaderComponent from "../../components/Loader";
 import DeleteButton from "../../components/Buttons/DeleteButton";
+import SearchComponent from "../../components/SearchComponent";
 
 function Bookings() {
     const navigate = useNavigate();
@@ -171,6 +172,8 @@ function Bookings() {
                                 resetPage={resetPage}
                             >
                                 <ButtonContainer>
+                                    <SearchComponent />
+
                                     <SectionSelect 
                                         value={currentOrder}
                                         onChange={(e) => setCurrentOrder(e.target.value)}
@@ -186,6 +189,7 @@ function Bookings() {
                                             })
                                         }
                                     </SectionSelect>
+
                                     <NewButton 
                                         className="new-booking" 
                                         to={"/dashboard/bookings/new"}
