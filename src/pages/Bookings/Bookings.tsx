@@ -20,6 +20,7 @@ import { Container, ImagePreview, Imagen } from "../../styled/ImagePreviewInTabl
 import LoaderComponent from "../../components/Loader";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import SearchComponent from "../../components/SearchComponent";
+import { useDebounce } from "@uidotdev/usehooks";
 
 function Bookings() {
     const navigate = useNavigate();
@@ -28,7 +29,9 @@ function Bookings() {
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Bookings");
     const [currentOrder, setCurrentOrder] = useState<string>("order_date");
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [query, setQuery] = useState('');
     const theme = useContext(ThemeContext);
+    const debouncedquery = useDebounce(query, 300);
 
     const resetPage = () => {
         setCurrentPage(1);
@@ -36,10 +39,12 @@ function Bookings() {
     
     const dispatch = useAppDispatch();
     const bookingsData = useAppSelector(selectBookings);
+
     const filteredBookings = useMemo(() => {
+        const search = bookingsData.data.filter((booking) => booking.full_name.toLowerCase().includes(debouncedquery.toLowerCase()));
         const all = (currentTab === "All Bookings")
-            ? bookingsData.data
-            : bookingsData.data.filter((item) => item.status === currentTab)
+            ? search
+            : search.filter((item) => item.status === currentTab)
         
         return [...all].sort((a, b) => {
             switch (currentOrder) {
@@ -56,7 +61,7 @@ function Bookings() {
             }
         })
         
-    }, [bookingsData, currentTab, currentOrder])
+    }, [bookingsData, currentTab, currentOrder, debouncedquery])
 
     const initialFetch = async () => {
         await dispatch(getBookings()).unwrap();
@@ -172,7 +177,10 @@ function Bookings() {
                                 resetPage={resetPage}
                             >
                                 <ButtonContainer>
-                                    <SearchComponent />
+                                    <SearchComponent 
+                                        query={query}
+                                        setQuery={setQuery}
+                                    />
 
                                     <SectionSelect 
                                         value={currentOrder}

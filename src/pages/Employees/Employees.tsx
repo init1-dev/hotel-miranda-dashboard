@@ -20,6 +20,7 @@ import { Container, EmployeeDataModal } from "../../styled/ImagePreviewInTable";
 import LoaderComponent from "../../components/Loader";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import SearchComponent from "../../components/SearchComponent";
+import { useDebounce } from "@uidotdev/usehooks";
 
 function Employees() {
     const navigate = useNavigate();
@@ -28,7 +29,9 @@ function Employees() {
     const [currentTab, setCurrentTab] = useState<string | boolean | undefined>("All Employees");
     const [currentOrder, setCurrentOrder] = useState("default");
     const [currentPage, setCurrentPage] = useState(1);
+    const [query, setQuery] = useState('');
     const theme = useContext(ThemeContext);
+    const debouncedquery = useDebounce(query, 300);
 
     const resetPage = () => {
         setCurrentPage(1);
@@ -37,9 +40,10 @@ function Employees() {
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);
     const filteredEmployees = useMemo(() => {
+        const search = employeesData.data.filter((employee) => employee.fullname.toLowerCase().includes(debouncedquery.toLowerCase()));
         const all = (currentTab === "All Employees")
-            ? employeesData.data
-            : employeesData.data.filter((item) => item.status === currentTab)
+            ? search
+            : search.filter((item) => item.status === currentTab)
 
         return [...all].sort((a, b) => {
             switch (currentOrder) {
@@ -50,7 +54,7 @@ function Employees() {
             }
         })
         
-    }, [employeesData, currentTab, currentOrder])
+    }, [employeesData, currentTab, currentOrder, debouncedquery])
 
     const initialFetch = async () => {
         await dispatch(getEmployeesThunk()).unwrap();
@@ -172,7 +176,10 @@ function Employees() {
                                 resetPage={resetPage}
                             >
                                 <ButtonContainer>
-                                    <SearchComponent />
+                                    <SearchComponent 
+                                        query={query}
+                                        setQuery={setQuery}
+                                    />
 
                                     <SectionSelect 
                                         onChange={(e) => setCurrentOrder(e.target.value)}

@@ -1,12 +1,27 @@
 import styled, { keyframes } from "styled-components";
 import { ImSearch } from "react-icons/im";
-import { useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
-const SearchComponent = () => {
+
+interface SearchComponentProps {
+    query: string;
+    setQuery: Dispatch<SetStateAction<string>>;
+}
+
+const SearchComponent = ({
+    query,
+    setQuery
+}: SearchComponentProps) => {
     const [isOpen, setIsOpen] = useState(false);
+    
 
     const handleIconClick = () => {
         setIsOpen(prev => !prev);
+    };
+
+    const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        setQuery(inputValue);
     };
     
     return (
@@ -14,10 +29,9 @@ const SearchComponent = () => {
             <SearchInput
                 type="text"
                 $isOpen={isOpen}
+                value={query}
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Search.."
-                // value={value}
-                // onChange={onChange}
-                // placeholder={placeholder}
             />
             <SearchIcon onClick={handleIconClick} />
         </SearchContainer>
