@@ -22,7 +22,6 @@ import LoaderComponent from "../../components/Loader";
 import { fetchFromApi } from "../../helpers/API/fetchFromApi";
 import { bookingsCollection } from "../../helpers/API/apiVariables";
 import { customToast } from "../../helpers/toastify/customToast";
-import SearchComponent from "../../components/SearchComponent";
 
 function Rooms() {
     const navigate = useNavigate();
@@ -243,8 +242,6 @@ function Rooms() {
                                 resetPage={resetPage}
                             >
                                 <ButtonContainer>
-                                    <SearchComponent />
-
                                     <SectionSelect 
                                         onChange={(e) => setCurrentOrder(e.target.value)}
                                         name="room-type" 

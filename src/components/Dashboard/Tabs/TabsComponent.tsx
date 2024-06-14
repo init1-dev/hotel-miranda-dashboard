@@ -58,7 +58,7 @@ const TabsContainer = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: flex-start;
     height: 70px;
     gap: 1rem;
     user-select: none;
