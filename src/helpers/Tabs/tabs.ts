@@ -1,24 +1,24 @@
 const tabs = {
     bookings: [
-        { label: "All Bookings", accesor: "All Bookings"},
+        { label: "All", accesor: "All Bookings"},
         { label: "Check In", accesor: "Check In"},
         { label: "Check Out", accesor: "Check Out"},
         { label: "In Progress", accesor: "In Progress"}
     ],
     rooms: [
-        { label: "All Rooms", accesor: "All Rooms"},
+        { label: "All", accesor: "All Rooms"},
         { label: "Available", accesor: "Available"},
         { label: "Booked", accesor: "Booked"}
     ],
     messages: [
-        { label: "All Messages", accesor: "All Messages"},
+        { label: "All", accesor: "All Messages"},
         { label: "Archived", accesor: "Archived"},
         { label: "Unread", accesor: "Unread"}
     ],
     employees: [
-        { label: "All Employees", accesor: "All Employees"},
-        { label: "Active Employees", accesor: "Active"},
-        { label: "Inactive Employees", accesor: "Inactive"}
+        { label: "All", accesor: "All Employees"},
+        { label: "Active", accesor: "Active"},
+        { label: "Inactive", accesor: "Inactive"}
     ],
 }
 

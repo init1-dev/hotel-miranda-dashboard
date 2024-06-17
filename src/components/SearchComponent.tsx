@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { ImSearch } from "react-icons/im";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { AiOutlineClear } from "react-icons/ai";
 
 interface SearchComponentProps {
     query: string;
@@ -12,12 +12,25 @@ const SearchComponent = ({
     query,
     setQuery
 }: SearchComponentProps) => {
-    const [isOpen, setIsOpen] = useState(false);
-    
+    const [isOpen, setIsOpen] = useState(query === '' ? false : true);
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const handleIconClick = () => {
         setIsOpen(prev => !prev);
     };
+
+    useEffect(() => {
+        if(isOpen && searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, [isOpen]);
+
+    const handleSearchReset = () => {
+        if(query !== ''){
+            setQuery('');
+            setIsOpen(false);
+        }
+    }
 
     const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
@@ -25,25 +38,40 @@ const SearchComponent = ({
     };
     
     return (
-        <SearchContainer>
-            <SearchInput
-                type="text"
-                $isOpen={isOpen}
-                value={query}
-                onChange={(e) => handleInputChange(e)}
-                placeholder="Search.."
-            />
-            <SearchIcon onClick={handleIconClick} />
-        </SearchContainer>
+        <StyledSearchComponent>
+            <ClearIcon $isOpen={isOpen} $query={query} onClick={() => handleSearchReset()}/>
+
+            <InputContainer>
+                <SearchInput
+                    ref={searchInputRef}
+                    type="text"
+                    $isOpen={isOpen}
+                    value={query}
+                    onChange={(e) => handleInputChange(e)}
+                    placeholder="Search.."
+                />
+                <SearchIcon onClick={handleIconClick} />
+            </InputContainer>
+        </StyledSearchComponent>
     );
 }
 
-const SearchContainer = styled.div`
-    position: relative;
+const StyledSearchComponent = styled.div`
     display: flex;
+    gap: 1rem;
     align-items: center;
+`;
+
+const InputContainer = styled.div`
+    position: relative;
+    gap: 1rem;
     max-width: 400px;
     margin: 0 auto;
+`;
+
+const ClearIcon = styled(AiOutlineClear)<{$isOpen: boolean, $query: string}>`
+    display: ${(props) => (props.$isOpen && props.$query !== '' ? 'block' : 'none')};
+    font-size: 22px;
 `;
 
 const expand = keyframes`

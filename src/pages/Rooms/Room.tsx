@@ -234,6 +234,10 @@ const StyledButton = styled.button`
         background-color: #13584626;
         color: #1C7A61;
 
+        &:active {
+            translate: 0 1px;
+        }
+
         &:hover {
             border-color: #145544;
         }
@@ -246,11 +250,14 @@ const StyledButton = styled.button`
 const StyledBookingsTable = styled.table<{ $visible?: boolean; }>`
     padding-top: 1rem;
     width: 100%;
-    display: ${({$visible}) => $visible ? '' : 'none'};
+    /* display: ${({$visible}) => $visible ? '' : 'none'}; */
+    opacity: ${({$visible}) => $visible ? '1' : '0'};
+    pointer-events: ${({$visible}) => $visible ? 'auto' : 'none'};
     background-color: ${({ theme }) => theme.contentBg};
     border: 2px ridge ${({ theme }) => theme.iconsColor};
     border-radius: 0.5rem;
     box-shadow: 2px 2px 6px -4px black;
+    transition: opacity 0.2s ease;
 
     tr {
         text-align: center;
