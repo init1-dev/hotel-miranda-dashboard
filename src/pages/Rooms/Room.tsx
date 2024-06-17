@@ -16,6 +16,7 @@ import styled from 'styled-components';
 import { FiEye } from "react-icons/fi";
 import { FiEyeOff } from "react-icons/fi";
 import { getBookings } from '../../store/Bookings/bookingsThunk';
+import { query1350, query1500 } from '../../helpers/responsive';
 
 SwiperCore.use([Navigation]);
 
@@ -202,6 +203,15 @@ function Room () {
 const StyledContainer = styled.div`
     margin: 1rem 12% 0 12%;
     width: 76%;
+
+    @media (max-width: ${query1500}) {
+        width: auto;
+        margin: 1rem 5% 0 5%;
+    }
+
+    @media (max-width: ${query1350}) {
+        margin: 1rem 2% 0 2%;
+    }
 `;
 
 const ContainerHeader = styled.h3`

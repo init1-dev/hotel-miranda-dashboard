@@ -4,7 +4,7 @@ import { Title } from '../../styled/Form';
 import { Amenities, ImageContainer, InfoContainer, InfoContainerRow, Preview, TextDiv, TopContainerRow } from '../../styled/Preview';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteBooking, getBooking } from '../../store/Bookings/bookingsThunk';
 import { selectBooking } from '../../store/Bookings/bookingsSlice';
 import { format } from 'date-fns';
@@ -17,8 +17,9 @@ import { BookingData } from '../../store/interfaces';
 import { customToast } from '../../helpers/toastify/customToast';
 import { MessageTitle } from '../../styled/Message';
 import LoaderComponent from '../../components/Loader';
-import { ButtonContainer } from '../../styled/Button';
+import { ActionButtonIcon, ButtonContainer } from '../../styled/Button';
 import DeleteButton from '../../components/Buttons/DeleteButton';
+import { FaRegEdit } from 'react-icons/fa';
 
 SwiperCore.use([Navigation]);
 
@@ -28,6 +29,7 @@ function Booking () {
     const bookingData = useAppSelector(selectBooking);
     const [fetched, setFetched] = useState(false);
     const theme = useContext(ThemeContext);
+    const navigate = useNavigate();
 
     const roomPrice = bookingData.itemData?.roomInfo.price; 
     const roomDiscount = bookingData.itemData?.roomInfo.discount;
@@ -80,6 +82,13 @@ function Booking () {
                                     </small>
                                 </p>
                                 <ButtonContainer>
+                                    <ActionButtonIcon onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(`/dashboard/bookings/edit/${id}`);
+                                    }}>
+                                        <FaRegEdit />
+                                    </ActionButtonIcon>
+
                                     <DeleteButton 
                                         type='Booking' 
                                         action={deleteBooking} 
