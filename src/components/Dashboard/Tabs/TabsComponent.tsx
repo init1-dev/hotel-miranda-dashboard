@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import styled from "styled-components";
 import { query1350, query1500 } from "../../../helpers/responsive";
 
@@ -20,15 +20,9 @@ export const TabsComponent = ({
     section,
     children,
     currentTab,
-    setCurrentTab,
-    resetPage
+    setCurrentTab
 }: TabsProps ) => {
 
-    useEffect(() => {
-        setCurrentTab(currentTab)
-        resetPage();
-    }, [currentTab]);
-    
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
             <TabsContainer>

@@ -40,6 +40,8 @@ function Employees() {
     const dispatch = useAppDispatch();
     const employeesData = useAppSelector(selectEmployees);
     const filteredEmployees = useMemo(() => {
+        if(currentPage !== 1) resetPage();
+        
         const search = employeesData.data.filter((employee) => employee.fullname.toLowerCase().includes(debouncedquery.toLowerCase()));
         const all = (currentTab === "All Employees")
             ? search

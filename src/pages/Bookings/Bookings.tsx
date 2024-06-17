@@ -41,6 +41,8 @@ function Bookings() {
     const bookingsData = useAppSelector(selectBookings);
 
     const filteredBookings = useMemo(() => {
+        if(currentPage !== 1) resetPage();
+        
         const search = bookingsData.data.filter((booking) => booking.full_name.toLowerCase().includes(debouncedquery.toLowerCase()));
         const all = (currentTab === "All Bookings")
             ? search

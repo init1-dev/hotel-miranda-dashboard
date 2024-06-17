@@ -47,6 +47,8 @@ function Messages() {
     const dispatch = useAppDispatch();
     const messagesData = useAppSelector(selectMessages);
     const filteredMessages = useMemo(() => {
+        if(currentPage !== 1) resetPage();
+        
         const all = (currentTab === "All Messages")
             ? messagesData.data
             : currentTab === "Archived"
