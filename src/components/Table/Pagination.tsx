@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { ArrowButton } from "../../styled/Button";
+import { MdFirstPage } from "react-icons/md";
+import { MdLastPage } from "react-icons/md";
 
 type PaginationProps = {
     dataLength: number;
@@ -11,6 +13,9 @@ type PaginationProps = {
 
 const Pagination = ({dataLength, itemsPerPage, maxPageNumbersToShow, currentPage, paginate}: PaginationProps) => {
     const totalPages = Math.ceil(dataLength / itemsPerPage);
+    const halfMaxPagesToShow = Math.floor(maxPageNumbersToShow / 2);
+    const firstPage = Math.max(1, currentPage - halfMaxPagesToShow);
+    const lastPage = Math.min(totalPages, firstPage + maxPageNumbersToShow - 1);
 
     const nextPage = () => {
         if (currentPage < totalPages) {
@@ -25,10 +30,6 @@ const Pagination = ({dataLength, itemsPerPage, maxPageNumbersToShow, currentPage
     };
 
     const getPageNumbers = () => {
-        const halfMaxPagesToShow = Math.floor(maxPageNumbersToShow / 2);
-        const firstPage = Math.max(1, currentPage - halfMaxPagesToShow);
-        const lastPage = Math.min(totalPages, firstPage + maxPageNumbersToShow - 1);
-
         const pageNumbers = [];
         for (let i = firstPage; i <= lastPage; i++) {
             pageNumbers.push(i);
@@ -48,19 +49,45 @@ const Pagination = ({dataLength, itemsPerPage, maxPageNumbersToShow, currentPage
 
     return (
         <>
-            <PaginationStyles>
-                <ArrowButton onClick={prevPage} disabled={currentPage === 1}>{'Prev'}</ArrowButton>
-                {getPageNumbers().map((pageNumber, index) => (
-                    <PageNumber key={index} onClick={() => {
-                        if (typeof pageNumber === 'number') {
-                            paginate(pageNumber)
-                        }
-                    }} className={`${pageNumber === currentPage && "active"}`}>
-                        {pageNumber}
-                    </PageNumber>
-                ))}
-                <ArrowButton onClick={nextPage} disabled={currentPage === totalPages}>{'Next'}</ArrowButton>
-            </PaginationStyles>
+            {
+                totalPages > 0 
+                    ?   <PaginationStyles>
+                            <ArrowButton
+                                onClick={() => paginate(firstPage)}
+                                disabled={currentPage === 1}
+                            >
+                                <MdFirstPage />
+                            </ArrowButton>
+
+                            <ArrowButton 
+                                onClick={prevPage} 
+                                disabled={currentPage === 1}
+                            >{'Prev'}</ArrowButton>
+
+                            {getPageNumbers().map((pageNumber, index) => (
+                                <PageNumber key={index} onClick={() => {
+                                    if (typeof pageNumber === 'number') {
+                                        paginate(pageNumber)
+                                    }
+                                }} className={`${pageNumber === currentPage && "active"}`}>
+                                    {pageNumber}
+                                </PageNumber>
+                            ))}
+
+                            <ArrowButton 
+                                onClick={nextPage} 
+                                disabled={currentPage === totalPages}
+                            >{'Next'}</ArrowButton>
+
+                            <ArrowButton
+                                onClick={() => paginate(lastPage)}
+                                disabled={currentPage === lastPage}
+                            >
+                                <MdLastPage />
+                            </ArrowButton>
+                        </PaginationStyles>
+                    : <PaginationStyles></PaginationStyles>
+            }
         </>
     );
 }

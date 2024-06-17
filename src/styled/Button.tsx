@@ -31,6 +31,11 @@ export const ArrowButton = styled(ButtonStyled)`
     &:focus, &:focus-visible {
         outline: unset;
     }
+
+    &:disabled {
+        filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.2)) opacity(50%);
+        cursor: not-allowed !important;
+    }
 `;
 
 export const ActionButton = styled.button`
