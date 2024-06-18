@@ -53,7 +53,7 @@ const Pagination = ({dataLength, itemsPerPage, maxPageNumbersToShow, currentPage
                 totalPages > 0 
                     ?   <PaginationStyles>
                             <ArrowButton
-                                onClick={() => paginate(firstPage)}
+                                onClick={() => paginate(1)}
                                 disabled={currentPage === 1}
                             >
                                 <MdFirstPage />
