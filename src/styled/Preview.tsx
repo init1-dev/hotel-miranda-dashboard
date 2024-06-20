@@ -231,8 +231,10 @@ export const SwiperSlideItem = styled(SwiperSlide)`
 
 export const SlideImg = styled.img`
     display: block;
+    border-radius: 0.5rem;
     width: auto;
-    height: 50px;
+    height: 40px;
     aspect-ratio: 1/1;
     object-fit: cover;
+    margin-right: 1rem;
 `

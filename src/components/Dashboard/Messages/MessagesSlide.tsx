@@ -18,6 +18,7 @@ import { selectMessages } from '../../../store/Messages/messagesSlice';
 import { editMessage } from '../../../store/Messages/messagesThunk';
 import { MessageData } from '../../../store/interfaces';
 import LoaderComponent from '../../Loader';
+import { SlideImg } from '../../../styled/Preview';
 
 SwiperCore.use([Navigation]);
 
@@ -101,7 +102,7 @@ function MessagesSlider() {
                                         </h4>
                                         <InfoContainer>
                                             <div>
-                                                {/* <SlideImg src={message.foto} alt="" /> */}
+                                                <SlideImg src={message.foto} alt="" />
                                                 <div>
                                                     <h6>{message.full_name}</h6>
                                                     <small>{timeAgo}</small>
