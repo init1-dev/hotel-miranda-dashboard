@@ -71,8 +71,8 @@ const ButtonContent = styled(NavLink)`
     border-radius: 1rem;
     gap: 1.5rem;
     background-color: ${({ theme }) => theme.contentBg};
-    transition: scale 0.3s ease;
-    box-shadow: 2px 2px 6px -4px black;
+    transition: scale 0.3s ease, box-shadow 0.2s ease;
+    box-shadow: 4px 4px 5px -4px rgba(0, 0, 0, 0.1);
 
     & > div:first-child {
             background-color: #ffedec;
@@ -85,7 +85,7 @@ const ButtonContent = styled(NavLink)`
 
     &:hover {
         scale: 1.08;
-        box-shadow: rgba(0, 0, 0, 0.08) 0px 16px 30px;
+        box-shadow: rgba(0, 0, 0, 0.15) 6px 6px 12px;
 
         & > div:first-child {
             background-color: #e23428;

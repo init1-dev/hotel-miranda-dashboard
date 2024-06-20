@@ -10,7 +10,7 @@ export const CalendarStyle = styled.div`
     font-size: 12px;
     max-width: 450px;
     margin-bottom: 1.5rem;
-    box-shadow: 2px 2px 6px -4px black;
+    box-shadow: 4px 4px 5px -3px rgba(0, 0, 0, 0.1);
 
     .calendar-sidebar {
         width: 300px;

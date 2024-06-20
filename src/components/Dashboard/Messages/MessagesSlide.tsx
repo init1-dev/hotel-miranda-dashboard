@@ -224,7 +224,7 @@ export const StatusButtonUnarchive = styled(StatusButtonArchive)`
 
 const SwiperSlideItem = styled(SwiperSlide)`
     position: relative;
-    border: 1px solid #80808042;
+    border: 1px solid rgba(128, 128, 128, 0.2);
     border-radius: 0.5rem;
     text-align: center;
     flex-direction: column;
@@ -234,13 +234,13 @@ const SwiperSlideItem = styled(SwiperSlide)`
     justify-content: space-between;
     align-items: flex-start;
     cursor: grab;
-    transition: scale 0.2s ease-in-out;
-    box-shadow: 0.5px 0.5px 5px -4px black;
+    transition: scale 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 4px 4px 5px -4px rgba(0, 0, 0, 0.1);
 
     &:hover {
         scale: 1.05;
         text-rendering: optimizeLegibility;
-        box-shadow: rgba(0, 0, 0, 0.08) 8px 8px 20px;
+        box-shadow: rgba(0, 0, 0, 0.15) 6px 6px 12px;
     }
 
     &:active {
