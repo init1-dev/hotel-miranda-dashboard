@@ -18,7 +18,7 @@ import { selectMessages } from '../../../store/Messages/messagesSlice';
 import { editMessage } from '../../../store/Messages/messagesThunk';
 import { MessageData } from '../../../store/interfaces';
 import LoaderComponent from '../../Loader';
-import { SlideImg } from '../../../styled/Preview';
+// import { SlideImg } from '../../../styled/Preview';
 
 SwiperCore.use([Navigation]);
 
