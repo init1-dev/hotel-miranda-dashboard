@@ -102,7 +102,7 @@ function MessagesSlider() {
                                         </h4>
                                         <InfoContainer>
                                             <div>
-                                                <SlideImg src={message.foto} alt="" />
+                                                {/* <SlideImg src={message.foto} alt="" /> */}
                                                 <div>
                                                     <h6>{message.full_name}</h6>
                                                     <small>{timeAgo}</small>
